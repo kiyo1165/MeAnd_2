@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'profile_header.html' %}
+    <br>
+    <div class="container-fluid">
+        <div class="row row-eq-height">
+            <div class="sidebar-left col-md-2 shadow p-3 mb-5 bg-white rounded">
+                <div class="sidebar-face-image">
+                    <img src="{{ my_page.face_image.thumbnail.url }}" alt="顔写真">
+                </div>
+                <div class="email">
+                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a
+                            href="{% url 'account_email' %}">変更する</a></span></label>
+                </div>
+                <div class="password">
+                    <label style="font-size:  8px;">Password：<span><a
+                            href="{% url 'account_change_password' %}">変更する</a></span></label>
+                </div>
+                <ul class="menu">
+                    <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">HOME</a></li>
+                    <li class="message"><a href=""><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a></li>
+                    <li class="secret"><a href=""><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
+                    <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
+                </ul>
+                <div class="sidebar-sns">
+                    <div class="set-sns">
+                        <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                        <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="col-md-9 shadow p-3 mb-5 bg-white rounded">
+                <button class="btn btn-info"><a href="{% url 'accounts:profile_edit' %}">プロフィール編集</a></button>
+                 <hr>
+                <div class="row">
+                    <div class="col-md-3 label">
+                        <p>お名前</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.user.last_name }}{{ my_page.user.first_name }}</p>
+                    </div>
+                    <div class="col-md-3 label">
+                        <p>年齢</p>
+                    </div>
+                     <div class="col-md-9 ">
+                        <p>{{ my_page.age }}歳</p>
+                    </div>
+                     <div class="col-md-3 label">
+                        <p>性別</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.get_gender_display }}</p>
+                    </div>
+                     <div class="col-md-3 label">
+                        <p>お住まいのエリア</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.pref }}</p>
+                    </div>
+                     <div class="col-md-3 label">
+                        <p>保持資格</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.qualification }}</p>
+                    </div>
+                      <div class="col-md-3 label">
+                        <p>カウンセラー経験</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.years_of_experience }}年</p>
+                    </div>
+                    <div class="col-md-3 label">
+                        <p>ご経歴</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.career | linebreaksbr }}</p>
+                    </div>
+                      <div class="col-md-3 label">
+                        <p>自己紹介</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.self_introduction | linebreaksbr }}</p>
+                    </div>
+                     <div class="col-md-3 label">
+                        <p>FaceBook</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.face_book | urlize }}</p>
+                    </div>
+                       <div class="col-md-3 label">
+                        <p>Twitter</p>
+                    </div>
+                     <div class="col-md-9">
+                        <p>{{ my_page.Twitter| urlize }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

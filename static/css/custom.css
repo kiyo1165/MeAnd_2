@@ -1,0 +1,300 @@
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+h2{
+    font-size: 25px;
+    color: #212529;
+}
+p {
+    font-size: 14px;
+    color: #212529;
+    line-height: 27px;
+}
+
+/*プロフィール*/
+.profile-header {
+    background-color: #23c3c3;
+    height: 125px;
+    margin-bottom: 100px;
+}
+
+.content-wrapper {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
+    height: 100px;
+}
+
+.header-face-image {
+    float: left;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+.header-face-image img {
+    width: 140px;
+    border-radius: 80px;
+    border: solid 7px #23c3c3;
+}
+
+.header-name {
+    float: left;
+    margin: 50px 20px;
+    color: #ffffff;
+}
+
+.label {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.messages_ul li {
+    text-align: center;
+}
+
+.messages {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.alert-success {
+    color: #1e4e0a;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #23c3c3;
+    border-color: #c3e6cb;
+    border-radius: 5px;
+}
+
+.cate-title h4 {
+    color: #FFFFFF;
+}
+
+.cate-title {
+    background-color: #56C500;
+    padding-bottom: 1px;
+    padding-top: 5px;
+    text-align: center;
+    border-radius: 10px;
+    border: solid 0px;
+}
+
+a {
+    text-decoration: none;
+
+}
+
+.card {
+    max-width: 300px;
+}
+
+.card-img-top {
+    height: 120px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 14px;
+}
+
+.face-image {
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    /*background-color: #aaa;*/
+
+}
+
+.face-image img {
+    border-radius: 50px;
+    border: solid 1px lightgray;
+}
+
+.cons-name {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+    /*background-color: red;*/
+}
+
+.name {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.qualification {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin-left: 10px;
+}
+
+.cons-detail {
+    height: auto;
+    border: solid 1px #F8F9FA;
+}
+
+.detail-header {
+    height: auto;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-image {
+    float: left;
+}
+
+.detail-status {
+    margin-top: 25px;
+    margin-left: 30px;
+    float: left;
+}
+
+.detail-status p {
+    font-size: 13px;
+    color: gray;
+    padding-top: 4px;
+}
+
+.cons-style {
+    float: right;
+    /*background-color: #56C500;*/
+    display: inline-block;
+    margin-top: 70px;
+    padding: 0;
+}
+
+.style-icon {
+    float: left;
+}
+
+.style-icon img {
+    width: 30px;
+}
+
+.style-info {
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.plan-detail p {
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.sidebar {
+    height: 100%;
+}
+
+.sidebar-face-image {
+    text-align: center;
+}
+
+.sidebar-face-image img {
+    border-radius: 100px;
+    border: solid 4px #23c3c3;
+}
+
+.sidebar-prof p {
+    text-align: center;
+}
+
+.sidebar-prof small {
+    text-align: center;
+    color: gray;
+}
+
+.sidebar-sns {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.twitter {
+    max-width: 40px;
+    margin-right: 5px;
+}
+
+.facebook {
+    max-width: 40px;
+}
+
+.follow-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.row-eq-height {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.area p {
+    text-align: right;
+    color: gray;
+}
+
+.price {
+    margin-top: 10px;
+}
+
+.price .s {
+    font-weight: bold;
+    font-size: 10px;
+    color: #666666;
+    background-color: #EEEEEE;
+    text-align: left;
+    border: solid 0px;
+    border-radius: 10px;
+    padding: 3px 10px;
+}
+
+.price span {
+    font-weight: bold;
+    color: #333333;
+}
+
+.target p {
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.button-area {
+    display: inline-block;
+    margin: auto;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+
+
+.profile-card {
+    min-height: 100px;
+
+}
+
+.card {
+    max-width: 800px;
+}
+
+.card-header{
+    background-color: #FFFFFF;
+
+}
+
+.detail-image img{
+    width: 120px;
+    border-radius: 80px;
+    border: solid 4px #23c3c3;
+}
+.style-icon{
+    margin-right: 5px;
+}

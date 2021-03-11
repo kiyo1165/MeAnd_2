@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="container">
+        <p>id:{{ message_host.id }}{{ message_host.email }}{{ message_host.last_name }}{{ message_host.first_name }}さんへメッセージを送る</p>
+        <form action="" method="post">{% csrf_token %}
+            {{ form }}
+            <button type="submit">送信</button>
+        </form>
+        <br>
+        <hr>
+        <br>
+
+
+        <div class="card-section">
+            {% for list in message_list %}
+                    <div class="card-body shadow">
+                        <div class="status row mb-4">
+                            <div class="img col-2">
+                                {% if list.user_2.userprofile.face_image %}
+                                    <img src="{{ list.user_2.userprofile.face_image.thumbnail.url }}" class="face-img">
+                                {% endif %}
+                            </div>
+                            <p class="col-8">{{ list.user_2.last_name }}{{ list.user_2.first_name }}</p>
+                            <p class="col-2">{{ list.created_at }}</p>
+                        </div>
+                        <p class="card-text ml-4">{{ list.send_text }}</p>
+                    </div>
+                <br>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

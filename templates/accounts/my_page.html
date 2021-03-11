@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'profile_header.html' %}
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="sidebar-left col-md-2 shadow p-3 mb-5 bg-white rounded">
+                <div class="sidebar-face-image">
+                    <img src="{{ my_page.face_image.thumbnail.url }}" alt="顔写真">
+                </div>
+                <div class="email">
+                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a
+                            href="{% url 'account_email' %}">変更する</a></span></label>
+                </div>
+                <div class="password">
+                    <label style="font-size:  8px;">Password：<span><a
+                            href="{% url 'account_change_password' %}">変更する</a></span></label>
+                </div>
+                <ul class="menu">
+                    <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">HOME</a></li>
+                    <li class="message"><a href=""><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a></li>
+                    <li class="secret"><a href=""><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
+                    <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
+                </ul>
+                <div class="sidebar-sns">
+                    <div class="set-sns">
+                        <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                        <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-9 profile-card">
+                <div class="accordion" id="accordionExample">
+                    <div class="card shadow p-3 mb-5 bg-white rounded">
+                        <div class="card-header" id="headingOne">
+                            <div>
+                                <a style="font-size: 18px;" type="button" data-toggle="collapse"
+                                   data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    プロフィール
+                                </a>
+                            </div>
+                            <div class="edit" style="margin-top:10px;">
+                                <a href="{% url 'accounts:profile_edit'%}" style="font-size: 10px;" type="button"
+                                   class="btn btn-info">編集</a>
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 label">
+                                        <p>お名前</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.user.last_name }}{{ my_page.user.first_name }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>年齢</p>
+                                    </div>
+                                    <div class="col-md-9 ">
+                                        <p>{{ my_page.age }}歳</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>性別</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.get_gender_display }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>お住まいのエリア</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.pref }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>保持資格</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.qualification }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>カウンセラー経験</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.years_of_experience }}年</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>ご経歴</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.career | linebreaksbr }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>自己紹介</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.self_introduction | linebreaksbr }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>FaceBook</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.face_book | urlize }}</p>
+                                    </div>
+                                    <div class="col-md-3 label">
+                                        <p>Twitter</p>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p>{{ my_page.Twitter| urlize }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow p-3 mb-5 bg-white rounded">
+                        <div class="card-header " id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Collapsible Group Item #2
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                                squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
+                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
+                                squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
+                                butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
+                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                    Collapsible Group Item #3
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                                squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck
+                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it
+                                squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur
+                                butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth
+                                nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

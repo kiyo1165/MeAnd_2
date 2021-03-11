@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            {% for item in objects %}
+                <div class="col-4 cate-list">
+                    <div class="cate-title">
+                        <a href="{% url 'main:cate_search_done' item.name %}"><h4>{{  item.name }}</h4></a>
+                    </div>
+                    <br>
+                    <div class=" content">
+                        <p>test</p>
+                        <p>test</p>
+                        <p>test</p>
+                        <p>test</p>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+    <p>id:{{ message_host.id }}{{ message_host.email }}{{ message_host.last_name }}{{ message_host.first_name }}さんへメッセージを送る</p>
+        <form action="" method="post">{% csrf_token %}
+            {{ form }}
+            <button type="submit">送信</button>
+        </form>
+
+        <hr>
+        <br>
+        <br>
+
+        {% for item in message_list %}
+            <div class="row message_list ml-1">
+                <div class="card w-100 col-12">
+                    <div class="card-body row">
+                        <div class="col-1">
+                            <img src="{{ item.user.userprofile.face_image.thumbnail.url }}" class="face-img">
+                        </div>
+
+                        <p class="col-9">
+                            {{ item.user.last_name }}{{ item.user.first_name }}{{ item.created_at }}</p>
+                        <p class="col-2">{{ item.created_at }}</p>
+                    </div>
+                    <div class="row send_text">
+                        <p class="text_body col-12 pl-5">{{ item.send_text }}</p>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}

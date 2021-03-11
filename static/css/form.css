@@ -1,0 +1,61 @@
+.container-fluid {
+    max-width: 1300px;
+}
+
+#id_age, #id_gender, #id_pref, #id_years_of_experience {
+    max-width: 80px;
+}
+
+label, p {
+    font-size: 14px;
+    color: #333333;
+}
+
+.sidebar-left {
+    max-height: 800px;
+    height: 100%;
+}
+
+.email, .password {
+    text-align: left;
+    margin-left: 25px;
+}
+
+.sidebar-face-image {
+    margin-bottom: 10px;
+}
+
+.menu {
+    text-align: left;
+    margin-left: 25px;
+}
+
+ul li img {
+    display: inline-block;
+    width: 18px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+ul li {
+    font-size: 12px;
+    line-height: 40px;
+}
+.edit a:visited {
+    color: #FFFFFF;
+}
+a:link {
+    color: #333333;
+}
+
+a:visited {
+    color: #333333;
+}
+a:hover {
+    color: #26C2C3;
+}
+
+a:active {
+    color: #26C2C3;
+}

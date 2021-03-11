@@ -1,0 +1,9 @@
+.navbar{
+    height: 90px;
+    background-color: #FFFFFF;
+}
+
+.navbar a{
+    font-size: 20px;
+    color: black;
+}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for item in plan_list %}
+                <div class="card-deck col-4">
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                        <div class="bd-placeholder-img card-img-top">
+                                <div class="face-image">
+                                    <img src="{{ item.user.profile.face_image.thumbnail.url }}" alt="face_image">
+                                </div>
+                                <div class="cons-name">
+                                    <p class="name">{{ item.user.last_name }}&nbsp;{{ item.user.first_name }}</p>
+                                    <p class="qualification">{{ item.user.profile.qualification }}</p>
+                                </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="card-title">{{ item.title}}</h6>
+                            <p class="">対象者：{{ item.target }}</p>
+                            <p class="card-text">{{ item.catch_message | truncatechars:60 }}<a href="{% url 'main:plan_detail' item.pk %}">続きを読む</a></p>
+                        </div>
+                        <div class="card-footer">
+                            <p>相談のタイミング</p>
+                            <small class="text-muted">{{ item.get_counseling_active_display }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

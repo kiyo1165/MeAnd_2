@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <br>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">
+                        id:{{ message_receiver.id }}{{ message_receiver.email }}{{ message_receiver.last_name }}{{ message_receiver.first_name }}さんへメッセージを送る
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">{% csrf_token %}
+                        {{ form }}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                        <button type="submit" class="btn btn-primary">送信</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row row-eq-height">
+            <div class="col-1"></div>
+            <div class="cons-detail col-md-7 shadow p-3 mb-5 bg-white rounded">
+                <div class="detail-header shadow-sm p-3 mb-5 bg-white rounded">
+                    <h2>{{ object.title }}</h2>
+                    <div class="price"><span>{{ object.price }}円</span>
+                        <span class="s">１セッション{{ object.session_time }}分</span>
+                    </div>
+                    <br>
+
+                    <div class="face-image detail-image">
+                        <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
+                    </div>
+                    <div class="detail-status">
+                        <h5>{{ object.user.last_name }}{{ object.user.first_name }}</h5>
+                        <small>
+                            {{ object.user.profile.age }}歳・{{ object.user.profile.get_gender_display }}・{{ object.user.profile.qualification }}
+                        </small>
+                        <p>カウンセラー経験{{ object.user.profile.years_of_experience }}年</p>
+                    </div>
+                    <div class="cons-style">
+                        {% for item in object.style_choices.all %}
+                            <p style="display: inline">{{ item }}</p>
+                            {% if item.style_name in '対面' %}
+                                <div class="style-icon">
+                                    <img src="{% static 'icon/meet.png' %}">
+                                </div>
+                            {% elif item.style_name in 'オンライン・電話' %}
+                                <div class="style-icon">
+                                    <img src="{% static 'icon/icon_phone.png' %}">
+                                </div>
+                            {% elif item.style_name in 'チャット・メール' %}
+                                <div class="style-icon">
+                                    <img src="{% static 'icon/mail.png' %}">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="target">
+                    <h4>こんな方におすすめ</h4>
+                    <hr>
+                    <p>{{ object.target }}</p>
+                </div>
+                <br>
+                <div class="plan-detail">
+                    <h4>内容</h4>
+                    <hr>
+                    <p>{{ object.detail | linebreaksbr }}</p>
+                </div>
+                <br>
+                <div class="button-area">
+                    <button type="button" class="btn btn-outline-success">契約する</button>
+                </div>
+
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3 sidebar shadow p-3 mb-5 bg-white rounded">
+                <div class="sidebar-face-image">
+                    <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
+                </div>
+                <div class="sidebar-prof">
+                    <p>{{ object.user.last_name }}{{ object.user.first_name }}</p>
+                    <p>カウンセラー経験{{ object.user.profile.years_of_experience }}年</p>
+                    <small>{{ object.user.profile.self_introduction | truncatechars:70 }}</small>
+                </div>
+                <div class="sidebar-sns">
+                    <div class="set-sns">
+                        <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                        <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+
+                    </div>
+
+                </div>
+                <div class="follow-button">
+                    <button type="button" class="btn btn-outline-success">フォローする</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-7">
+                <h6 style="text-align: center">カウンセラーに相談したいことを質問しましょう！</h6>
+                <div class="follow-button">
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter">メッセージで相談する</button>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    </div>
+
+{% endblock %}

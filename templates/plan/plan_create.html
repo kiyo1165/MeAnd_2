@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row row-eq-height">
+            <div class="sidebar-left col-md-2 shadow p-3 mb-5 bg-white rounded">
+                <div class="sidebar-face-image">
+                    <img src="{{ user.profile.face_image.thumbnail.url }}" alt="顔写真">
+                </div>
+                <div class="email">
+                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a
+                            href="{% url 'account_email' %}">変更する</a></span></label>
+                </div>
+                <div class="password">
+                    <label style="font-size:  8px;">Password：<span><a
+                            href="{% url 'account_change_password' %}">変更する</a></span></label>
+                </div>
+                <ul class="menu">
+                    <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">HOME</a></li>
+                    <li class="message"><a href=""><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a></li>
+                    <li class="secret"><a href=""><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
+                    <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
+                </ul>
+                <div class="sidebar-sns">
+                    <div class="set-sns">
+                        <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                        <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="col-md-9 shadow p-3 mb-5 bg-white rounded">
+                <h3>プランの作成</h3>
+                <form method="POST">{% csrf_token %}
+                    {% for field in plan_form %}
+                        <div class="row form-inline" style="margin-top: 20px">
+
+                        <div class="col-md-2">
+                             <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                                 </div>
+                        </div>
+                        <div class="col-md-10 ">
+                            <div class="form-group">
+                                {{ field }}
+                            </div>
+                            <br><br>
+                        </div>
+                        </div>
+
+                    {% endfor %}
+
+                    <button type="submit">登録</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
