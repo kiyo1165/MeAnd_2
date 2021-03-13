@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h4>カウンセラー一覧</h4>
+    <ul>
+        {% for user in object_list %}
+        <li><a href="{% url 'reservation:plan_list' user.pk %}">{{ user.first_name }}</a></li>
+        {% empty %}
+        <li>まだ登録者がいません。</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

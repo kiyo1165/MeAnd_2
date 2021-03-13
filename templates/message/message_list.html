@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container">
@@ -23,8 +24,8 @@
                     {% if list.user != request.user %}
                         <div class="row card-header">
                             <div class="img col-2　align-items-center">
-                                {% if list.user.userprofile.face_image %}
-                                    <img src="{{ list.user.userprofile.face_image.thumbnail.url }}" class="face-img">
+                                {% if list.user.profile.face_image %}
+                                    <img src="{{ list.user.profile.face_image.thumbnail.url }}" class="message-face-img">
                                 {% endif %}
                             </div>
                             <p class="col-10 align-items-center">
@@ -41,8 +42,8 @@
                     {% else %}
                          <div class="row card-header">
                             <div class="img col-2　align-items-center">
-                                {% if list.user_2.userprofile.face_image %}
-                                    <img src="{{ list.user_2.userprofile.face_image.thumbnail.url }}" class="face-img">
+                                {% if list.user_2.profile.face_image %}
+                                    <img src="{{ list.user_2.profile.face_image.thumbnail.url }}" class="face-img">
                                 {% endif %}
                             </div>
                             <p class="col-10 align-items-center">

@@ -1,46 +1,42 @@
-from django.db import models
-from django.core.mail import send_mail
-from django.contrib.auth.models import PermissionsMixin, UserManager
-from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.core.mail import send_mail
+from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from stdimage.models import StdImageField
 
 
 class CustomUserManager(UserManager):
-    use_in_migrations = True
-
     def _create_user(self, email, password, **extra_fields):
         if not email:
-            raise ValueError( 'メールアドレスは必須です。' )
-        email = self.normalize_email( email )
-        user = self.model( email=email, **extra_fields )
-        user.set_password( password )
-        user.save( using=self._db )
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        extra_fields.setdefault( 'is_staff', False )
-        extra_fields.setdefault( 'is_superuser', False )
-        return self._create_user( email, password, **extra_fields )
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault( 'is_staff', True )
-        extra_fields.setdefault( 'is_superuser', True )
-
-        if extra_fields.get( 'is_staff' ) is not True:
-            raise ValueError( 'スーパーユーザーはスタッフ権限が必要です。' )
-        if extra_fields.get( 'is_superuser' ) is not True:
-            raise ValueError( 'スーパーユーザーは最高権限が必要です。' )
-
-        return self._create_user( email, password, **extra_fields )
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        return self._create_user(email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(_('first name'), max_length=150, blank=True)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    first_name = models.CharField(_('first name'), max_length=150, blank=False)
+    last_name = models.CharField(_('last name'), max_length=150, blank=False)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -99,7 +95,7 @@ class Profile(models.Model):
     career = models.TextField('経歴', max_length=1000, blank=True)
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
     self_introduction = models.TextField('自己紹介', max_length=1000, blank=True)
-    face_image = StdImageField( upload_to='media/face_image', blank=True, variations={
+    face_image = StdImageField( upload_to='media/face_image', blank=True, default='icon/images.png', variations={
         'large': (600, 400),
         'thumbnail': (100, 100, True),
         'medium': (300, 200),
@@ -112,6 +108,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.gender
+
 
 
 

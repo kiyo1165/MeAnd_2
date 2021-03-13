@@ -44,12 +44,14 @@
                     </div>
                 </li>
                 <li><a href="{% url 'plan:plan_create' %}">プラン作成</a></li>
+                <li><a href="{% url 'accounts:profile_create' %}">プロフィール作成</a></li>
                 <li><a href="{% url 'plan:plan_create' %}">{{ user.email }}</a></li>
             </ul>
             <div class="log">
 
                 <p><a href="{% url 'account_logout'%}">ログアウト</a></p>
                 <p><a href="{% url 'account_login'%}">ログイン</a></p>
+                <p><a href="{% url 'account_signup'%}">サインアップ</a></p>
             </div>
         </div>
     </nav>

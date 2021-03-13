@@ -1,6 +1,12 @@
 from pathlib import Path
 import os
+import environ
 from django.contrib.messages import constants as messages
+import datetime
+
+# django-environから環境変数を読み込む
+env = environ.Env()
+# env.read_env(os.path.join(BASE_DIR, '.env'))
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'dark',
@@ -47,6 +53,10 @@ INSTALLED_APPS = [
     'accounts',
     #画像編集
     'stdimage',
+    #決済
+    'stripe',
+    #予約
+    'reservation',
 ]
 
 MIDDLEWARE = [
@@ -181,3 +191,27 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 #ログアウトリンクのクリック一発でログアウトする設定
 ACCOUNT_LOGOUT_ON_GET = True
+
+# STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+# STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
+
+PUBLIC_HOLIDAYS = [
+
+    # 2021
+    datetime.date(year=2021, month=1, day=1),
+    datetime.date(year=2021, month=1, day=11),
+    datetime.date(year=2021, month=2, day=11),
+    datetime.date(year=2021, month=2, day=23),
+    datetime.date(year=2021, month=3, day=20),
+    datetime.date(year=2021, month=4, day=29),
+    datetime.date(year=2021, month=5, day=3),
+    datetime.date(year=2021, month=5, day=4),
+    datetime.date(year=2021, month=5, day=5),
+    datetime.date(year=2021, month=7, day=19),
+    datetime.date(year=2021, month=8, day=11),
+    datetime.date(year=2021, month=9, day=20),
+    datetime.date(year=2021, month=9, day=23),
+    datetime.date(year=2021, month=10, day=11),
+    datetime.date(year=2021, month=11, day=3),
+    datetime.date(year=2021, month=11, day=23),
+]

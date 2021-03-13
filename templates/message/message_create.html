@@ -20,8 +20,8 @@
                     <div class="card-body shadow">
                         <div class="status row mb-4">
                             <div class="img col-2">
-                                {% if list.user_2.userprofile.face_image %}
-                                    <img src="{{ list.user_2.userprofile.face_image.thumbnail.url }}" class="face-img">
+                                {% if list.user_2.profile.face_image %}
+                                    <img src="{{ list.user_2.profile.face_image.thumbnail.url }}" class="message-face-img">
                                 {% endif %}
                             </div>
                             <p class="col-8">{{ list.user_2.last_name }}{{ list.user_2.first_name }}</p>

@@ -11,5 +11,6 @@ urlpatterns = [
     path('user_settings/', include( 'accounts.urls' ) ),
     path('message/', include('message.urls')),
     path('comment/', include('usercomments.urls')),
+    path('reserve/', include('reservation.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
