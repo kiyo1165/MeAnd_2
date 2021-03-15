@@ -1,9 +1,49 @@
 .navbar{
-    height: 90px;
+    height: 76px;
     background-color: #FFFFFF;
+
+}
+.navbar-collapse{
+    max-width: 1550px;
+    margin: auto 10px;
+}
+.navbar-brand{
+    margin-left: 20px;
+}
+.navbar a{
+    font-size: 14px;
+    color: #696a6c;
 }
 
-.navbar a{
-    font-size: 20px;
-    color: black;
+.dropdown-menu{
+    line-height: 20px;
+    width: 5px;
+    border: solid  1px #c3e6cb;
+}
+
+.dropdown-menu a{
+    font-size: 12px;
+
+}
+.carousel{
+    border: solid 0px black;
+}
+.carousel-item{
+    height: 80%;
+}
+.back-image{
+    height: 500px;
+    width: 1200px;
+}
+
+.carousel-caption {
+    margin: auto 0;
+    padding: 0;
+}
+.carousel-caption h1{
+    width: 550px;
+    height: 600px;
+    font-size: 50px;
+    writing-mode: vertical-rl;
+
 }

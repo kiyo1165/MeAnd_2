@@ -7,7 +7,7 @@
     <h6>{{ today }}</h6>
     <p>{{ start_day }} - {{ end_day }}</p>
     <div class="row">
-         <table class="table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
+         <table class="table text-center" style="table-layout: fixed;width: 100%" border="1">
         <tr>
             <td><a href="{% url 'reservation:next_calendar' plan.pk before.year before.month before.day %}">前週</a></td>
             {% for day in days %}
