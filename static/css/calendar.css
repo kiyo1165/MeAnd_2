@@ -1,0 +1,17 @@
+th{
+    font-size: 12px;
+    font-weight: normal;
+    background-color: #EBEBEB;
+}
+
+th .check-detail{
+    font-size: 10px;
+}
+
+table{
+   table-layout: fixed;width: 100%;
+}
+
+td{
+    font-size: 10px;
+}

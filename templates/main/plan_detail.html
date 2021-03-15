@@ -44,7 +44,7 @@
                         <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
                     </div>
                     <div class="detail-status">
-                        <h5>{{ object.user.last_name }}{{ object.user.first_name }}</h5>
+                        <h5>{{ object.user.first_name }}{{ object.user.last_name }}</h5>
                         <small>
                             {{ object.user.profile.age }}歳・{{ object.user.profile.get_gender_display }}・{{ object.user.profile.qualification }}
                         </small>
@@ -83,7 +83,7 @@
                 </div>
                 <br>
                 <div class="button-area">
-                    <button type="button" class="btn btn-outline-success">予約する</button>
+                    <button type="button" class="btn btn-outline-success"><a href="{% url 'reservation:calendar' object.pk %}">予約する</a></button>
                 </div>
 
             </div>

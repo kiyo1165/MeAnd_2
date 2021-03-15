@@ -1,12 +1,14 @@
 import datetime
 from django.conf import settings
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from .models import  Reservation
 from accounts.models import User
 from plan.models import Plan
+from django.contrib import messages
+from .form import BookingForm
 
 class UserList(ListView):
     model = User
@@ -31,7 +33,8 @@ class StaffCalendar(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = User.objects.get(pk=self.request.user.id)
+        plan = Plan.objects.get(pk=self.kwargs['pk'])
+        # user = User.objects.get(pk=self)
         today = datetime.date.today()
 
         # どの日を基準にカレンダーを表示するかの処理。
@@ -51,15 +54,18 @@ class StaffCalendar(TemplateView):
 
         # 9時から17時まで1時間刻み、1週間分の、値がTrueなカレンダーを作る
         calendar = {}
-        for hour in range(9, 18):
+        for hour in range(9, 23):
             row = {}
+
             for day in days:
                 row[day] = True
             calendar[hour] = row
 
+
+
         start_time = datetime.datetime.combine(start_day, datetime.time(hour=9, minute=0, second=0))
-        end_time =datetime.datetime.combine(end_day, datetime.time(hour=17, minute=0, second=0))
-        for schedule in Reservation.objects.filter( staff=user ).exclude(
+        end_time =datetime.datetime.combine(end_day, datetime.time(hour=23, minute=0, second=0))
+        for schedule in Reservation.objects.filter( plan=plan.id ).exclude(
                 Q( start__gt=end_time ) | Q( end__lt=start_time ) ):
             local_dt = timezone.localtime( schedule.start )
             booking_date = local_dt.date()
@@ -67,7 +73,7 @@ class StaffCalendar(TemplateView):
             if booking_hour in calendar and booking_date in calendar[booking_hour]:
                 calendar[booking_hour][booking_date] = False
 
-        context['user'] = user
+        context['plan'] = plan
         context['calendar'] = calendar
         context['days'] = days
         context['start_day'] = start_day
@@ -77,3 +83,36 @@ class StaffCalendar(TemplateView):
         context['today'] = today
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
+
+class Booking(CreateView):
+    model = Reservation
+    template_name = 'reservation/booking.html'
+    form_class = BookingForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data( **kwargs )
+        context['staff'] = get_object_or_404( Plan, pk=self.kwargs['pk'] )
+        return context
+
+    def form_valid(self, form):
+        plan = get_object_or_404( Plan, pk=self.kwargs['pk'] )
+        user = User.objects.get( pk=self.request.user.id )
+        user_2 = User.objects.get(pk=plan.user.pk)
+        year = self.kwargs.get( 'year' )
+        month = self.kwargs.get( 'month' )
+        day = self.kwargs.get( 'day' )
+        hour = self.kwargs.get( 'hour' )
+        start = datetime.datetime( year=year, month=month, day=day, hour=hour )
+        end = datetime.datetime( year=year, month=month, day=day, hour=hour + 1 )
+        if Reservation.objects.filter( plan=plan, start=start ).exists():
+            messages.error( self.request, 'すみません、入れ違いで予約がありました。別の日時はどうですか。' )
+        else:
+            schedule = form.save( commit=False )
+            schedule.plan = plan
+            schedule.user = user
+            schedule.user2 = user_2
+            schedule.start = start
+            schedule.end = end
+            schedule.save()
+            messages.success( self.request, '予約が完了しました。' )
+            return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )

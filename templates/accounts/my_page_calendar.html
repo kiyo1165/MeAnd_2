@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+
+
+    <div class="row">
+            {% include 'left_sideber.html' %}
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+        <h4>予約一覧</h4>
+        <hr>
+        <p>{{ start_day }} - {{ end_day }}</p>
+        <table class="table table-bordered text-center" border="1">
+            <tr>
+                <td><a href="{% url 'accounts:my_page_calendar' plan.pk before.year before.month before.day %}">前週</a>
+                </td>
+                {% for day in days %}
+                    {% if day in public_holidays %}
+                        <th style="background-color: #FECECE;">{{ day | date:"d(D)" }}
+                            {% elif day.weekday == 5 %}
+                        <th style="color: blue;">{{ day | date:"d(D)" }}
+                            {% elif day.weekday == 6 %}
+                        <th style="color: red;">{{ day | date:"d(D)" }}
+                            {% else %}
+                        <th>{{ day | date:"d(D)" }}
+                    {% endif %}
+                    <br><a class="check-detail" href="{% url 'accounts:my_page_day_detail' plan.pk day.year day.month day.day %}">詳細</a>
+                {% endfor %}
+                <td><a href="{% url 'accounts:my_page_calendar' plan.pk next.year next.month next.day %}">次週</a></td>
+            </tr>
+
+            {% for hour, schedules in calendar.items %}
+                <tr>
+                    <td>
+                        {{ hour }}:00
+                    </td>
+                    {% for dt, book in schedules.items %}
+                        <td>
+                            {% if book %}
+                                <small style="color: blue">○</small>
+                            {% else %}
+                                <small style="color: coral; font-weight: bold">×</small>
+                            {% endif %}
+                        </td>
+
+                    {% endfor %}
+                    <td>
+                        {{ hour }}:00
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+
+        {% include 'left_sideber.html' %}
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <h5>予約の編集</h5>
+            <hr>
+              <form action="" method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit">送信</button>
+    </form>
+    <hr>
+    <form action="{% url 'accounts:my_page_schedule_delete' reservation.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">削除</button>
+    </form>
+
+        </div>
+    </div>
+
+    </div>
+
+
+{% endblock %}

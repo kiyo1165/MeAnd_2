@@ -110,7 +110,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'meand_db',
+        'NAME': 'meand_db3',
         'USER': 'kiyotsugu_akashi', #os.environ.get( 'DB_USER' )
         'PASSWORD':'kiyo1165' , #os.environ.get( 'DB_PASSWORD' )
         'HOST': '',

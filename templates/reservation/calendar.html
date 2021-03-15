@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
+{% load booking %}
 
 {% block content %}
-    <h1>{{ user.plan.title }}店 {{ user.first_name }}</h1>
-    <h4>{{ today }}</h4>
+    <div class="container">
+    <h5>{{ plan.user.last_name }}{{ plan.user.first_name }}カウンセラー&nbsp;{{ plan.title }}プランの予約</h5>
+    <h6>{{ today }}</h6>
     <p>{{ start_day }} - {{ end_day }}</p>
-
-    <table class="table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
+    <div class="row">
+         <table class="table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
         <tr>
-            <td><a href="">前週</a></td>
+            <td><a href="{% url 'reservation:next_calendar' plan.pk before.year before.month before.day %}">前週</a></td>
             {% for day in days %}
                 {% if day in public_holidays %}
-                    <th style="background-color: yellow">{{ day | date:"d(D)" }}</th>
+                    <th style="background-color: #FFEBEA">{{ day | date:"d(D)" }}</th>
                 {% elif day.weekday == 5 %}
                     <th style="color: blue;">{{ day | date:"d(D)" }}</th>
                 {% elif day.weekday == 6 %}
@@ -19,22 +21,24 @@
                     <th>{{ day | date:"d(D)" }}</th>
                 {% endif %}
             {% endfor %}
-            <td><a href="">次週</a></td>
+            <td><a href="{% url 'reservation:next_calendar' plan.pk next.year next.month next.day %}">次週</a></td>
         </tr>
 
         {% for hour, schedules in calendar.items %}
-            <tr style="font-size:12px">
+            <tr>
                 <td>
                     {{ hour }}:00
                 </td>
                 {% for dt, book in schedules.items %}
                     <td>
-                        {% if dt <= today %}
+                        {% is_1hour_later dt hour as ok %}
+
+                        {% if not ok %}
                             -
                         {% elif book %}
-                            <a href="">○</a>
+                            <a style="color: blue; font-weight: bold" href="{% url 'reservation:booking' plan.pk dt.year dt.month dt.day hour %}">○</a>
                         {% else %}
-                            ×
+                            <small style="color: coral; font-weight: bold">×</small>
                         {% endif %}
                     </td>
 
@@ -46,4 +50,10 @@
         {% endfor %}
 
     </table>
+
+    </div>
+    </div>
+
+
+
 {% endblock %}

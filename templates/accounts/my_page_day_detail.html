@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% include 'left_sideber.html' %}
+            <div class="col-md-1"></div>
+
+    <div class="col-md-9">
+    <h5>{{ view.kwargs.year }}年{{ view.kwargs.month }}月{{ view.kwargs.day }}日の予約一覧</h5>
+    <table class="table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
+    <tr>
+        <th>予約時間</th>
+        <th>予約者名</th>
+    </tr>
+        {% for hour, schedules in calendar.items %}
+            <tr style="font-size:12px">
+                <td>
+                    {{ hour }}:00
+                </td>
+                <td>
+                    {{ schedules }}
+                    {% if schedules %}
+                        {% for s in schedules %}
+                            <a href="{% url 'accounts:my_page_schedule' s.id %}">{{ s.message }}</a>
+                        {% endfor %}
+                    {% else %}
+                        <form action="{% url 'accounts:my_page_holiday_add' plan.pk view.kwargs.year view.kwargs.month view.kwargs.day hour %}"
+                              method="POST">
+                            {% csrf_token %}
+                            <button type="submit">休暇にする</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+     </div>
+        </div>
+    </div>
+
+{% endblock %}
