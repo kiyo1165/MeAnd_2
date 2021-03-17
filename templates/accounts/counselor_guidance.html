@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        <li>登録資格の説明</li>
+        <li>必要書類</li>
+        <li>
+            <ul>
+                <li>本人確認書類-> 運転免許証 or 健康保険証 <small>※顔写真付き、現住所が確認できるもの。</small></li>
+                <li>保持資格証明書<small>※有効期限の記載あるもの</small></li>
+            </ul>
+        </li>
+        <li>プロフィールの登録</li>
+        <li>機密保持契約の締結</li>
+        <li>銀行口座の登録</li>
+        <li></li>
+    </ul>
+    {% if user.is_authenticated  %}
+        <button type="button" class="btn btn-info"><a href="{% url 'accounts:counselor_register' user.pk %}">カウンセラーの登録</a></button>
+    {% else %}
+        <p>カウンセラーの登録は会員登録、もしくはログインが必要です。</p>
+    <button type="button" class="btn btn-info"><a href="{% url 'account_signup' %}">新規登録</a></button>
+    {% endif %}
+{% endblock %}

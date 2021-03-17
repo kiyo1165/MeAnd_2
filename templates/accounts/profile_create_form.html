@@ -10,10 +10,12 @@
                     <img src="{{ profile.face_image.thumbnail.url }}" alt="顔写真">
                 </div>
                 <div class="email">
-                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a href="{% url 'account_email' %}">変更する</a></span></label>
+                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a
+                            href="{% url 'account_email' %}">変更する</a></span></label>
                 </div>
                 <div class="password">
-                    <label style="font-size:  8px;">Password：<span><a href="{% url 'account_change_password' %}">変更する</a></span></label>
+                    <label style="font-size:  8px;">Password：<span><a
+                            href="{% url 'account_change_password' %}">変更する</a></span></label>
                 </div>
                 <ul class="menu">
                     <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">HOME</a></li>
@@ -36,6 +38,13 @@
                 <br>
 
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-md-2">
                             <p>お名前</p>
@@ -43,7 +52,7 @@
                         <div class="col-md-10">
                             <div class="form-group form-inline">
                                 <label for="{{ user_form.last_name.id_for_label }}">性：</label>
-                                 {{ user_form.last_name }}
+                                {{ user_form.last_name }}
                                 <label for="{{ user_form.first_name.id_for_label }}">名：</label>
                                 {{ user_form.first_name }}
                             </div>
@@ -53,7 +62,6 @@
                     <br>
                     <div class="row">
                         {% for field in form %}
-
                             <div class="col-md-2">
                                 <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
                             </div>

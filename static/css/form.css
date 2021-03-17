@@ -2,13 +2,39 @@
     max-width: 1300px;
 }
 
-#id_age, #id_gender, #id_pref, #id_years_of_experience {
+#id_age, #id_gender, #id_pref,
+#id_years_of_experience,
+#id_first_name, #id_last_name{
     max-width: 80px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+#id_occupation{
+    max-width: 160px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+#id_face_image{
+    max-width: 250px;
+    border-radius: 2px;
+    font-size: 12px;
+    height: 40px;
+    border: none;
+}
+
+
+.form-group {
+     font-size: 12px;
+}
+.profile-btn{
+    width: 900px;
+    text-align: right;
+    margin-top: 20px;
 }
 
 label, p {
-    font-size: 14px;
-    color: #333333;
+    font-size: 12px;
+
 }
 
 .sidebar-left {
@@ -39,8 +65,8 @@ ul li img {
 }
 
 ul li {
-    font-size: 12px;
-    line-height: 40px;
+    /*font-size: 12px;*/
+    /*line-height: 25px;*/
 }
 .edit a:visited {
     color: #FFFFFF;

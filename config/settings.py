@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'allauth.socialaccount',
     'django.contrib.sites',
-    'bootstrap5',
+    'bootstrap4',
+    'django_cleanup',
     'main',
     'plan',
     'category',
@@ -186,7 +187,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #意味：必須
 ACCOUNT_EMAIL_REQUIRED = True
 
 #ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'accounts:my_page'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 #ログアウトリンクのクリック一発でログアウトする設定

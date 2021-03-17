@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from stdimage.models import StdImageField
+from .choise import SEX_SELECT, OCCUPATION_SELECT
 
 
 class CustomUserManager(UserManager):
@@ -82,15 +83,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         return self.email
 
-SEX_SELECT = [
-    ('men', '男性'),
-    ('women', '女性')
-]
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.CharField('年齢', max_length=3, blank=True)
     gender = models.CharField('性別', max_length=5, blank=True, choices=SEX_SELECT)
     pref = models.CharField('お住まいの都道府県', max_length=5, blank=True)
+    occupation = models.CharField( 'ご職業', max_length=10, blank=True, choices=OCCUPATION_SELECT )
     qualification = models.CharField('保持資格', max_length=100, blank=True)
     career = models.TextField('経歴', max_length=1000, blank=True)
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
@@ -100,7 +99,7 @@ class Profile(models.Model):
         'thumbnail': (100, 100, True),
         'medium': (300, 200),
         'small': (70, 70),
-    } )
+    })
     face_book = models.URLField('FaceBook_URL', max_length=300, blank=True)
     Twitter = models.URLField('Twitter_URL', max_length=300, blank=True)
     created_at = models.DateTimeField( auto_now_add=True)
@@ -109,6 +108,19 @@ class Profile(models.Model):
     def __str__(self):
         return self.gender
 
+
+class CounselorRegister(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    identification = models.ImageField('本人確認書類',upload_to='media/identification')
+    credentials = models.ImageField('資格証明書', upload_to='media/credentials')
+    signature = models.CharField('署名', max_length=20)
+    address = models.CharField('住所', max_length=255)
+    agreement = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.signature
 
 
 

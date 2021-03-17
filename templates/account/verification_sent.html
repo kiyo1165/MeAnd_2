@@ -1,12 +1,18 @@
-{% extends "account/base.html" %}
+{% extends "base.html" %}
+{% load  static %}
 
 {% load i18n %}
 
 {% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "Verify Your E-mail Address" %}</h1>
+    <div class="container-sm text-center" style="margin-top: 100px">
 
-    <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.{% endblocktrans %}</p>
+        <h4>{% trans "Verify Your E-mail Address" %}</h4>
+
+        <p>{% blocktrans %}確認のためのメールをお送りしました。提供されたリンクに沿って、サインアップの手続きを確定してください。数分経っても届かない場合は、お手数ですがお問い合わせください。{% endblocktrans %}</p>
+
+    </div>
+
 
 {% endblock %}

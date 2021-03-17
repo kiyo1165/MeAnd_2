@@ -15,6 +15,9 @@ from django.utils import timezone
 from reservation.models import Reservation
 from django.db.models import Q
 from django.conf import settings
+from accounts.models import CounselorRegister
+from django.core.mail import send_mail, EmailMessage
+
 
 
 class OnlyStaffMixin( UserPassesTestMixin ):
@@ -57,7 +60,7 @@ def ProfileEdit(request):
     user = User.objects.get( pk=request.user.pk )
     profile = get_object_or_404( Profile, user_id=request.user.pk )
     user_form = UserForm( request.POST or None, instance=user )
-    profile_form = ProfileForm( request.POST or None, instance=profile )
+    profile_form = ProfileForm(request.POST or None, instance=profile)
     if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
         user_form = user_form.save( commit=False )
         user_form.save()
@@ -91,10 +94,13 @@ class MyPage( TemplateView ):
         ctx = super( MyPage, self ).get_context_data()
         plan = Plan.objects.filter( user_id=self.request.user.id )
         user = User.objects.get( pk=self.request.user.pk )
-        ctx['my_page'] = Profile.objects.get( user_id=user )
-        ctx['plan_list'] = Plan.objects.filter( user_id=user )
+        if user != plan:
+            messages.info(self.request, f'最初にプロフィールの登録をお願いします。' )
+        else:
+            ctx['my_page'] = Profile.objects.get( user_id=user )
+            ctx['plan_list'] = Plan.objects.filter( user_id=user )
         # ctx['reservation_list'] = Reservation.objects.filter(plan=)
-        return ctx
+            return ctx
 
 
 class MyProfile( TemplateView ):
@@ -126,17 +132,20 @@ class MyPageCalendar( StaffCalendar ):
         else:
             base_date = today
 
-        days = [base_date + datetime.timedelta( days=day ) for day in range( 7 )]
-        start_day = days[0]
-        end_day = days[-1]
+        week = [base_date + datetime.timedelta( days=day ) for day in range( 7 )]
+        # print(week)
+        start_day = week[0]
+        end_day = week[-1]
 
         # 9時から17時まで1時間刻み、1週間分の、値がTrueなカレンダーを作る
         calendar = {}
         for hour in range( 9, 23 ):
             row = {}
-            for day in days:
+            for day in week:
                 row[day] = True
             calendar[hour] = row
+        print(calendar)
+
 
         start_time = datetime.datetime.combine( start_day, datetime.time( hour=9, minute=0, second=0 ) )
         end_time = datetime.datetime.combine( end_day, datetime.time( hour=23, minute=0, second=0 ) )
@@ -151,11 +160,12 @@ class MyPageCalendar( StaffCalendar ):
 
         context['plan'] = plan
         context['calendar'] = calendar
-        context['days'] = days
+        context['week'] = week
+        context['hour'] = hour
         context['start_day'] = start_day
         context['end_day'] = end_day
-        context['before'] = days[0] - datetime.timedelta( days=7 )
-        context['next'] = days[-1] + datetime.timedelta( days=1 )
+        context['before'] = week[0] - datetime.timedelta( days=7 )
+        context['next'] = week[-1] + datetime.timedelta( days=1 )
         context['today'] = today
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
@@ -215,16 +225,74 @@ class MyPageScheduleDelete(DeleteView):
         return super(MyPageSchedule, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('accounts:my_page_schedule', kwargs={'pk':self.kwargs['pk']})
+        return reverse('accounts:my_page_calendar', kwargs={'pk':self.request.user.id})
 
 
 @require_POST
 def my_page_holiday_add(request, pk, year, month, day, hour):
-    plan = get_object_or_404( Plan, pk=pk )
-    if plan.user == request.user or request.user.is_superuser:
+    user = User.objects.get(pk=pk)
+    if user == request.user or request.user.is_superuser:
         start = datetime.datetime( year=year, month=month, day=day, hour=hour )
         end = datetime.datetime( year=year, month=month, day=day, hour=hour + 1 )
-        Reservation.objects.create( plan=plan, start=start, end=end, name='休暇(システムによる追加)' )
+        Reservation.objects.create( user2=user,user=user, start=start, end=end, message='休暇(システムによる追加)' )
         return redirect( 'accounts:my_page_day_detail', pk=pk, year=year, month=month, day=day )
 
-    raise PermissionDenied
+
+
+def my_page_day_holiday_add(request, pk, year, month, day):
+    user = User.objects.get(pk=pk)
+    if user == request.user or request.user.is_superuser:
+        for i in range(9,23):
+            start = datetime.datetime( year=year, month=month, day=day, hour=i )
+            end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
+            Reservation.objects.create( user2=user,  start=start, end=end, message='休暇(システムによる追加)' )
+        return redirect( 'accounts:my_page_calendar', request.user.pk )
+
+
+
+def my_page_day_holiday_delete(request, pk, year, month, day):
+    user = User.objects.get(pk=pk)
+    if user == request.user or request.user.is_superuser:
+        for i in range(9,23):
+            start = datetime.datetime( year=year, month=month, day=day, hour=i )
+            end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
+            Reservation.objects.filter(user2=pk, start=start, end=end).delete()
+        return redirect( 'accounts:my_page_calendar', request.user.pk )
+
+
+
+
+
+class CounselorGuidance(TemplateView):
+    template_name = 'accounts/counselor_guidance.html'
+
+
+class CounselorRegister(OnlyStaffMixin, CreateView):
+    template_name = 'accounts/counselor_register.html'
+    model = CounselorRegister
+    fields = ('identification', 'credentials', 'signature', 'address', 'agreement')
+    success_url = reverse_lazy('accounts:my_page')
+
+    def form_valid(self, form):
+        register = form.save(commit=False)
+        user = User.objects.get( pk=self.kwargs['pk'] )
+        register.user = user
+        register.save()
+        send_mail(
+            subject='【カウンセラーの仮登録完了】' + user.last_name + 'さん',
+            message=user.last_name + 'さんのカウンセラーの仮登録が完了しました。内容の確認、お手続きの完了まで3〜5営業日頂いております。完了次第メールにてご連絡致します。',
+            recipient_list=['admin@example.com', ],
+            from_email=user.email
+        )
+        messages.success(self.request, f'ご登録が完了しました。確認メールをご確認ください。')
+        return super(CounselorRegister, self).form_valid(form)
+
+class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
+    template_name = 'accounts/conselor_confirm_registered.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cons_object'] = User.objects.get(pk=self.kwargs['pk'])
+        return context
+
+

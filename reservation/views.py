@@ -9,6 +9,7 @@ from accounts.models import User
 from plan.models import Plan
 from django.contrib import messages
 from .form import BookingForm
+from django.core.mail import send_mail, EmailMessage
 
 class UserList(ListView):
     model = User
@@ -34,7 +35,7 @@ class StaffCalendar(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         plan = Plan.objects.get(pk=self.kwargs['pk'])
-        # user = User.objects.get(pk=self)
+        user = User.objects.get(pk=plan.user.id)
         today = datetime.date.today()
 
         # どの日を基準にカレンダーを表示するかの処理。
@@ -65,7 +66,7 @@ class StaffCalendar(TemplateView):
 
         start_time = datetime.datetime.combine(start_day, datetime.time(hour=9, minute=0, second=0))
         end_time =datetime.datetime.combine(end_day, datetime.time(hour=23, minute=0, second=0))
-        for schedule in Reservation.objects.filter( plan=plan.id ).exclude(
+        for schedule in Reservation.objects.filter( user2=user ).exclude(
                 Q( start__gt=end_time ) | Q( end__lt=start_time ) ):
             local_dt = timezone.localtime( schedule.start )
             booking_date = local_dt.date()
@@ -104,15 +105,22 @@ class Booking(CreateView):
         hour = self.kwargs.get( 'hour' )
         start = datetime.datetime( year=year, month=month, day=day, hour=hour )
         end = datetime.datetime( year=year, month=month, day=day, hour=hour + 1 )
-        if Reservation.objects.filter( plan=plan, start=start ).exists():
+        if Reservation.objects.filter( user2=user_2, start=start ).exists():
             messages.error( self.request, 'すみません、入れ違いで予約がありました。別の日時はどうですか。' )
         else:
             schedule = form.save( commit=False )
-            schedule.plan = plan
             schedule.user = user
             schedule.user2 = user_2
             schedule.start = start
             schedule.end = end
             schedule.save()
-            messages.success( self.request, '予約が完了しました。' )
+            send_mail(
+                subject='【予約完了】' + str(schedule.start) + '〜' + str(schedule.end),
+                message='開始時間：' + str(schedule.start) + '〜' + str(schedule.end) + 'カウンセラー：' +
+                        schedule.user.first_name,
+                recipient_list=[ 'admin@example.com',],
+                from_email=schedule.user.email
+            )
+            messages.success( self.request,'予約が完了しました。登録されているメールアドレスをご確認ください。')
+
             return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )

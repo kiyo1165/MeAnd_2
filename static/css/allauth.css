@@ -1,0 +1,44 @@
+
+.allauth-signup {
+    text-align: center;
+    width: 880px;
+    margin-top: 150px;
+
+}
+
+.signup-center{
+    border: solid 0.1rem  #8FD5DC;
+    border-radius: 10px;
+    padding: 50px 0px;
+}
+
+.secondaryAction{
+    font-size: 12px;
+}
+
+.primaryAction, button {
+    border-radius:10px;
+    border: solid 1px #83CFD3;
+    background: #15A3B8;
+    color: #FFFFFF;
+    font-size: 13px;
+    width: 7rem;
+    padding: 8px;
+}
+
+.primaryAction, button:hover {
+    opacity: 0.9;
+}
+
+#id_password, #id_login{
+    background-color: #FFFFFF;
+    border: solid 1px #FFFFFF;
+    border-radius: 2px;
+}
+
+#id_password1{
+    margin-left: 25px;
+}
+#id_password2{
+    margin-right: 20px;
+}

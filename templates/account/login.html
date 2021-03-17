@@ -1,46 +1,59 @@
-{% extends "account/base.html" %}
-
+{% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
+    <div class="container allauth-signup">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 signup-center">
+                <a href=""><img style=width:200px;" src="{% static 'icon/MeAnd_logo2.png' %}" alt="MeAnd-logo2"></a>
+                <h5>{% trans "Sign In" %}</h5>
+                {% get_providers as socialaccount_providers %}
 
-<h1>{% trans "Sign In" %}</h1>
+                {% if socialaccount_providers %}
+                    <p>{% blocktrans with site.name as site_name %}
+                        会員登録がまだの方は, <a href="{{ signup_url }}">新規登録</a>
+                        からお願いいたします。 {{ site_name }} はお会いできることを楽しみにしています:{% endblocktrans %}</p>
 
-{% get_providers as socialaccount_providers %}
+                    <div class="socialaccount_ballot">
 
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+                        <ul class="socialaccount_providers">
+                            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                        </ul>
 
-<div class="socialaccount_ballot">
+                        <div class="login-or">{% trans 'or' %}</div>
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+                    </div>
 
-  <div class="login-or">{% trans 'or' %}</div>
+                    {% include "socialaccount/snippets/login_extra.html" %}
 
-</div>
+                {% else %}
+                    <p>{% blocktrans %} 会員登録がまだの方は、
+                        <a href="{{ signup_url }}">新規登録</a> をお願いいたします。{% endblocktrans %}</p>
+                {% endif %}
 
-{% include "socialaccount/snippets/login_extra.html" %}
+                <form class="login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <a class="button secondaryAction"
+                       href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                    <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+                </form>
 
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
+            </div>
+            <div class="col-md-3"></div>
+
+        </div>
+
+
+    </div>
 
 {% endblock %}

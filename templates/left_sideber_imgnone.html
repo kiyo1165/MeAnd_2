@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="sidebar-left col-md-2">
+
+    <ul class="sidebar-menu">
+        <li class="home"><a href="{% url 'accounts:my_page' %}"><img src="{% static 'icon/home.png' %}" alt="">My Page Top</a></li>
+        <li class="message"><a href="{% url 'accounts:my_page_calendar' user.pk %}"><img src="{% static 'icon/reservation.png' %}" alt="">予約確認</a>
+        <li class="message"><a href="{% url 'message:message_list' %}"><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a>
+        </li>
+        <li class="secret"><a href="{% url 'accounts:cons_confirm_registered' user.pk %}"><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
+        <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
+    </ul>
+    <div class="sidebar-sns">
+        <div class="set-sns">
+            <img src="{% static '/icon/twitter.png' %}" class="twitter">
+            <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+        </div>
+    </div>
+</div>

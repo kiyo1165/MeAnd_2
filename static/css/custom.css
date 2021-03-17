@@ -5,15 +5,15 @@ h2{
     font-size: 25px;
     color: #212529;
 }
-p {
-    font-size: 14px;
-    color: #1c1b15;
+body p {
+    font-size: 12px;
+    color: #333333;
     line-height: 27px;
 }
 
 /*プロフィール*/
 .profile-header {
-    background-color: #23c3c3;
+    background-color: #BBC9B7;
     height: 125px;
     margin-bottom: 100px;
 }
@@ -27,7 +27,7 @@ p {
 .message-face-img{
     width: 50px;
     border-radius: 80px;
-    border: solid 2px #23c3c3;
+    border: solid 2px #BBC9B7;
 }
 
 .header-face-image {
@@ -38,8 +38,8 @@ p {
 
 .header-face-image img {
     width: 140px;
-    border-radius: 80px;
-    border: solid 7px #23c3c3;
+    border-radius: 70px;
+    border: solid 7px #BBC8B6;
 }
 
 .header-name {
@@ -65,9 +65,8 @@ p {
 
 .alert-success {
     color: #1e4e0a;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #23c3c3;
+    font-size: 12px;
+    background-color: #C6D6C5;
     border-color: #c3e6cb;
     border-radius: 5px;
 }
@@ -101,9 +100,6 @@ a {
     padding: 0;
 }
 
-p {
-    font-size: 14px;
-}
 
 .face-image {
     margin-left: 10px;
@@ -132,7 +128,6 @@ p {
 }
 
 .qualification {
-    font-size: 14px;
     color: #aaaaaa;
     margin-left: 10px;
 }
@@ -192,49 +187,6 @@ p {
     line-height: 27px;
 }
 
-.sidebar {
-    height: 100%;
-}
-
-.sidebar-face-image {
-    text-align: center;
-}
-
-.sidebar-face-image img {
-    border-radius: 100px;
-    border: solid 4px #23c3c3;
-}
-
-.sidebar-prof p {
-    text-align: center;
-}
-
-.sidebar-prof small {
-    text-align: center;
-    color: gray;
-}
-
-.sidebar-sns {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 0;
-    text-align: center;
-    width: 100%;
-}
-
-.twitter {
-    max-width: 40px;
-    margin-right: 5px;
-}
-
-.facebook {
-    max-width: 40px;
-}
-
-.follow-button {
-    margin-top: 20px;
-    text-align: center;
-}
 
 .row-eq-height {
     display: flex;

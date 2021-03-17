@@ -1,0 +1,50 @@
+.sidebar-menu{
+    line-height: 35px;
+    font-size: 12px;
+    margin-left: 25px;
+}
+
+
+.sidebar {
+    height: 100%;
+}
+
+.sidebar-face-image {
+    text-align: center;
+}
+
+.sidebar-face-image img {
+    border-radius: 100px;
+    border: solid 4px #BBC8B6;
+}
+
+.sidebar-prof p {
+    text-align: center;
+}
+
+.sidebar-prof small {
+    text-align: center;
+    color: gray;
+}
+
+.sidebar-sns {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.twitter {
+    max-width: 40px;
+    margin-right: 5px;
+}
+
+.facebook {
+    max-width: 40px;
+}
+
+.follow-button {
+    margin-top: 20px;
+    text-align: center;
+}

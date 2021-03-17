@@ -1,79 +1,142 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <br>
-    <br>
+    {% include 'profile_header.html' %}
     <div class="container-fluid">
         <div class="row row-eq-height">
-            <div class="sidebar-left col-md-2 shadow p-3 mb-5 bg-white rounded">
-                <div class="sidebar-face-image">
-                    <img src="{{ profile.face_image.thumbnail.url }}" alt="顔写真">
-                </div>
-                <div class="email">
-                    <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a href="{% url 'account_email' %}">変更する</a></span></label>
-                </div>
-                <div class="password">
-                    <label style="font-size:  8px;">Password：<span><a href="{% url 'account_change_password' %}">変更する</a></span></label>
-                </div>
-                <ul class="menu">
-                    <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">HOME</a></li>
-                    <li class="message"><a href=""><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a></li>
-                    <li class="secret"><a href=""><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
-                    <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
-                </ul>
-                <div class="sidebar-sns">
-                    <div class="set-sns">
-                        <img src="{% static '/icon/twitter.png' %}" class="twitter">
-                        <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
-                    </div>
-                </div>
-            </div>
+            {% include 'left_sideber_imgnone.html' %}
             <div class="col-md-1"></div>
 
-            <div class="col-md-9 shadow p-3 mb-5 bg-white rounded">
-                <h3>プロフィール</h3>
-                <br>
+            <div class="col-md-8">
+                <h4 style="margin-top: 10px">プロフィール編集</h4>
+                <hr>
                 <br>
 
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
+                        {% if form.non_field_errors %}
+                            <div class="errorlist">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}<br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                         <div class="col-md-2">
                             <p>お名前</p>
                         </div>
                         <div class="col-md-10">
                             <div class="form-group form-inline">
-                                <label for="{{ user_form.first_name.id_for_label }}">性：</label>
-                                {{ user_form.first_name }}&nbsp;&nbsp;&nbsp;
-                                <label for="{{ user_form.last_name.id_for_label }}">名：</label>
-                                {{ user_form.last_name }}
+                                <label for="{{ user_form.last_name.id_for_label }}">性：</label>
+                                {{ user_form.last_name }}&nbsp;&nbsp;&nbsp;
+                                <label for="{{ user_form.first_name.id_for_label }}">名：</label>
+                                {{ user_form.first_name }}
                             </div>
                         </div>
                     </div>
                     <br>
-                    <br>
                     <div class="row">
-                        {% for field in profile_form %}
-
+                        {% if user != is_staff or is_superuser %}
                             <div class="col-md-2">
-                                <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                                <div class="field">
+                                    <p>年齢：</p>
+                                </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="form-group">
-                                    {{ field }}
+                                    {{ profile_form.age }}
+                                    <span class="helptext">{{ pforile.age.help_text }}</span>
+                                    {{ profile_form.age.errors }}
                                 </div>
-                                <br><br>
+                            </div>
+                            <br><br><br>
+
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>性別：</p>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ profile_form.gender }}
+                                    <span class="helptext">{{ pforile.gender.help_text }}</span>
+                                    {{ profile_form.gender.errors }}
+                                </div>
+                            </div>
+                            <br><br> <br>
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>都道府県：</p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ profile_form.pref }}
+                                    <span class="helptext">{{ pforile.pref.help_text }}</span>
+                                    {{ profile_form.pref.errors }}
+                                </div>
+                            </div>
+                            <br><br><br>
+
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>ご職業：</p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ profile_form.occupation }}
+                                    <span class="helptext">{{ pforile.occupation.help_text }}</span>
+                                    {{ profile_form.occupation.errors }}
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="profile-btn">
+                                <button type="submit" class="btn btn-info " data-bs-dismiss="alert" aria-label="Close">
+                                    登録
+                                </button>
                             </div>
 
-                        {% endfor %}
-                    </div>
-                    <button type="submit" class="btn-close" data-bs-dismiss="alert" aria-label="Close">登録</button>
-                </form>
+                            </form>
+                            </div>
+                        {% else %}
+
+                            {% for field in profile_form %}
+                                <div class="col-md-2">
+                                    <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="errorlist">
+                                                {% for error in field.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <br><br> <br><br>
 
 
-            </div>
+                            {% endfor %}
 
+                            <div class="profile-btn">
+                                <button type="submit" class="btn btn-info " data-bs-dismiss="alert" aria-label="Close">
+                                    登録
+                                </button>
+                            </div>
+
+                        {% endif %}
+
+
+            </form>
         </div>
+    </div>
 
     </div>
 
+    </div>
 {% endblock %}

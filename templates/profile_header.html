@@ -1,10 +1,15 @@
- <div class="profile-header">
-            <section class="content-wrapper">
-                <div class="header-face-image">
-                    <img src="{{ user.profile.face_image.large.url }}" alt="">
-                </div>
-                <div class="header-name">
-                    <h4>{{ my_page.user.last_name }}{{ my_page.user.first_name }}さん</h4>
-                </div>
-            </section>
+<div class="profile-header">
+    <section class="content-wrapper">
+        <div class="header-face-image">
+            <img src="{{ user.profile.face_image.large.url }}" alt="">
         </div>
+        <div class="header-name">
+            <h4>{{ user.last_name }}{{ user.first_name }}さん</h4>
+            {% if user.is_staff or user.is_superuser %}
+                <h6>カウンセラー</h6>
+            {% else %}
+                <h6>ゲスト</h6>
+            {% endif %}
+        </div>
+    </section>
+</div>

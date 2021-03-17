@@ -1,0 +1,93 @@
+.container-fluid {
+
+}
+
+.nda {
+    max-width: 800px;
+    margin-top: 50px;
+}
+
+.nda p {
+    display: inline-block;
+    margin: 1px auto;
+}
+
+.nda-detail{
+    border: solid 1px #E5E5E5;
+    border-radius: 5px;
+    padding: 15px;
+    line-height: 1px;
+}
+
+
+.today {
+    text-align: right;
+}
+
+.register-info {
+    margin: 20px auto;
+    padding: 10px 5px;
+    font-size: 12px;
+    border: solid 2px #c3e6cb;
+    border-radius: 5px;
+}
+
+.register-info li {
+    line-height: 25px;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.identification-info {
+    margin: 20px auto;
+    padding: 10px 5px;
+    font-size: 12px;
+    border: solid 2px #c3e6cb;
+    border-radius: 5px;
+}
+
+.identification-info li {
+    line-height: 25px;
+    margin-left: 5px;
+    font-size: 12px;
+}
+.identification-info-confirm{
+    margin: 30px;
+    text-align: center;
+}
+
+.identification-info-confirm img {
+    width: 200px;
+}
+
+.credentials-info-confirm{
+    margin: 30px;
+    text-align: center;
+}
+
+.credentials-info-confirm img {
+    width: 200px;
+}
+
+.identification input {
+    margin-top: 10px;
+    font-size: 10px;
+    color: red;
+}
+
+.credentials-info {
+    line-height: 25px;
+    margin: 20px auto;
+    padding: 10px 5px;
+    font-size: 12px;
+    border: solid 2px #c3e6cb;
+    border-radius: 5px;
+
+}
+
+.credentials input {
+    margin-top: 10px;
+    font-size: 10px;
+    color: red;
+}
+

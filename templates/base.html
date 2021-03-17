@@ -2,7 +2,6 @@
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,56 +12,59 @@
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/counselor_register.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/allauth.css' %}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;900&family=Noto+Serif+JP:wght@500;900&display=swap"
           rel="stylesheet">
     <script src="https://kit.fontawesome.com/ca32f5216d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="#">MeAnd</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">MeAndとは？</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">サービス・料金</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    カウンセラーを探す
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'main:cate_search' %}">相談内容から探す</a>
-                    <a class="dropdown-item" href="#">エリアから探す</a>
-                    <a class="dropdown-item" href="#">資格から探す</a>
-                </div>
-            </li>
-            {#                <li><a href="{% url 'plan:plan_create' %}">プラン作成</a></li>#}
-            {#                <li><a href="{% url 'accounts:profile_create' %}">プロフィール作成</a></li>#}
-            {#                <li><a href="{% url 'plan:plan_create' %}">{{ user.email }}{{ user.id }}</a></li>#}
-        </ul>
-        <ul class="navbar-nav">
-            {% if user.isAuthenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a></li>
-            {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><img style="margin-right:5px"
-                                                                                               src="{% static 'icon/login.png' %}"
-                                                                                               alt="login-logo">ログイン</a>
+<nav class="navbar navbar-light navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'main:top' %}"><img src="{% static 'icon/MeAnd_logo3.png' %}" alt="Meand_logo" style="width: 150px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">MeAndとは？</a>
                 </li>
-                <li class="nav-item"><a style="margin-top: 9px; margin-left: 15px; color: #F8F9FA;"
-                                        class="nav-link btn-lg btn-info" role="button"
-                                        href="{% url 'account_signup' %}">新規登録</a></li>
-            {% endif %}
-        </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">サービス・料金</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        カウンセラーを探す
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'main:cate_search' %}">相談内容から探す</a></li>
+                        <li><a class="dropdown-item" href="#">エリアから探す</a></li>
+                        <li><a class="dropdown-item" href="#">資格から探す</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav register">
+                {% if user.is_authenticated %}
+                    <li class="nav-item logout"><a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a><p><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p></li>
+                {% else %}
+                    <li class="nav-item login" style="margin-top: 30px;"><a class="nav-link" href="{% url 'account_login' %}"><img
+                            style="margin-right:4px; margin-top: 5px;"
+                            src="{% static 'icon/login.png' %}"
+                            alt="login-logo">ログイン</a>
+                    </li>
+                    <li class="nav-item signup"><a style="margin-top: 12px; width: 90px; margin-left: 25px; text-align: center;color: #F8F9FA;"
+                                            class="nav-link btn-lg btn-info" role="button"
+                                            href="{% url 'account_signup' %}">新規登録</a><p><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
+
 <div class="message-area">
     <div class="messages">
         {% if messages %}
@@ -75,12 +77,9 @@
         {% endif %}
     </div>
 </div>
-
-
-
 {% block content %}
     <header>
-    {% include 'header.html' %}
+        {% include 'header.html' %}
     </header>
 {% endblock %}
 <br>

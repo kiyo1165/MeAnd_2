@@ -15,7 +15,7 @@
             <tr>
                 <td><a href="{% url 'accounts:my_page_calendar' plan.pk before.year before.month before.day %}">前週</a>
                 </td>
-                {% for day in days %}
+                {% for day in week %}
                     {% if day in public_holidays %}
                         <th style="background-color: #FECECE;">{{ day | date:"d(D)" }}
                             {% elif day.weekday == 5 %}
@@ -25,7 +25,9 @@
                             {% else %}
                         <th>{{ day | date:"d(D)" }}
                     {% endif %}
-                    <br><a class="check-detail" href="{% url 'accounts:my_page_day_detail' plan.pk day.year day.month day.day %}">詳細</a>
+                    <br><a class="check-detail" href="{% url 'accounts:my_page_day_detail' user.pk day.year day.month day.day %}">詳細</a>
+                    <br><a class="check-detail" href="{% url 'accounts:my_page_day_holiday_add' user.pk day.year day.month day.day %}">休暇</a>
+                    <br><a class="check-detail" href="{% url 'accounts:my_page_day_holiday_delete' user.pk day.year day.month day.day %}">削除</a>
                 {% endfor %}
                 <td><a href="{% url 'accounts:my_page_calendar' plan.pk next.year next.month next.day %}">次週</a></td>
             </tr>
