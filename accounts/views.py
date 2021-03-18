@@ -86,7 +86,7 @@ def ProfileEdit(request):
         return render( request, 'accounts/profile_form.html', ctx )
 
 
-class MyPage( TemplateView ):
+class MyPage(TemplateView):
     model = Profile
     template_name = 'accounts/my_page.html'
 
@@ -94,13 +94,9 @@ class MyPage( TemplateView ):
         ctx = super( MyPage, self ).get_context_data()
         plan = Plan.objects.filter( user_id=self.request.user.id )
         user = User.objects.get( pk=self.request.user.pk )
-        if user != plan:
-            messages.info(self.request, f'最初にプロフィールの登録をお願いします。' )
-        else:
-            ctx['my_page'] = Profile.objects.get( user_id=user )
-            ctx['plan_list'] = Plan.objects.filter( user_id=user )
-        # ctx['reservation_list'] = Reservation.objects.filter(plan=)
-            return ctx
+        ctx['my_page'] = Profile.objects.get( user_id=user )
+        ctx['plan_list'] = Plan.objects.filter( user_id=user )
+        return ctx
 
 
 class MyProfile( TemplateView ):
@@ -113,12 +109,13 @@ class MyProfile( TemplateView ):
         return ctx
 
 
-class MyPageCalendar( StaffCalendar ):
+class MyPageCalendar(TemplateView):
     template_name = 'accounts/my_page_calendar.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs )
-        plan = Plan.objects.get( pk=self.kwargs['pk'] )
+        user = User.objects.get( pk=self.request.user.pk)
+        plan = Plan.objects.filter(user_id=user)
         today = datetime.date.today()
 
         # どの日を基準にカレンダーを表示するかの処理。
@@ -284,7 +281,7 @@ class CounselorRegister(OnlyStaffMixin, CreateView):
             recipient_list=['admin@example.com', ],
             from_email=user.email
         )
-        messages.success(self.request, f'ご登録が完了しました。確認メールをご確認ください。')
+        messages.warning(self.request, f'{user.last_name}{user.first_name}さんのカウンセラーの仮登録が完了しました。確認メールをご確認ください。')
         return super(CounselorRegister, self).form_valid(form)
 
 class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
@@ -296,3 +293,9 @@ class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
         return context
 
 
+class MyPageTest(MyPage, MyPageCalendar):
+    template_name = 'accounts/index.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(MyPageTest, self).get_context_data()
+        return ctx

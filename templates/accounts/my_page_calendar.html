@@ -13,7 +13,7 @@
         <p>{{ start_day }} - {{ end_day }}</p>
         <table class="table table-bordered text-center" border="1">
             <tr>
-                <td><a href="{% url 'accounts:my_page_calendar' plan.pk before.year before.month before.day %}">前週</a>
+                <td><a href="{% url 'accounts:my_page_calendar2' request.user.pk before.year before.month before.day %}">前週</a>
                 </td>
                 {% for day in week %}
                     {% if day in public_holidays %}
@@ -29,7 +29,7 @@
                     <br><a class="check-detail" href="{% url 'accounts:my_page_day_holiday_add' user.pk day.year day.month day.day %}">休暇</a>
                     <br><a class="check-detail" href="{% url 'accounts:my_page_day_holiday_delete' user.pk day.year day.month day.day %}">削除</a>
                 {% endfor %}
-                <td><a href="{% url 'accounts:my_page_calendar' plan.pk next.year next.month next.day %}">次週</a></td>
+                <td><a href="{% url 'accounts:my_page_calendar2' request.user.pk next.year next.month next.day %}">次週</a></td>
             </tr>
 
             {% for hour, schedules in calendar.items %}

@@ -14,8 +14,7 @@ MESSAGE_TAGS = {
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = Path( __file__ ).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -28,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.twitter',
     'django.contrib.sites',
     'bootstrap4',
     'django_cleanup',
@@ -48,15 +49,15 @@ INSTALLED_APPS = [
     'message',
     'usercomments',
 
-    #認証
+    # 認証
     'allauth',
     'allauth.account',
     'accounts',
-    #画像編集
+    # 画像編集
     'stdimage',
-    #決済
+    # 決済
     'stripe',
-    #予約
+    # 予約
     'reservation',
 ]
 
@@ -72,10 +73,26 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '975864354045-62mmpdvb6ip7b4rgeb91ot4h8bvb7cqk.apps.googleusercontent.com',
+            'secret': 'dv7XA4SaCkHb_doEaw47Smxp',
+            'key': ''
+        },
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        }
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR, 'templates', 'allauth')],
+        'DIRS': [os.path.join( BASE_DIR, 'templates' ), os.path.join( BASE_DIR, 'templates', 'allauth' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +101,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'builtins':[ #追加
+            'builtins': [  # 追加
                 'bootstrap4.templatetags.bootstrap4',
             ],
         },
@@ -101,9 +118,7 @@ ACCOUNT_FORMS = {
     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
 }
 
-
 WSGI_APPLICATION = 'config.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -112,14 +127,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'meand_db3',
-        'USER': 'kiyotsugu_akashi', #os.environ.get( 'DB_USER' )
-        'PASSWORD':'kiyo1165' , #os.environ.get( 'DB_PASSWORD' )
+        'USER': 'kiyotsugu_akashi',  # os.environ.get( 'DB_USER' )
+        'PASSWORD': 'kiyo1165',  # os.environ.get( 'DB_PASSWORD' )
         'HOST': '',
         'PORT': '',
 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -139,7 +153,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -153,45 +166,46 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join( BASE_DIR, 'static' ),
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
+MEDIA_ROOT = os.path.join( BASE_DIR, 'media' )
 MEDIA_URL = '/media/'
-
 
 # allauth設定
 AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
-    #一般ユーザーのメール承認
+    # 一般ユーザーのメール承認
     'allauth.account.auth_backends.AuthenticationBackend',
-    #管理サイト用（ユーザー名承認）
+    # 管理サイト用（ユーザー名承認）
     'django.contrib.auth.backends.ModelBackend'
 )
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#メールアドレス承認に変更する設定
+# メールアドレス承認に変更する設定
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
 # サインアップにメールアドレス確認を挟むよう設定
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory' #意味：必須
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # 意味：必須
 ACCOUNT_EMAIL_REQUIRED = True
 
-#ログイン/ログアウト後の遷移先を設定
+# ログイン/ログアウト後の遷移先を設定
 LOGIN_REDIRECT_URL = 'accounts:my_page'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
-#ログアウトリンクのクリック一発でログアウトする設定
+# ログアウトリンクのクリック一発でログアウトする設定
 ACCOUNT_LOGOUT_ON_GET = True
+
+# ソーシャルアカウント
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 # STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 # STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
@@ -199,20 +213,20 @@ ACCOUNT_LOGOUT_ON_GET = True
 PUBLIC_HOLIDAYS = [
 
     # 2021
-    datetime.date(year=2021, month=1, day=1),
-    datetime.date(year=2021, month=1, day=11),
-    datetime.date(year=2021, month=2, day=11),
-    datetime.date(year=2021, month=2, day=23),
-    datetime.date(year=2021, month=3, day=20),
-    datetime.date(year=2021, month=4, day=29),
-    datetime.date(year=2021, month=5, day=3),
-    datetime.date(year=2021, month=5, day=4),
-    datetime.date(year=2021, month=5, day=5),
-    datetime.date(year=2021, month=7, day=19),
-    datetime.date(year=2021, month=8, day=11),
-    datetime.date(year=2021, month=9, day=20),
-    datetime.date(year=2021, month=9, day=23),
-    datetime.date(year=2021, month=10, day=11),
-    datetime.date(year=2021, month=11, day=3),
-    datetime.date(year=2021, month=11, day=23),
+    datetime.date( year=2021, month=1, day=1 ),
+    datetime.date( year=2021, month=1, day=11 ),
+    datetime.date( year=2021, month=2, day=11 ),
+    datetime.date( year=2021, month=2, day=23 ),
+    datetime.date( year=2021, month=3, day=20 ),
+    datetime.date( year=2021, month=4, day=29 ),
+    datetime.date( year=2021, month=5, day=3 ),
+    datetime.date( year=2021, month=5, day=4 ),
+    datetime.date( year=2021, month=5, day=5 ),
+    datetime.date( year=2021, month=7, day=19 ),
+    datetime.date( year=2021, month=8, day=11 ),
+    datetime.date( year=2021, month=9, day=20 ),
+    datetime.date( year=2021, month=9, day=23 ),
+    datetime.date( year=2021, month=10, day=11 ),
+    datetime.date( year=2021, month=11, day=3 ),
+    datetime.date( year=2021, month=11, day=23 ),
 ]

@@ -35,7 +35,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        {% if user != is_staff or is_superuser %}
+                        {% if not user.is_staff or user.is_superuser %}
                             <div class="col-md-2">
                                 <div class="field">
                                     <p>年齢：</p>
@@ -87,6 +87,18 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     {{ profile_form.occupation }}
+                                    <span class="helptext">{{ pforile.occupation.help_text }}</span>
+                                    {{ profile_form.occupation.errors }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>プロフィール写真：</p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ profile_form.face_image }}
                                     <span class="helptext">{{ pforile.occupation.help_text }}</span>
                                     {{ profile_form.occupation.errors }}
                                 </div>
