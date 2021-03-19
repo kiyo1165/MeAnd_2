@@ -1,0 +1,56 @@
+.first-message{
+    max-height: 500px;
+    border:none ;
+    max-width: 840px;
+}
+.first-message p{
+    font-size: 12px;
+    color: #333333;
+}
+
+.first-message h5{
+    font-size:18px ;
+    color: #333333;
+}
+.first-message h6{
+    font-size:14px ;
+    color: #333333;
+}
+
+.first-message span{
+    font-size: 10px;
+    font-weight: normal;
+    border-radius: 1px;
+}
+
+.first-message img{
+    width: 70px;
+    border-radius: 40px;
+    margin: 20px 30px;
+
+}
+#id_message{
+    font-size: 12px;
+    max-width:500px ;
+    width: 80%;
+    height: 100px;
+    border: solid 1px #E5E5E5;
+    border-radius: 1px;
+
+}
+
+.message-form label{
+    font-size: 12px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.message-form button{
+    border: solid 1px #37B9CB;
+    background: #37B9CB;
+    padding: 10px;
+    font-size: 12px;
+    color: #FFFFFF;
+    border-radius: 2px;
+}
+

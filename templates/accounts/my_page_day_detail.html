@@ -1,43 +1,46 @@
-{% extends 'base.html' %}
+{% extends 'my_page_base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            {% include 'left_sideber.html' %}
-            <div class="col-md-1"></div>
+    <div class="col-xl-12 col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                <h6>{{ view.kwargs.year }}年{{ view.kwargs.month }}月{{ view.kwargs.day }}日の予約一覧</h6>
+            </div>
+            <div class="card-body">
+                <div class="calendar-area">
 
-    <div class="col-md-9">
-    <h5>{{ view.kwargs.year }}年{{ view.kwargs.month }}月{{ view.kwargs.day }}日の予約一覧</h5>
-    <table class="table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
-    <tr>
-        <th>予約時間</th>
-        <th>予約者名</th>
-    </tr>
-        {% for hour, schedules in calendar.items %}
-            <tr style="font-size:12px">
-                <td>
-                    {{ hour }}:00
-                </td>
-                <td>
-                    {{ schedules }}
-                    {% if schedules %}
-                        {% for s in schedules %}
-                            <a href="{% url 'accounts:my_page_schedule' s.id %}">{{ s.message }}</a>
+                    <table class="calendar-table table table-bordered text-center" style="table-layout: fixed;width: 100%" border="1">
+                        <tr>
+                            <th><p style="margin-top: 10px">予約時間</p></th>
+                            <th><p style="margin-top: 10px">予約者名</p></th>
+                        </tr>
+                        {% for hour, schedules in calendar.items %}
+                            <tr style="font-size:14px">
+                                <td>
+                                    <p style="margin-top: 12px">{{ hour }}:00</p>
+                                </td>
+                                <td>
+                                    {% if schedules %}
+                                        {% for s in schedules %}
+                                            <a href="{% url 'accounts:my_page_schedule' s.id %}"><p  style="margin-top: 12px">{{ s.message }}</p></a>
+                                        {% endfor %}
+                                    {% else %}
+                                        <form style= "display:inline-block;text-align: center" action="{% url 'accounts:my_page_holiday_add' plan.pk view.kwargs.year view.kwargs.month view.kwargs.day hour %}"
+                                              method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-info" style="padding: 5px; font-size: 10px; margin-bottom: 0px; margin-top: 12px" >休暇にする</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
                         {% endfor %}
-                    {% else %}
-                        <form action="{% url 'accounts:my_page_holiday_add' plan.pk view.kwargs.year view.kwargs.month view.kwargs.day hour %}"
-                              method="POST">
-                            {% csrf_token %}
-                            <button type="submit">休暇にする</button>
-                        </form>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
 
-    </table>
-     </div>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+
+
 
 {% endblock %}

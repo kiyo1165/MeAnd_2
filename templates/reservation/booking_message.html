@@ -1,0 +1,46 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="card mb-3 first-message">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <img src="{{ reservation_message.user.profile.face_image.thumbnail.url }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            {{ reservation_message.user.last_name }}{{ reservation_message.user.first_name }}</h6>
+                        <p class="card-text"><span
+                                class="badge badge-info">ご相談内容</span>&nbsp;{{ reservation_message.message }}</p>
+                        <p class="card-text"><small class="text-muted">{{ reservation_message.created_at }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr>
+        {% for item in booking_message %}
+            <div class="card mb-3 first-message">
+                <div class="row no-gutters">
+                    <div class="col-md-2">
+                        <img src="{{ item.user.profile.face_image.thumbnail.url }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                {{ item.user.last_name }}{{ item.user.first_name }}</h6>
+                            <p class="card-text">{{ item.message }}</p>
+                            <p class="card-text"><small class="text-muted">{{ item.created_at }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <form class="message-form" action="" method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">送信</button>
+        </form>
+    </div>
+{% endblock %}

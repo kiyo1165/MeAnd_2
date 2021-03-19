@@ -1,0 +1,39 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">予約番号</th>
+                <th scope="col">予約プラン</th>
+                <th scope="col">予約者名</th>
+                <th scope="col">メッセージ</th>
+                <th scope="col">開始終了時間</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for list in object_list %}
+            <tr>
+                <th scope="row"><a href="{% url 'reservation:booking_message' list.pk %}">{{ list.id }}</a></th>
+                <td>{{ list.plan.title }}</td>
+                <td>{{ list.user.last_name }}{{ list.user.first_name }}</td>
+                <td>{{ list.message }}</td>
+                <td>{{ list.start }}〜{{ list.end }}</td>
+            </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}

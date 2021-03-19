@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-    <div class="row">
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card">
+                    <h5 class="card-header text-center">予約編集</h5>
+                    <div class="card-body text-center">
 
-        {% include 'left_sideber.html' %}
-        <div class="col-md-1"></div>
-        <div class="col-md-9">
-            <h5>予約の編集</h5>
-            <hr>
-              <form action="" method="POST">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit">送信</button>
-    </form>
-    <hr>
-    <form action="{% url 'accounts:my_page_schedule_delete' reservation.pk %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">削除</button>
-    </form>
+                        <form action="" method="POST">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <button class="col-md-4" type="submit" style="width: 60px; padding: 5px">送信</button>
+                        </form>
+                        <form action="{% url 'accounts:my_page_schedule_delete' object.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" style="width: 60px; padding: 5px">削除</button>
+                        </form>
+                    </div>
 
+                </div>
+
+
+            </div>
         </div>
+
+    </div>
     </div>
 
     </div>

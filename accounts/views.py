@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView,ListView
 from .models import Profile
 from .forms import UserForm, ProfileForm
 from .models import User
@@ -17,6 +17,8 @@ from django.db.models import Q
 from django.conf import settings
 from accounts.models import CounselorRegister
 from django.core.mail import send_mail, EmailMessage
+from message.views import MessageList
+
 
 
 
@@ -48,12 +50,6 @@ def ProfileCreate(request):
             'profile_form': profile_form,
         }
         return render( request, 'accounts/profile_form.html', ctx )
-    #
-    # def get_context_data(self, *args, **kwargs):
-    #     ctx = super(ProfileCreate, self).get_context_data()
-    #     user_form = UserForm()
-    #     ctx['user_form'] = user_form
-    #     return ctx
 
 
 def ProfileEdit(request):
@@ -91,21 +87,11 @@ class MyPage(TemplateView):
     template_name = 'accounts/my_page.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super( MyPage, self ).get_context_data()
+        ctx = super( MyPage, self ).get_context_data(**kwargs)
         plan = Plan.objects.filter( user_id=self.request.user.id )
         user = User.objects.get( pk=self.request.user.pk )
         ctx['my_page'] = Profile.objects.get( user_id=user )
         ctx['plan_list'] = Plan.objects.filter( user_id=user )
-        return ctx
-
-
-class MyProfile( TemplateView ):
-    model = Profile
-    template_name = 'accounts/profile.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super( MyProfile, self ).get_context_data()
-        ctx['my_page'] = Profile.objects.get( user_id=self.request.user.id )
         return ctx
 
 
@@ -168,13 +154,33 @@ class MyPageCalendar(TemplateView):
         return context
 
 
-class MyPageDayDetail( TemplateView ):
+class MyProfile( TemplateView ):
+    model = Profile
+    template_name = 'accounts/profile.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super( MyProfile, self ).get_context_data()
+        ctx['my_page'] = Profile.objects.get( user_id=self.request.user.id )
+        return ctx
+
+#TODO 詳細ページのリンク確認
+class MyPageSchedule(UpdateView):
+    model = Reservation
+    fields = ('start', 'end', 'message')
+    template_name = 'accounts/schedule_form.html'
+    success_url = reverse_lazy('accounts:my_page')
+
+    def form_valid(self, form):
+        messages.success(self.request, f'更新しました。')
+        return super(MyPageSchedule, self).form_valid(form)
+
+
+class MyPageDayDetail(TemplateView ):
     template_name = 'accounts/my_page_day_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data( **kwargs )
-        pk = self.kwargs['pk']
-        plan = get_object_or_404( Plan, pk=pk )
+        context = super().get_context_data()
+        user = get_object_or_404( User, pk=self.request.user.pk )
         year = self.kwargs.get( 'year' )
         month = self.kwargs.get( 'month' )
         day = self.kwargs.get( 'day' )
@@ -197,21 +203,8 @@ class MyPageDayDetail( TemplateView ):
                 calendar[booking_hour].append( schedule )
 
         context['calendar'] = calendar
-        context['plan'] = plan
+        context['plan'] = user
         return context
-
-
-class MyPageSchedule(UpdateView):
-    model = Reservation
-    fields = ('start', 'end', 'message')
-    template_name = 'accounts/schedule_form.html'
-    success_url = reverse_lazy('accounts:my_page')
-
-    def form_valid(self, form):
-        messages.success(self.request, f'更新しました。')
-        return super(MyPageSchedule, self).form_valid(form)
-
-
 
 
 class MyPageScheduleDelete(DeleteView):
@@ -222,7 +215,7 @@ class MyPageScheduleDelete(DeleteView):
         return super(MyPageSchedule, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('accounts:my_page_calendar', kwargs={'pk':self.request.user.id})
+        return reverse('accounts:my_page_test')
 
 
 @require_POST
@@ -243,7 +236,7 @@ def my_page_day_holiday_add(request, pk, year, month, day):
             start = datetime.datetime( year=year, month=month, day=day, hour=i )
             end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
             Reservation.objects.create( user2=user,  start=start, end=end, message='休暇(システムによる追加)' )
-        return redirect( 'accounts:my_page_calendar', request.user.pk )
+        return redirect( 'accounts:my_page_test' )
 
 
 
@@ -254,9 +247,10 @@ def my_page_day_holiday_delete(request, pk, year, month, day):
             start = datetime.datetime( year=year, month=month, day=day, hour=i )
             end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
             Reservation.objects.filter(user2=pk, start=start, end=end).delete()
-        return redirect( 'accounts:my_page_calendar', request.user.pk )
+        return redirect( 'accounts:my_page_test' )
 
-
+class MyPageTest(MyPage, MyPageCalendar):
+    template_name = 'accounts/index.html'
 
 
 
@@ -293,9 +287,20 @@ class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
         return context
 
 
-class MyPageTest(MyPage, MyPageCalendar):
-    template_name = 'accounts/index.html'
+class ReservationList(ListView):
+    model = Reservation
+    template_name = 'accounts/reservation_list.html'
 
-    def get_context_data(self, **kwargs):
-        ctx = super(MyPageTest, self).get_context_data()
-        return ctx
+    def get_queryset(self):
+        user = self.request.user.pk
+        reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user)).order_by('-created_at')
+        return reserve_user
+
+
+
+
+
+
+
+
+

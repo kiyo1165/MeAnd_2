@@ -2,9 +2,10 @@ import datetime
 from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView
-from .models import  Reservation
+from .models import  Reservation, ReservationMessage
 from accounts.models import User
 from plan.models import Plan
 from django.contrib import messages
@@ -111,6 +112,7 @@ class Booking(CreateView):
             schedule = form.save( commit=False )
             schedule.user = user
             schedule.user2 = user_2
+            schedule.plan = plan
             schedule.start = start
             schedule.end = end
             schedule.save()
@@ -124,3 +126,27 @@ class Booking(CreateView):
             messages.success( self.request,'予約が完了しました。登録されているメールアドレスをご確認ください。')
 
             return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )
+
+class BookingMessage(CreateView):
+    model = ReservationMessage
+    template_name = 'reservation/booking_message.html'
+    fields = ('message',)
+
+    
+    def form_valid(self, form):
+        form = form.save(commit=False)
+        reservation = Reservation.objects.get(pk=self.kwargs['pk'])
+        user = get_object_or_404(User, pk=self.request.user.pk)
+        form.reservation = reservation
+        form.user = user
+        form.save()
+        return redirect('accounts:reservation_list')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(BookingMessage, self).get_context_data()
+        reservation = Reservation.objects.get(pk=self.kwargs['pk'])
+        booking_message = ReservationMessage.objects.filter(reservation=self.kwargs['pk']).order_by('-created_at')
+        ctx['reservation_message'] = reservation
+        ctx['booking_message'] = booking_message
+        return ctx
+        
