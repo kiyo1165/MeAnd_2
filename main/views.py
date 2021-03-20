@@ -66,7 +66,7 @@ class PlanDetail(DetailView, DetailSendMessage):
         self_plan = Plan.objects.get(pk=self.kwargs['pk'])
         form.user = User.objects.get(pk=self_plan.user_id)
         form.save()
-        return redirect('message:message_list')
+        return redirect('main:cate_search')
 
 
 

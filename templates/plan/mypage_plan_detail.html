@@ -1,0 +1,61 @@
+{% extends 'my_page_base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="cons-detail p-3 mb-5 bg-white ">
+            <div class="detail-header p-3 mb-5 bg-white ">
+                <h2>{{ object.title }}</h2>
+                <div class="price"><span>{{ object.price }}円</span>
+                    <span class="s">１セッション{{ object.session_time }}分</span>
+                </div>
+                <br>
+
+                <div class="face-image detail-image">
+                    <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
+                </div>
+                <div class="detail-status">
+                    <h5>{{ object.user.first_name }}{{ object.user.last_name }}</h5>
+                    <small>
+                        {{ object.user.profile.age }}歳・{{ object.user.profile.get_gender_display }}・{{ object.user.profile.qualification }}
+                    </small>
+                    <p>カウンセラー経験{{ object.user.profile.years_of_experience }}年</p>
+                </div>
+                <div class="cons-style">
+                    {% for item in object.style_choices.all %}
+                        <p style="display: inline">{{ item }}</p>
+                        {% if item.style_name in '対面' %}
+                            <div class="style-icon">
+                                <img src="{% static 'icon/meet.png' %}">
+                            </div>
+                        {% elif item.style_name in 'オンライン・電話' %}
+                            <div class="style-icon">
+                                <img src="{% static 'icon/icon_phone.png' %}">
+                            </div>
+                        {% elif item.style_name in 'チャット・メール' %}
+                            <div class="style-icon">
+                                <img src="{% static 'icon/mail.png' %}">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="target">
+                <h4>こんな方におすすめ</h4>
+                <hr>
+                <p>{{ object.target }}</p>
+            </div>
+            <br>
+            <div class="plan-detail">
+                <h4>内容</h4>
+                <hr>
+                <p>{{ object.detail | linebreaksbr }}</p>
+            </div>
+            <br>
+            <div class="button-area">
+                <button class="edit btn btn-info" type="button"><a href="{% url 'plan:mypage_plan_update'  object.pk %}">編集</a></button>
+                <button class="delete btn btn-warning" type="button"><a href="{% url 'plan:mypage_plan_delete'  object.pk %}">削除</a></button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

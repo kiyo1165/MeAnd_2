@@ -4,9 +4,7 @@ import environ
 from django.contrib.messages import constants as messages
 import datetime
 
-# django-environから環境変数を読み込む
-env = environ.Env()
-# env.read_env(os.path.join(BASE_DIR, '.env'))
+
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'dark',
@@ -25,7 +23,7 @@ SECRET_KEY = '0d4-ii#^@6v(s(!puzso105^twz24bs*!kc^@0usz=bhagxyqu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -57,6 +55,7 @@ INSTALLED_APPS = [
     'stdimage',
     # 決済
     'stripe',
+    'checkout',
     # 予約
     'reservation',
 ]
@@ -107,6 +106,10 @@ TEMPLATES = [
         },
     },
 ]
+# django-environから環境変数を読み込む
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
+
 ACCOUNT_FORMS = {
     'login': 'allauth.account.forms.LoginForm',
     'signup': 'allauth.account.forms.SignupForm',
@@ -198,7 +201,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # 意味：必須
 ACCOUNT_EMAIL_REQUIRED = True
 
 # ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'accounts:my_page'
+LOGIN_REDIRECT_URL = 'accounts:mypage'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 # ログアウトリンクのクリック一発でログアウトする設定
@@ -207,8 +210,9 @@ ACCOUNT_LOGOUT_ON_GET = True
 # ソーシャルアカウント
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
-# STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
-# STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
+#Stripe
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
 
 PUBLIC_HOLIDAYS = [
 

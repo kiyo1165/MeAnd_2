@@ -2,14 +2,16 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import User
 from plan.models import Plan
+from .choise import STATUS_LIST
 
 # Create your models here.
-#TODO planロジック変更
 class Reservation(models.Model):
     """予約スケジュール."""
     start = models.DateTimeField('開始時間')
     end = models.DateTimeField('終了時間')
+    active = models.BooleanField('稼働可否',default=True) #休暇設定時にTrue
     message = models.CharField('メッセージ', max_length=255)
+    status = models.CharField('ステータス', max_length=20, blank=True, choices=STATUS_LIST)
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True, related_name='guest_user')
     user2 = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True, related_name='host_user')
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, blank=True, null=True, related_name='reserve_plan')
@@ -19,7 +21,6 @@ class Reservation(models.Model):
         start = timezone.localtime(self.start).strftime('%Y/%m/%d %H:%M:%S')
         end = timezone.localtime(self.end).strftime('%Y/%m/%d %H:%M:%S')
         return f'{self.message} {start} ~ {end} {self.user2}'
-
 
 class ReservationMessage(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)

@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from .models import User, Profile
+from reservation.models import Reservation
 from allauth.account.forms import SignupForm
 from django import forms
 
@@ -45,4 +46,11 @@ class CustomSignupForm(SignupForm):
         user.type = self.cleaned_data["type"]
         # Save the user's type to their database record
         user.save()
+
+class ReserveUpdateForm(ModelForm):
+    start = forms.SplitDateTimeField(label='開始時間', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
+    end = forms.SplitDateTimeField(label='終了時間', widget=forms.SplitDateTimeWidget(date_attrs={'type':'date'},time_attrs={'type':'time'}))
+    class Meta:
+        model = Reservation
+        fields = ['start', 'end', 'message']
 

@@ -1,15 +1,14 @@
 from django.urls import path
-from django.views.generic import  TemplateView
 from .views \
-    import ProfileEdit, MyPage, MyProfile,\
+    import ProfileEdit, MyProfile,\
     ProfileCreate, MyPageCalendar,MyPageDayDetail,\
     MyPageSchedule,MyPageScheduleDelete, my_page_holiday_add,my_page_day_holiday_add,my_page_day_holiday_delete,\
-    CounselorGuidance,CounselorRegister,CounselorConfirmRegistered, MyPageTest, ReservationList
+    CounselorGuidance,CounselorRegister,CounselorConfirmRegistered, MyPageMixin, ReservationList
 
 app_name = 'accounts'
 urlpatterns = [
-    path('my_page_test/', MyPageTest.as_view(), name='my_page_test'), #管理画面テスト
-    path('my_page/<int:pk>/calendar/<int:year>/<int:month>/<int:day>/',MyPageTest.as_view(), name='my_page_calendar3'),#管理画面テスト
+    path('mypage/', MyPageMixin.as_view(), name='mypage'), #管理画面テスト
+    path('mypage/<int:pk>/calendar/<int:year>/<int:month>/<int:day>/',MyPageMixin.as_view(), name='my_page_calendar3'),#管理画面テスト
     path( 'mypage/holiday/day/add/<int:pk>/<int:year>/<int:month>/<int:day>/', my_page_day_holiday_add,
           name='my_page_day_holiday_add' ),
     path( 'mypage/holiday/day/delete/<int:pk>/<int:year>/<int:month>/<int:day>/', my_page_day_holiday_delete,
@@ -21,7 +20,6 @@ urlpatterns = [
     path('cons_confirm_registered/<int:pk>', CounselorConfirmRegistered.as_view(), name='cons_confirm_registered'),
     path('profile_create/', ProfileCreate, name='profile_create'),
     path('profile_edit/', ProfileEdit, name='profile_edit' ),
-    path('my_page/', MyPage.as_view(), name='my_page'),
     path('profile/', MyProfile.as_view(), name='profile'),
     path('my_page/<int:pk>/calendar/', MyPageCalendar.as_view(), name='my_page_calendar'),
     path('my_page/<int:pk>/calendar/<int:year>/<int:month>/<int:day>/',MyPageCalendar.as_view(), name='my_page_calendar2'),

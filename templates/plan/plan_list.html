@@ -1,0 +1,37 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <p><a href="{% url 'plan:plan_create' %}">プラン新規作成</a></p>
+    <h4>プラン一覧</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="row">Id</th>
+            <th scope="col">タイトル</th>
+            <th scope="col">ターゲット</th>
+            <th scope="col">面談スタイル</th>
+            <th scope="col">編集</th>
+            <th scope="col">削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td><a href="{% url 'plan:mypage_plan_detail' item.pk %}">{{ item.title }}</a></td>
+                <td>{{ item.target }}</td>
+                <td>
+                    {% for s in item.style_choices.all %}
+                        {{ s }}/
+                    {% endfor %}
+                </td>
+                <td><button type="button" class="btn btn-info"><a href="{% url 'plan:mypage_plan_update' item.pk %}">編集</a></button></td>
+                <td><button type="button" class="btn btn-warning"><a href="{% url 'plan:mypage_plan_delete' item.pk %}">削除</a></button></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+{% endblock %}

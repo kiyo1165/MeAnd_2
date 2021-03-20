@@ -1,25 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'my_page_base.html' %}
 {% load static %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="mr-lg-auto col-lg-3">
-                <div class="border-0 mb-3 mb-lg-0 card">
-                    <div class="p-4 card-body">
-                        <ul class="text-muted card-text">
-                            <li class="py-1">Home</li>
-                            <li class="py-1">プランの作成</li>
-                            <li class="py-1"><a href="{% url 'message:message_list' %}">メッセージの確認</a></li>
-                            <li class="py-1">機密保持契約</li>
-                            <li class="py-1">プロフィール</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-
             <div class="card-section col-lg-9">
+            {% if object_list is None %}
+                <h5><i class="far fa-envelope"></i>メッセージはありません。</h5>
+            {% endif %}
                 {% for list in object_list %}
                     {% if list.user != request.user %}
                         <div class="row card-header">

@@ -1,0 +1,11 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <div class="container-sm">
+        <form action="" method="POST" class="text-center">{% csrf_token %}
+            <p>本当に{{ plan.title }}を削除しますか？</p>
+            <button type="submit" value="削除する" class="btn btn-info">削除</button>
+        </form>
+
+    </div>
+{% endblock %}

@@ -16,10 +16,6 @@ class UserList(ListView):
     model = User
     template_name = 'reservation/user_list.html'
 
-class PlanList(ListView):
-    model = Plan
-    template_name = 'reservation/plan_list.html'
-
     def get_context_data(self,**kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['user'] = self.user

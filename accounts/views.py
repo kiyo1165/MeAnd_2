@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView,ListView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView,ListView, FormView
 from .models import Profile
-from .forms import UserForm, ProfileForm
+from .forms import UserForm, ProfileForm, ReserveUpdateForm
 from .models import User
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
@@ -26,8 +26,16 @@ class OnlyStaffMixin( UserPassesTestMixin ):
     raise_exception = True
 
     def test_func(self):
-        user = get_object_or_404( User, pk=self.kwargs['pk'] )
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
         return user == self.request.user or self.request.user.is_superuser
+
+
+class OnlyMyPageMixin( UserPassesTestMixin ):
+    raise_exception = True
+
+    def test_func(self):
+        user = get_object_or_404(User,pk=self.request.user.id)
+        return user
 
 
 # Create your views here.
@@ -66,13 +74,13 @@ def ProfileEdit(request):
             profile_form.user = user
             profile_form.save()
             messages.success( request, f'正常に登録されました' )
-            return redirect( 'accounts:my_page' )
+            return redirect( 'accounts:mypage' )
         else:
             profile_form.face_image = request.FILES.get( 'face_image' )
             profile_form.user = user
             profile_form.save()
             messages.success( request, f'正常に登録されました' )
-            return redirect( 'accounts:my_page' )
+            return redirect( 'accounts:mypage' )
     else:
         ctx = {
             'user_form': user_form,
@@ -82,17 +90,17 @@ def ProfileEdit(request):
         return render( request, 'accounts/profile_form.html', ctx )
 
 
-class MyPage(TemplateView):
-    model = Profile
-    template_name = 'accounts/my_page.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super( MyPage, self ).get_context_data(**kwargs)
-        plan = Plan.objects.filter( user_id=self.request.user.id )
-        user = User.objects.get( pk=self.request.user.pk )
-        ctx['my_page'] = Profile.objects.get( user_id=user )
-        ctx['plan_list'] = Plan.objects.filter( user_id=user )
-        return ctx
+# class MyPage(TemplateView):
+#     model = Profile
+#     template_name = 'accounts/my_page.html'
+#
+#     def get_context_data(self, **kwargs):
+#         ctx = super( MyPage, self ).get_context_data(**kwargs)
+#         plan = Plan.objects.filter( user_id=self.request.user.id )
+#         user = User.objects.get( pk=self.request.user.pk )
+#         ctx['my_page'] = Profile.objects.get( user_id=user )
+#         ctx['plan_list'] = Plan.objects.filter( user_id=user )
+#         return ctx
 
 
 class MyPageCalendar(TemplateView):
@@ -100,7 +108,7 @@ class MyPageCalendar(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs )
-        user = User.objects.get( pk=self.request.user.pk)
+        user = get_object_or_404(User, pk=self.request.user.pk)
         plan = Plan.objects.filter(user_id=user)
         today = datetime.date.today()
 
@@ -153,6 +161,17 @@ class MyPageCalendar(TemplateView):
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
 
+class MyPageMixin(MyPageCalendar):
+    template_name = 'accounts/index.html'
+    model = Plan
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        plan = Plan.objects.filter( user_id=self.request.user.id )
+        user = get_object_or_404(User, pk=self.request.user.pk )
+        ctx['my_page'] = Profile.objects.get( user_id=user )
+        ctx['plan_list'] = Plan.objects.filter( user_id=user )
+        return ctx
+
 
 class MyProfile( TemplateView ):
     model = Profile
@@ -166,9 +185,10 @@ class MyProfile( TemplateView ):
 #TODO 詳細ページのリンク確認
 class MyPageSchedule(UpdateView):
     model = Reservation
-    fields = ('start', 'end', 'message')
+    # fields = ('start', 'end', 'message')
+    form_class = ReserveUpdateForm
     template_name = 'accounts/schedule_form.html'
-    success_url = reverse_lazy('accounts:my_page')
+    success_url = reverse_lazy('accounts:mypage')
 
     def form_valid(self, form):
         messages.success(self.request, f'更新しました。')
@@ -215,7 +235,7 @@ class MyPageScheduleDelete(DeleteView):
         return super(MyPageSchedule, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('accounts:my_page_test')
+        return reverse('accounts:mypage')
 
 
 @require_POST
@@ -224,7 +244,7 @@ def my_page_holiday_add(request, pk, year, month, day, hour):
     if user == request.user or request.user.is_superuser:
         start = datetime.datetime( year=year, month=month, day=day, hour=hour )
         end = datetime.datetime( year=year, month=month, day=day, hour=hour + 1 )
-        Reservation.objects.create( user2=user,user=user, start=start, end=end, message='休暇(システムによる追加)' )
+        Reservation.objects.create( user2=user,user=user, start=start, end=end, message='休暇(システムによる追加)', active=False )
         return redirect( 'accounts:my_page_day_detail', pk=pk, year=year, month=month, day=day )
 
 
@@ -235,8 +255,8 @@ def my_page_day_holiday_add(request, pk, year, month, day):
         for i in range(9,23):
             start = datetime.datetime( year=year, month=month, day=day, hour=i )
             end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
-            Reservation.objects.create( user2=user,  start=start, end=end, message='休暇(システムによる追加)' )
-        return redirect( 'accounts:my_page_test' )
+            Reservation.objects.create( user2=user,  start=start, end=end, message='休暇(システムによる追加)', active=False )
+        return redirect( 'accounts:mypage' )
 
 
 
@@ -247,10 +267,9 @@ def my_page_day_holiday_delete(request, pk, year, month, day):
             start = datetime.datetime( year=year, month=month, day=day, hour=i )
             end = datetime.datetime( year=year, month=month, day=day, hour=i +1 )
             Reservation.objects.filter(user2=pk, start=start, end=end).delete()
-        return redirect( 'accounts:my_page_test' )
+        return redirect( 'accounts:mypage' )
 
-class MyPageTest(MyPage, MyPageCalendar):
-    template_name = 'accounts/index.html'
+
 
 
 
@@ -287,14 +306,15 @@ class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
         return context
 
 
-class ReservationList(ListView):
+class ReservationList(OnlyMyPageMixin, ListView):
     model = Reservation
     template_name = 'accounts/reservation_list.html'
 
     def get_queryset(self):
         user = self.request.user.pk
-        reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user)).order_by('-created_at')
+        reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user),active=True).order_by('-created_at')
         return reserve_user
+
 
 
 

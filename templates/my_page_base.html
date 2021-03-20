@@ -87,9 +87,9 @@ Page Wrapper
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">カウンセリング履歴</h6>
-                    <a class="collapse-item" href="buttons.html">カウンセラー</a>
+                    <a class="collapse-item" href="{% url 'plan:plan_list' %}">プラン</a>
                     <a class="collapse-item" href="{% url 'accounts:reservation_list' %}">予約の確認</a>
-                    <a class="collapse-item" href="cards.html">メッセージ</a>
+                    <a class="collapse-item" href="{% url 'message:message_list' %}">メッセージ</a>
                 </div>
             </div>
         </li>
