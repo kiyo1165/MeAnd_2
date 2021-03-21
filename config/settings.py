@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'django.contrib.sites',
     'bootstrap4',
     'django_cleanup',
@@ -85,7 +85,8 @@ SOCIALACCOUNT_PROVIDERS = {
         "AUTH_PARAMS": {
             "access_type": "online",
         }
-    }
+    },
+
 }
 
 TEMPLATES = [
@@ -109,6 +110,9 @@ TEMPLATES = [
 # django-environから環境変数を読み込む
 env = environ.Env()
 env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# env.SOCIAL_AUTH_FACEBOOK_KEY # アプリID
+# env.SOCIAL_AUTH_FACEBOOK_SECRET  # app secret
 
 ACCOUNT_FORMS = {
     'login': 'allauth.account.forms.LoginForm',

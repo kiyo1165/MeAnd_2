@@ -90,17 +90,17 @@ def ProfileEdit(request):
         return render( request, 'accounts/profile_form.html', ctx )
 
 
-# class MyPage(TemplateView):
-#     model = Profile
-#     template_name = 'accounts/my_page.html'
-#
-#     def get_context_data(self, **kwargs):
-#         ctx = super( MyPage, self ).get_context_data(**kwargs)
-#         plan = Plan.objects.filter( user_id=self.request.user.id )
-#         user = User.objects.get( pk=self.request.user.pk )
-#         ctx['my_page'] = Profile.objects.get( user_id=user )
-#         ctx['plan_list'] = Plan.objects.filter( user_id=user )
-#         return ctx
+class MyPage(TemplateView):
+    model = Profile
+    template_name = 'accounts/my_page.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super( MyPage, self ).get_context_data(**kwargs)
+        plan = Plan.objects.filter( user_id=self.request.user.id )
+        user = User.objects.get( pk=self.request.user.pk )
+        ctx['my_page'] = Profile.objects.get( user_id=user )
+        ctx['plan_list'] = Plan.objects.filter( user_id=user )
+        return ctx
 
 
 class MyPageCalendar(TemplateView):
@@ -124,7 +124,6 @@ class MyPageCalendar(TemplateView):
             base_date = today
 
         week = [base_date + datetime.timedelta( days=day ) for day in range( 7 )]
-        # print(week)
         start_day = week[0]
         end_day = week[-1]
 
@@ -135,7 +134,7 @@ class MyPageCalendar(TemplateView):
             for day in week:
                 row[day] = True
             calendar[hour] = row
-        print(calendar)
+
 
 
         start_time = datetime.datetime.combine( start_day, datetime.time( hour=9, minute=0, second=0 ) )
@@ -161,7 +160,17 @@ class MyPageCalendar(TemplateView):
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
 
-class MyPageMixin(MyPageCalendar):
+class GuestMyPageConsList(TemplateView):
+    model = User
+    template_name = 'accounts/guest/guest_my_page_conslist.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        cons = User.objects.filter(is_staff=True, is_superuser=False)
+        ctx['cons_list'] = cons
+        return ctx
+
+class MyPageMixin(MyPageCalendar,GuestMyPageConsList):
     template_name = 'accounts/index.html'
     model = Plan
     def get_context_data(self, **kwargs):
@@ -314,7 +323,6 @@ class ReservationList(OnlyMyPageMixin, ListView):
         user = self.request.user.pk
         reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user),active=True).order_by('-created_at')
         return reserve_user
-
 
 
 

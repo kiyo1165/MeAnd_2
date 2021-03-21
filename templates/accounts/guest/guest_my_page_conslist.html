@@ -1,0 +1,34 @@
+{% load static %}
+
+<div class="container">
+    <div class="row guest-main">
+        <div class="col-12">
+            <h5>おすすめのカウンセラー</h5>
+
+            {% for cons in  cons_list %}
+
+                <div class="card mb-3 border-0 shadow-sm p-3" style="max-width: 940px;">
+                    <div class="row no-gutters ">
+                        <div class="col-md-3 guest-card-image ">
+                            <img class="rounded-circle mt-3 ml-5 mb-1 w-50" src="{{ cons.profile.face_image.thumbnail.url }}"
+                                 alt="">
+                            <h5 class="card-title  mt-3 ml-5 mb-2">
+                                {{ cons.last_name }}{{ cons.first_name }}{{ cons.profile.age }}歳</h5>
+                            <small class="card-title  mt-3 ml-5 mb-2">{{ cons.profile.qualification }}</small>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <p>自己紹介</p>
+                                <p class="card-text">{{ cons.profile.self_introduction | truncatechars_html:200 }}続きを読む</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

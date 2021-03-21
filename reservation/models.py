@@ -4,6 +4,7 @@ from accounts.models import User
 from plan.models import Plan
 from .choise import STATUS_LIST
 
+
 # Create your models here.
 class Reservation(models.Model):
     """予約スケジュール."""

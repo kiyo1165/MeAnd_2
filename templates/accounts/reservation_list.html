@@ -8,6 +8,7 @@
                 <tr>
                     <th scope="col" style="width: 12px">予約番号</th>
                     <th scope="col" style="width: 20px">予約者名</th>
+                    <th scope="col" style="width: 20px">カウンセラー</th>
                     <th scope="col" style="width: 20px">予約プラン</th>
                     <th scope="col">面談スタイル</th>
                     <th scope="col">開始終了時間</th>
@@ -20,6 +21,7 @@
                     <tr>
                         <th scope="row"><a href="{% url 'reservation:booking_message' list.pk %}">{{ list.id }}</a></th>
                         <td>{{ list.user.last_name }}{{ list.user.first_name }}</td>
+                        <td>{{ list.user2.last_name }}{{ list.user2.first_name }}</td>
                         <td>{{ list.plan.title }}</td>
                             <td>
                                      {% for tag in list.plan.style_choices.all %}

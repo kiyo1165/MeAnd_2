@@ -1,27 +1,32 @@
 
 .allauth-signup {
     text-align: center;
-    width: 880px;
-    margin-top: 150px;
+    width: 680px;
+    margin-top: 20px;
 
 }
-
+.signup-logo{
+    margin-top: 0px;
+}
 .signup-center{
     border: solid 0.1rem  #8FD5DC;
     border-radius: 10px;
     padding: 50px 0px;
 }
 
+label, p {
+    font-size: 12px;
+}
 .secondaryAction{
     font-size: 12px;
 }
 
 .primaryAction, button {
-    border-radius:10px;
+    border-radius:1px;
     border: solid 1px #83CFD3;
     background: #15A3B8;
     color: #FFFFFF;
-    font-size: 13px;
+    font-size: 12px;
     width: 7rem;
     padding: 8px;
 }
@@ -32,7 +37,7 @@
 
 #id_password, #id_login{
     background-color: #FFFFFF;
-    border: solid 1px #FFFFFF;
+    border: solid 1px gainsboro;
     border-radius: 2px;
 }
 

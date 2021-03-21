@@ -8,8 +8,8 @@
 {% block content %}
     <div class="container allauth-signup">
         <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 signup-center">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 signup-center">
                 <a href=""><img style=width:200px;" src="{% static 'icon/MeAnd_Logo1.png' %}" alt="MeAnd-logo2"></a>
                 <h5>{% trans "Sign In" %}</h5>
                 {% get_providers as socialaccount_providers %}
@@ -17,15 +17,17 @@
                 {% if socialaccount_providers %}
                     <p>{% blocktrans with site.name as site_name %}
                         会員登録がまだの方は, <a href="{{ signup_url }}">新規登録</a>
-                        からお願いいたします。 {{ site_name }} はお会いできることを楽しみにしています:{% endblocktrans %}</p>
+                        からお願いいたします。<br>
+                        お会いできることを楽しみにしています。{% endblocktrans %}</p>
 
                     <div class="socialaccount_ballot">
 
                         <ul class="socialaccount_providers">
-                            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+
+                            <li>{% include "account/snippets/provider_list.html" with process="login" %}</li>
                         </ul>
 
-                        <div class="login-or">{% trans 'or' %}</div>
+                        <p class="login-or">{% trans 'or' %}メールアドレスでログイン</p>
 
                     </div>
 
@@ -55,5 +57,4 @@
 
 
     </div>
-
 {% endblock %}

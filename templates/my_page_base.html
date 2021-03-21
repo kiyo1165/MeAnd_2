@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>myp age</title>
     <link rel="stylesheet" href="{% static 'mypage/css/sb-admin-2.css' %}">
+    <link rel="stylesheet" href="{% static 'mypage/main.css' %}">
     <link rel="stylesheet" href="{% static 'mypage/scss/navs/_global.scss' %}">
     <link rel="stylesheet" href="{% static 'mypage/scss/navs/_sidebar.scss' %}">
     <link rel="stylesheet" href="{% static 'mypage/scss/navs/_topbar.scss' %}">
@@ -87,7 +88,9 @@ Page Wrapper
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">カウンセリング履歴</h6>
+                    {% if user == is_staff %}
                     <a class="collapse-item" href="{% url 'plan:plan_list' %}">プラン</a>
+                    {% endif %}
                     <a class="collapse-item" href="{% url 'accounts:reservation_list' %}">予約の確認</a>
                     <a class="collapse-item" href="{% url 'message:message_list' %}">メッセージ</a>
                 </div>

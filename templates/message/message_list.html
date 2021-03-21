@@ -4,29 +4,27 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="card-section col-lg-9">
+            <div class="card-section col-lg-9 shadow-sm">
             {% if object_list is None %}
                 <h5><i class="far fa-envelope"></i>メッセージはありません。</h5>
             {% endif %}
                 {% for list in object_list %}
                     {% if list.user != request.user %}
-                        <div class="row card-header">
+                        <div class="row card-header" style="background: #FFFFFF;border: none">
                             <div class="img col-2　align-items-center">
                                 {% if list.user.profile.face_image %}
-                                    <img src="{{ list.user.profile.face_image.thumbnail.url }}" class="message-face-img">
+                                    <img src="{{ list.user.profile.face_image.thumbnail.url }}" class="message-face-img" style="width: 50px; border-radius: 40px">
                                 {% endif %}
                             </div>
-                            <p class="col-10 align-items-center">
-                                <a href="{% url 'message:send_message' list.user.pk %}">
+                            <p class="col-10 align-items-center name" style="margin-top: 10px; font-size: 14px;">
+                                <a href="{% url 'message:send_message' list.user.pk %}" style="color: #333333;">
                                     {{ list.user.last_name }}{{ list.user.first_name }}{{ list.created_at }}</a>
                             </p>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body" style="color: #333333; font-size: 12px; padding: 10px;">
                             <p class="card-text">{{ list.send_text }}</p>
                         </div>
-                        <hr>
-
                     {% else %}
                          <div class="row card-header">
                             <div class="img col-2　align-items-center">

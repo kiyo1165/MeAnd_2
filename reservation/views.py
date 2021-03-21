@@ -12,6 +12,7 @@ from django.contrib import messages
 from .form import BookingForm
 from django.core.mail import send_mail, EmailMessage
 
+
 class UserList(ListView):
     model = User
     template_name = 'reservation/user_list.html'
@@ -82,6 +83,7 @@ class StaffCalendar(TemplateView):
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
 
+
 class Booking(CreateView):
     model = Reservation
     template_name = 'reservation/booking.html'
@@ -112,16 +114,17 @@ class Booking(CreateView):
             schedule.start = start
             schedule.end = end
             schedule.save()
-            send_mail(
-                subject='【予約完了】' + str(schedule.start) + '〜' + str(schedule.end),
-                message='開始時間：' + str(schedule.start) + '〜' + str(schedule.end) + 'カウンセラー：' +
-                        schedule.user.first_name,
-                recipient_list=[ 'admin@example.com',],
-                from_email=schedule.user.email
-            )
+            # send_mail(
+            #     subject='【予約完了】' + str(schedule.start) + '〜' + str(schedule.end),
+            #     message='開始時間：' + str(schedule.start) + '〜' + str(schedule.end) + 'カウンセラー：' +
+            #             schedule.user.first_name,
+            #     recipient_list=[ schedule.user.email,],
+            #     from_email='admin@example.com'
+            # )
             messages.success( self.request,'予約が完了しました。登録されているメールアドレスをご確認ください。')
 
             return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )
+
 
 class BookingMessage(CreateView):
     model = ReservationMessage
