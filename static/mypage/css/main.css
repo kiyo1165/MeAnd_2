@@ -1,16 +1,55 @@
 .card-header{
-    height: 30px;
+    /*height: 20px;*/
 }
 
 .name{
     margin-top: 30px;
 }
-
+.message-card-body{
+    /*padding: 0px 0px;*/
+}
 .message-face-img{
-    width: 40px;
-    border-radius: 20px;
+    width: 80px;
+    border-radius: 90px;
+}
+.status{
+    margin-bottom: 5px;
+}
+
+/*message返信*/
+.message-form button {
+    border: solid 1px #37B9CB;
+    background: #37B9CB;
+    padding: 10px;
+    font-size: 12px;
+    color: #FFFFFF;
+    border-radius: 2px;
+}
+
+#id_send_text {
+    font-size: 12px;
+    max-width: 800px;
+    width: 80%;
+    height: 100px;
+    margin-bottom: 10px;
+    border: solid 1px #E5E5E5;
+    border-radius: 1px;
 }
 
 .list-group .guest-card-image img{
     margin-left: 100px;
 }
+
+/*プロフィール編集フォーム*/
+#id_nick_name, #id_phone,#id_occupation{
+    width: 200px;
+}
+
+
+#id_age,#id_gender,#id_pref, #id_years_of_experience{
+    width: 100px;
+}
+
+
+
+

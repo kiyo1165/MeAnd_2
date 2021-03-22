@@ -12,5 +12,6 @@ urlpatterns = [
     path('message/', include('message.urls')),
     path('comment/', include('usercomments.urls')),
     path('reserve/', include('reservation.urls')),
+    path('', include('follow.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,7 @@
 from django.urls import path
 from .views \
     import ProfileEdit, MyProfile,\
-    ProfileCreate, MyPageCalendar,MyPageDayDetail,\
+    MyPageCalendar,MyPageDayDetail,\
     MyPageSchedule,MyPageScheduleDelete, my_page_holiday_add,my_page_day_holiday_add,my_page_day_holiday_delete,\
     CounselorGuidance,CounselorRegister,CounselorConfirmRegistered, MyPageMixin, ReservationList
 
@@ -18,7 +18,6 @@ urlpatterns = [
     path('cons_guidance/', CounselorGuidance.as_view(), name='counselor_guidance'),
     path('cons_register/<int:pk>', CounselorRegister.as_view(), name='counselor_register'),
     path('cons_confirm_registered/<int:pk>', CounselorConfirmRegistered.as_view(), name='cons_confirm_registered'),
-    path('profile_create/', ProfileCreate, name='profile_create'),
     path('profile_edit/', ProfileEdit, name='profile_edit' ),
     path('profile/', MyProfile.as_view(), name='profile'),
     path('my_page/<int:pk>/calendar/', MyPageCalendar.as_view(), name='my_page_calendar'),

@@ -7,7 +7,7 @@
 
 
     <!-- Area Calendar -->
-    {% if user == is_staff %}
+    {% if user.is_staff %}
         {% include './calendar.html' %}
     {% else %}
         {% include './guest/guest_my_page_conslist.html' %}

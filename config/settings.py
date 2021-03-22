@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'checkout',
     # 予約
     'reservation',
+    #follow
+    'follow',
 ]
 
 MIDDLEWARE = [
@@ -193,6 +195,8 @@ AUTHENTICATION_BACKENDS = (
     # 管理サイト用（ユーザー名承認）
     'django.contrib.auth.backends.ModelBackend'
 )
+
+#emailデバック
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # メールアドレス承認に変更する設定

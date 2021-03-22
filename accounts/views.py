@@ -6,7 +6,11 @@ from .models import User
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from plan.models import Plan
+
+#パーミッション
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from reservation.views import StaffCalendar
@@ -18,8 +22,6 @@ from django.conf import settings
 from accounts.models import CounselorRegister
 from django.core.mail import send_mail, EmailMessage
 from message.views import MessageList
-
-
 
 
 class OnlyStaffMixin( UserPassesTestMixin ):
@@ -36,28 +38,6 @@ class OnlyMyPageMixin( UserPassesTestMixin ):
     def test_func(self):
         user = get_object_or_404(User,pk=self.request.user.id)
         return user
-
-
-# Create your views here.
-def ProfileCreate(request):
-    user = User.objects.get( pk=request.user.pk )
-    user_form = UserForm( request.POST or None, instance=user )
-    profile_form = ProfileForm( request.POST )
-    if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
-        user_form = user_form.save( commit=False )
-        user_form.save()
-        profile_form = profile_form.save( commit=False )
-        profile_form.face_image = request.FILES.get( 'face_image' )
-        profile_form.user = user
-        profile_form.save()
-        messages.success( request, f'正常に登録されました' )
-        return redirect( 'accounts:my_page' )
-    else:
-        ctx = {
-            'user_form': user_form,
-            'profile_form': profile_form,
-        }
-        return render( request, 'accounts/profile_form.html', ctx )
 
 
 def ProfileEdit(request):

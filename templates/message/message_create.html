@@ -5,34 +5,40 @@
 {% block content %}
 
     <div class="container">
-        <h5>{{ message_host.last_name }}{{ message_host.first_name }}さんへメッセージを送る</h5>
-        <form action="" method="post" style="width: 800px">{% csrf_token %}
-            {{ form }}
-            <button type="submit">送信</button>
-        </form>
+        <div class="message-form">
+            <h5><img style="border-radius: 80px; width: 60px" src="{{ message_host.profile.face_image.thumbnail.url }}">&nbsp;&nbsp;{{ message_host.last_name }}{{ message_host.first_name }}さんへメッセージを送る<i
+                    class="fas fa-reply"></i>
+
+            </h5>
+            <form action="" method="post" style="width: 800px">{% csrf_token %}
+                {{ form }}
+                <button type="submit">送信</button>
+            </form>
+
+        </div>
+
         <br>
         <hr>
         <br>
-
-
-        <div class="card-section">
-            {% for list in message_list %}
-                    <div class="card-body shadow">
-                        <div class="status row mb-4">
-                            <div class="img col-2">
-                                {% if list.user_2.profile.face_image %}
-                                    <img src="{{ list.user_2.profile.face_image.thumbnail.url }}" class="message-face-img">
-                                {% endif %}
-                            </div>
-                            <p class="col-8">{{ list.user_2.last_name }}{{ list.user_2.first_name }}</p>
-                            <p class="col-2">{{ list.created_at }}</p>
-                        </div>
-                        <p class="card-text ml-4">{{ list.send_text }}</p>
+        {% for item in message_list %}
+            <div class="card mb-3 first-message shadow-sm">
+                <div class="row no-gutters">
+                    <div class="col-md-2">
+                        {% if item.user_2.profile.face_image.thumbnail.url %}
+                            <img src="{{ item.user_2.profile.face_image.thumbnail.url }}">
+                        {% endif %}
                     </div>
-                <br>
-                <br>
-            {% endfor %}
-        </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                {{ item.user_2.last_name }}{{ item.user_2.first_name }}</h6>
+                            <p class="card-text">{{ item.send_text }}</p>
+                            <p class="card-text"><small class="text-muted">{{ item.created_at }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 
 

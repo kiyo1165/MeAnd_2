@@ -20,13 +20,13 @@
                             </div>
                         {% endif %}
                         <div class="col-md-2">
-                            <p>お名前</p>
+                            <p>お名前:</p>
                         </div>
                         <div class="col-md-10">
                             <div class="form-group form-inline">
-                                <label for="{{ user_form.last_name.id_for_label }}">性：</label>
+                                <label for="{{ user_form.last_name.id_for_label }}">性</label>&nbsp;&nbsp;
                                 {{ user_form.last_name }}&nbsp;&nbsp;&nbsp;
-                                <label for="{{ user_form.first_name.id_for_label }}">名：</label>
+                                <label for="{{ user_form.first_name.id_for_label }}">名</label>&nbsp;&nbsp;
                                 {{ user_form.first_name }}
                             </div>
                         </div>
@@ -36,7 +36,21 @@
                         {% if not user.is_staff or user.is_superuser %}
                             <div class="col-md-2">
                                 <div class="field">
-                                    <p>年齢：</p>
+                                    <p>ニックネーム</p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                   <span style="color: red">※必須</span>{{ profile_form.nick_name }}
+                                    <p style="color:red">※カウンセラーにはニックネームが表示されます。</p>
+                                    {{ form.nick_name.help_text }}
+                                    {{ profile_form.nick_name.errors }}
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>年齢</p>
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -50,7 +64,7 @@
 
                             <div class="col-md-2">
                                 <div class="field">
-                                    <p>性別：</p>
+                                    <p>性別</p>
                                 </div>
                             </div>
                             <br>
@@ -65,13 +79,26 @@
                             <br><br> <br>
                             <div class="col-md-2">
                                 <div class="field">
-                                    <p>都道府県：</p>
+                                    <p>お電話番号</p>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    {{ profile_form.phone }}
+                                    {{ profile_form.phone.help_text }}
+                                    {{ profile_form.phone.errors }}
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="col-md-2">
+                                <div class="field">
+                                    <p>都道府県</p>
                                 </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="form-group">
                                     {{ profile_form.pref }}
-                                    <span class="helptext">{{ pforile.pref.help_text }}</span>
+                                    {{ pforile_form.pref.help_text }}
                                     {{ profile_form.pref.errors }}
                                 </div>
                             </div>
@@ -79,7 +106,7 @@
 
                             <div class="col-md-2">
                                 <div class="field">
-                                    <p>ご職業：</p>
+                                    <p>ご職業</p>
                                 </div>
                             </div>
                             <div class="col-md-10">
@@ -91,7 +118,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="field">
-                                    <p>プロフィール写真：</p>
+                                    <p>プロフィール写真</p>
                                 </div>
                             </div>
                             <div class="col-md-10">

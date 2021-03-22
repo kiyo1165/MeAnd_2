@@ -15,6 +15,14 @@ class ProfileForm( ModelForm ):
     class Meta:
         model = Profile
         exclude = ['user', 'created_at', 'updated_at']
+        widgets ={
+            'phone': forms.TextInput(attrs={
+                'placeholder': '例：08012341234※ハイフンなしでご入力ください。'
+            },
+            )
+        }
+
+
 
     def __init__(self, *args, **kwargs):
         super().__init__( *args, **kwargs )

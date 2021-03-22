@@ -2,7 +2,6 @@ import datetime
 from django.conf import settings
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView
 from .models import  Reservation, ReservationMessage
@@ -10,7 +9,8 @@ from accounts.models import User
 from plan.models import Plan
 from django.contrib import messages
 from .form import BookingForm
-from django.core.mail import send_mail, EmailMessage
+#パーミッション
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class UserList(ListView):
@@ -84,7 +84,7 @@ class StaffCalendar(TemplateView):
         return context
 
 
-class Booking(CreateView):
+class Booking(LoginRequiredMixin, CreateView):
     model = Reservation
     template_name = 'reservation/booking.html'
     form_class = BookingForm

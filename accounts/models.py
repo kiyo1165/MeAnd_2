@@ -11,6 +11,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
 class CustomUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
@@ -88,9 +89,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nick_name = models.CharField('ニックネーム', max_length=255, help_text='カウンセラーにはニックネームが表示されます。')
+    phone = models.CharField('お電話番号', max_length=15, blank=True, help_text='※お電話でのカウンセリングはお電話番号が必要です。')
     age = models.CharField('年齢', max_length=3, blank=True)
     gender = models.CharField('性別', max_length=5, blank=True, choices=SEX_SELECT)
-    pref = models.CharField('お住まいの都道府県', max_length=5, blank=True)
+    pref = models.CharField('お住まいの都道府県', max_length=5, blank=True, help_text='※対面でのカウンセリングは都道府県が必要です。')
     occupation = models.CharField( 'ご職業', max_length=10, blank=True, choices=OCCUPATION_SELECT )
     qualification = models.CharField('保持資格', max_length=100, blank=True)
     career = models.TextField('経歴', max_length=1000, blank=True)

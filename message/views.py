@@ -6,6 +6,7 @@ from .form import MessageForm
 from accounts.models import User
 from django.db.models import Q
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+import datetime
 
 
 # class OnlyYouMixin(UserPassesTestMixin):
@@ -60,8 +61,10 @@ class MessageList(ListView):
                 'id': message_obj.id,
                 'user': message_obj.user,
                 'send_text': message_obj.send_text,
+                'created_at': message_obj.created_at
             }
             message_list.append(message_elm)
+
         for message_obj in queryset_2:
             message_elm = {
                 'id': message_obj.id,
@@ -76,5 +79,12 @@ class MessageList(ListView):
                 if message_obj['user'] not in exists_user_list:
                     distinct_list.append( message_obj )
                     exists_user_list.append( message_obj['user'] )
+                    print(distinct_list)
             return distinct_list
 
+    # def get_context_data(self, **kwargs):
+    #     ctx = super().get_context_data(**kwargs)
+    #     today_now =  datetime.dateteime.time()
+    #     user_2 = self.request.user
+    #
+    #     return
