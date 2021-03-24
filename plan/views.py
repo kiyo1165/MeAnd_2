@@ -14,11 +14,15 @@ def PlanCreate(request):
     if request.method == 'POST' and  plan_form.is_valid():
         form = plan_form.save(commit=False)
         form.user = user
+        print(request)
+        form.plan_sign = request.FILES.get('plan_sign')
+        print(form.plan_sign)
         form.save()
         plan_form.save_m2m()
         messages.success(request, f'プランを登録しました。')
         return redirect('plan:plan_list')
     else:
+        print('error')
         ctx = {
             'plan_form':plan_form,
         }

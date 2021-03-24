@@ -13,7 +13,13 @@
                             {{ reservation_message.user.last_name }}{{ reservation_message.user.first_name }}</h6>
                         <p class="card-text"><span
                                 class="badge badge-info">ご相談内容</span>&nbsp;{{ reservation_message.message }}</p>
-                        <p class="card-text"><small class="text-muted">{{ reservation_message.created_at }}</small></p>
+
+                        <p class="card-text">
+                        <span class="badge badge-secondary">面談スタイル</span>
+                            {% for item in reservation_message.style_choice.all %}{{ item }}
+                            {% endfor %}
+                        </p>
+                         <p class="card-text"><small class="text-muted">予約時間：{{ reservation_message.created_at }}</small></p>
                     </div>
                 </div>
             </div>

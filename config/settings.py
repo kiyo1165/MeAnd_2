@@ -37,15 +37,18 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.twitter',
     'django.contrib.sites',
     'bootstrap4',
+    'widget_tweaks',
     'django_cleanup',
     'main',
     'plan',
     'category',
     'message',
     'usercomments',
+    'rest_framework',
+
 
     # 認証
     'allauth',
@@ -60,6 +63,8 @@ INSTALLED_APPS = [
     'reservation',
     #follow
     'follow',
+    #API
+    'api',
 ]
 
 MIDDLEWARE = [

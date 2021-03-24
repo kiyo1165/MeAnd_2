@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+
+        {% for follow in follow_list %}
+            {{ follow }}
+        {% endfor %}
+        {% for user in users %}
+
+            <div class="card user-list mb-3"  style="max-width: 1200px;">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <img src="{{ user.profile.face_image.url }}" style="width:180px; border-radius:100px">
+                        </div>
+                        <div class="col-md-10">
+
+                            <div class="card-body ">
+                                <div class="row m-0">
+                                    <div class="card-title col-m-2">
+                                        <h6 class="text-left mb-0 p-0">
+                                            {{ user.last_name }}{{ user.first_name }}<span
+                                                class="">{{ user.profile.age }}歳</span>
+                                        </h6>
+                                    </div>
+                                    <p class="col-m-10 card-qualification">{{ user.profile.qualification }}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-left">
+                                        <p class="m-0">カウンセラー経験{{ user.profile.years_of_experience }}年</p>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <p class="card-text m-0">{{ user.profile.self_introduction }}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <h2>user一覧</h2>
+    <div id="app"v-cloak v-for="item in user_list">
+        <p>[[ item.first_name]]</p>
+    </div>
+
+
+{#        {% endfor %}#}
+    </div>
+    {% block ajax %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+{% endblock %}
+
+    <script>
+    var vm = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data:{
+            user_list:[]
+        },
+        mounted: function (){
+            axios.get('{% url "user_list_json" %}')
+            .then(function (response){
+                console.log(response)
+                {#for(var d in response.data){#}
+                {#    var item = response.data[b]#}
+                {#    vm.user_list.push(item)#}
+                {#    console.log(user_list)#}
+                }
+
+            })
+        }
+
+    })
+    </script>
+
+{% endblock %}

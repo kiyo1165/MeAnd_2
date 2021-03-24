@@ -1,28 +1,31 @@
 {% extends 'my_page_base.html' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="table-responsive">
             <table class="table">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col" style="width: 12px">予約番号</th>
                     <th scope="col" style="width: 20px">予約者名</th>
+                    <th scope="col">メッセージ</th>
                     <th scope="col" style="width: 20px">カウンセラー</th>
                     <th scope="col" style="width: 20px">予約プラン</th>
                     <th scope="col">面談スタイル</th>
                     <th scope="col">開始終了時間</th>
-                    <th scope="col">メッセージ</th>
+
 
                 </tr>
                 </thead>
                 <tbody>
                 {% for list in object_list %}
                     <tr>
-                        <th scope="row"><a href="{% url 'reservation:booking_message' list.pk %}">{{ list.id }}</a></th>
+                        <th scope="row">{{ list.id }}</th>
                         <td>{{ list.user.last_name }}{{ list.user.first_name }}</td>
+                        <td><a href="{% url 'reservation:booking_message' list.pk %}">{{ list.message | truncatechars:100}}</a></td>
                         <td>{{ list.user2.last_name }}{{ list.user2.first_name }}</td>
-                        <td>{{ list.plan.title }}</td>
+
+                        <td>{{ list.plan.title|truncatechars:20 }}</td>
                             <td>
                                      {% for tag in list.plan.style_choices.all %}
                                          <span>{{ tag }}/</span>
@@ -30,7 +33,7 @@
 
                             </td>
                         <td>{{ list.start }}〜{{ list.end }}</td>
-                        <td>{{ list.message }}</td>
+
 
                     </tr>
                 {% endfor %}

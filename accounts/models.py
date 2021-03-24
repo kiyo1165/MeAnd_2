@@ -100,6 +100,7 @@ class Profile(models.Model):
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
     self_introduction = models.TextField('自己紹介', max_length=1000, blank=True)
     face_image = StdImageField( upload_to='media/face_image', blank=True, default='icon/images.png', variations={
+        'xl':(1000, 400),
         'large': (600, 400),
         'thumbnail': (100, 100, True),
         'medium': (300, 200),

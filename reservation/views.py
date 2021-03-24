@@ -11,6 +11,7 @@ from django.contrib import messages
 from .form import BookingForm
 #パーミッション
 from django.contrib.auth.mixins import LoginRequiredMixin
+from plan.models import StyleChoices
 
 
 class UserList(ListView):
@@ -114,13 +115,7 @@ class Booking(LoginRequiredMixin, CreateView):
             schedule.start = start
             schedule.end = end
             schedule.save()
-            # send_mail(
-            #     subject='【予約完了】' + str(schedule.start) + '〜' + str(schedule.end),
-            #     message='開始時間：' + str(schedule.start) + '〜' + str(schedule.end) + 'カウンセラー：' +
-            #             schedule.user.first_name,
-            #     recipient_list=[ schedule.user.email,],
-            #     from_email='admin@example.com'
-            # )
+            form.save_m2m()
             messages.success( self.request,'予約が完了しました。登録されているメールアドレスをご確認ください。')
 
             return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )

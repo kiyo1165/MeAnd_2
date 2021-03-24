@@ -1,0 +1,10 @@
+
+<form action="{% url 'follow:follow' %}" method="POST">
+    {% csrf_token %}
+    {% if user.id in follow_list %}
+        <button id="follow" name="{{user.id}}" style="background-color: #FFFFFF"><i class="fas fa-lg fa-heart like-red"></i></button>
+    {% else %}
+        <button id="follow" name="{{user.id}}" style="background-color: #FFFFFF"><i class="far fa-lg fa-heart"></i></button>
+    {% endif %}
+</form>
+<p name="{{user_id}}-count" class="count"> {{ user.follow_user.count }} </p>

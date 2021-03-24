@@ -6,21 +6,21 @@ from .choices_file import COUNSELING_STYLE_CHOICES
 class PlanForm(ModelForm):
     title = forms.CharField(
         label='タイトル',
-        widget=forms.Textarea(attrs={'rows': 3, 'cols':50,
+        widget=forms.Textarea(attrs={'rows': 2, 'cols':70,
                                      'class':'form-control',
-                                     'placeholder': '100文字以内で記載してください。' })
+                                     'placeholder': '30文字以内で記載してください。' })
     )
     catch_message = forms.CharField(
         label='アイキャッチメッセージ',
         widget=forms.Textarea(
-            attrs={'rows': 4, 'cols':50,
+            attrs={'rows': 3, 'cols':70,
                    'class':'form-control',
-                   'placeholder': '200文字以内でプランの要約やご相談者へのメッセージを記載してください。'})
+                   'placeholder': '100文字以内でプランの要約やご相談者へのメッセージを記載してください。'})
     )
     detail = forms.CharField(
         label='プラン詳細',
         widget=forms.Textarea(
-            attrs={'rows': 10, 'cols':50,
+            attrs={'rows': 15, 'cols':70,
                    'class':'form-control',
                    'placeholder': '1000文字以内でプランの要約やご相談者へのメッセージを記載してください。'})
         )
@@ -29,7 +29,7 @@ class PlanForm(ModelForm):
         widget=forms.Textarea(
             attrs={'rows': 2, 'cols':50,
                'class': 'form-control',
-               'placeholder': '100文字以内で対象者を記載してください。'})
+               'placeholder': '100文字以内で対象者を記載してください。例：中学生の子育てで悩んでいる方'})
     )
     price = forms.CharField(
         label='価格',
@@ -46,7 +46,10 @@ class PlanForm(ModelForm):
                 'placeholder': '分単位/例:1時間 => 60'} )
     )
 
-    style_choices = forms.ModelMultipleChoiceField(queryset=StyleChoices.objects.all(),widget=forms.CheckboxSelectMultiple)
+    style_choices = forms.ModelMultipleChoiceField(
+        label='面談のスタイル',
+        queryset=StyleChoices.objects.all(),
+        widget=forms.CheckboxSelectMultiple)
 
 
 

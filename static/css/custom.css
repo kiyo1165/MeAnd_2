@@ -253,3 +253,8 @@ a {
 .style-icon{
     margin-right: 5px;
 }
+
+.user-list{
+    max-height: 300px;
+    height: 100%;
+}

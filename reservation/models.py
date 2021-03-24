@@ -3,6 +3,7 @@ from django.utils import timezone
 from accounts.models import User
 from plan.models import Plan
 from .choise import STATUS_LIST
+from plan.models import StyleChoices
 
 
 # Create your models here.
@@ -16,6 +17,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True, related_name='guest_user')
     user2 = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, null=True, related_name='host_user')
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, blank=True, null=True, related_name='reserve_plan')
+    style_choice = models.ManyToManyField(StyleChoices, verbose_name='面談スタイル', related_name='reserve_style_choice')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -25,7 +27,7 @@ class Reservation(models.Model):
 
 class ReservationMessage(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
-    user = models.ForeignKey( User, on_delete=models.CASCADE )
+    user = models.ForeignKey( User, on_delete=models.CASCADE)
     message = models.TextField('メッセージ', max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
 

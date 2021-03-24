@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404,redirect
+from django.shortcuts import get_object_or_404,redirect, render
 from django.views.generic import TemplateView, DetailView, CreateView
 from category.models import Category
 from plan.models import Plan
@@ -6,6 +6,10 @@ from message.form import MessageForm
 from accounts.models import User
 from message.models import Message
 from django.db.models import Q
+import json
+from django.http import JsonResponse
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core.serializers import serialize
 
 # Create your views here.
 class CateSearch(TemplateView):
@@ -69,9 +73,25 @@ class PlanDetail(DetailView, DetailSendMessage):
         return redirect('main:cate_search')
 
 
+class UserList(TemplateView):
+    template_name = 'main/user_list.html'
+
+def UserListJson(request):
+    users = serialize('json', User.objects.all())
+    # follow_list = []
+    # for user in users:
+    #     followed = print(type(user.follow_user.filter(follower_user=request.user)))
+    #     followed = str(followed)
+    #     if followed.exists():
+    #         follow_list.append(user)
+    return  JsonResponse(users, safe=False)
+
+# render(request, 'main/user_list.html', context)
 
 
-
-
+# context = {
+    #     'users':users,
+    #     'follow_list':follow_list,
+    # }
 
 
