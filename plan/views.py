@@ -32,6 +32,11 @@ class PlanList(ListView):
     model = Plan
     template_name = 'plan/plan_list.html'
 
+    def get_queryset(self):
+        user = self.request.user.pk
+        queryset = Plan.objects.filter(user=user)
+        return queryset
+
 class MyPagePlanDetail(DetailView):
     model = Plan
     template_name = 'plan/mypage_plan_detail.html'

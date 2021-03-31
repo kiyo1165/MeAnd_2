@@ -8,7 +8,6 @@ h2{
 body p {
     font-size: 14px;
     color: #333333;
-    line-height: 27px;
 }
 .badge{
     display: inline-block;
@@ -150,11 +149,11 @@ a {
     /*background-color: red;*/
 }
 
-.name {
-    font-size: 14px;
-    margin-top: 15px;
-    margin-left: 10px;
-}
+/*.name {*/
+/*    font-size: 14px;*/
+/*    margin-top: 15px;*/
+/*    margin-left: 10px;*/
+/*}*/
 
 .qualification {
     color: #aaaaaa;
@@ -292,3 +291,12 @@ a {
 .plan-detail-fix{
     width: 80%;
 }
+
+/*プランリスト*/
+.plan-list{
+    /*max-height: 200px;*/
+}
+.plan-list-body{
+    padding: 0;
+}
+

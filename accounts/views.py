@@ -282,7 +282,7 @@ class CounselorRegister(OnlyStaffMixin, CreateView):
     template_name = 'accounts/counselor_register.html'
     model = CounselorRegister
     fields = ('identification', 'credentials', 'signature', 'address', 'agreement')
-    success_url = reverse_lazy('accounts:my_page')
+    success_url = reverse_lazy('accounts:profile_edit')
 
     def form_valid(self, form):
         register = form.save(commit=False)

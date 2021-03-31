@@ -6,7 +6,6 @@ from django.core.mail import send_mail, send_mass_mail
 
 @receiver(post_save, sender=Reservation)
 def message(sender, instance, created, **kwargs):
-    print(instance.message)
     if created :
         if  '休暇' in instance.message:
             pass
@@ -19,17 +18,8 @@ def message(sender, instance, created, **kwargs):
             #     )
             # print(instance)
         else:
-            to_host = ('【予約が入りました】'+ str(instance.start) + '〜' + str(instance.end),
-                       '開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user2.first_name,
-                       instance.user2.email,
-                       'admin@example.com'
-                       )
-            to_guest = (
-                    '【予約完了】' + str( instance.start ) + '〜' + str( instance.end ),
-                    '開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user.first_name,
-                    instance.user.email,
-                    'admin@example.com'
-            )
+            to_host = ('【予約が入りました】'+ str(instance.start) + '〜' + str(instance.end), '開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user2.first_name,'admin@example.com',[instance.user2.email])
+            to_guest = ('【予約完了】' + str( instance.start ) + '〜' + str( instance.end ),'開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user.first_name,'admin@example.com',[instance.user.email])
             send_mass_mail( (to_host, to_guest) )
 
 

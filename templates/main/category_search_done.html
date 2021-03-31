@@ -10,45 +10,39 @@
             <div class="col-lg-3"></div>
             <div class="col-lg-9">
                 {% for item in plan_list %}
-                    <div class="card mb-3">
+                    <div class="card plan-list mb-3">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="face-image">
                                     <img src="{{ item.user.profile.face_image.thumbnail.url }}" alt="face_image">
                                 </div>
                             </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
+                            <div class="col-md-10">
+                                <div class="card-body plan-list-body">
                                     <ul class="list-group list-group-horizontal-xl">
-                                        <li class="list-group-item border-0 p-0 mb-0"><p
+                                        <li class="list-group-item border-0 pb-0 mb-0 "><p
                                                 class="name">{{ item.user.last_name }}&nbsp;{{ item.user.first_name }}</p>
                                         </li>
-                                        <li class="list-group-item border-0 p-0 mb-0"><h1
-                                                class="name">{{ item.title }}</h1></li>
+                                        <li class="list-group-item border-0 pb-0 mb-0 "><h5
+                                                class="name"><a href="{% url 'main:plan_detail' item.pk %}">{{ item.title }}</a></h5></li>
                                     </ul>
                                     <ul class="list-group list-group-horizontal-xl ">
-                                        <li class="list-group-item border-0 p-0"><p class="name"><span
-                                                class="">評価：☆☆☆☆☆</span>
-                                        </p></li>
-                                        <li class="list-group-item border-0 p-0"><p class="name"><span
-                                                class="badge btn-info">経験：{{ item.user.profile.years_of_experience }}年</span>
-                                        </p></li>
-                                        <li class="list-group-item border-0 p-0"><p class="name"><span
-                                                class="badge btn-info">資格：{{ item.user.profile.qualification }}&nbsp;</span>
-                                        </p></li>
-                                        <li class="list-group-item border-0 p-0"><p class="name"><span
-                                                class="badge btn-info">カテゴリー：{{ item.category }}&nbsp;</span></p></li>
-                                        <li class="list-group-item border-0 p-0"><p class="name"></p></li>
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p>評価：☆☆☆☆☆</p></li>
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p class="name"><span class="badge btn-info">経験：{{ item.user.profile.years_of_experience }}年</span></p></li>
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p class="name"><span class="badge btn-info">資格：{{ item.user.profile.qualification }}&nbsp;</span></p></li>
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p class="name"><span class="badge btn-info">カテゴリー：{{ item.category }}&nbsp;</span></p></li>
+                                    </ul>
+                                    <ul class="list-group list-group-horizontal-xl ">
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0">  <p class="card-text">対象者：{{ item.target| truncatechars:40 }}</p></li>
                                     </ul>
 
-                                    <p class="card-text">対象者：{{ item.target| truncatechars:40 }}</p>
                                     <ul class="list-group list-group-horizontal-xl">
-                                        <li class="list-group-item border-0 p-0 mb-0"><p
-                                                class="name">{{ item.price }}円/{{ item.session_time }}分</p>
-                                        </li>
-
+                                        <li class="list-group-item border-0 pr-0 pb-0 mt-0 "><p class="mb-1">{{ item.price }}円/{{ item.session_time }}分</p></li>
                                     </ul>
-                                    <p class="card-text"><small class="text-muted">最終ログイン</small></p>
+                                    <ul class="list-group list-group-horizontal-xl">
+                                        <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p class="card-text"><small class="text-muted">最終ログイン</small></p></li>
+                                    </ul>
+
                                 </div>
                             </div>
                         </div>
