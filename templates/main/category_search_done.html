@@ -7,30 +7,56 @@
     <br>
     <div class="container">
         <div class="row">
-            {% for item in plan_list %}
-                <div class="card-deck col-4">
-                    <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-                        <div class="bd-placeholder-img card-img-top">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-9">
+                {% for item in plan_list %}
+                    <div class="card mb-3">
+                        <div class="row">
+                            <div class="col-md-3">
                                 <div class="face-image">
                                     <img src="{{ item.user.profile.face_image.thumbnail.url }}" alt="face_image">
                                 </div>
-                                <div class="cons-name">
-                                    <p class="name">{{ item.user.last_name }}&nbsp;{{ item.user.first_name }}</p>
-                                    <p class="qualification">{{ item.user.profile.qualification }}</p>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-horizontal-xl">
+                                        <li class="list-group-item border-0 p-0 mb-0"><p
+                                                class="name">{{ item.user.last_name }}&nbsp;{{ item.user.first_name }}</p>
+                                        </li>
+                                        <li class="list-group-item border-0 p-0 mb-0"><h1
+                                                class="name">{{ item.title }}</h1></li>
+                                    </ul>
+                                    <ul class="list-group list-group-horizontal-xl ">
+                                        <li class="list-group-item border-0 p-0"><p class="name"><span
+                                                class="">評価：☆☆☆☆☆</span>
+                                        </p></li>
+                                        <li class="list-group-item border-0 p-0"><p class="name"><span
+                                                class="badge btn-info">経験：{{ item.user.profile.years_of_experience }}年</span>
+                                        </p></li>
+                                        <li class="list-group-item border-0 p-0"><p class="name"><span
+                                                class="badge btn-info">資格：{{ item.user.profile.qualification }}&nbsp;</span>
+                                        </p></li>
+                                        <li class="list-group-item border-0 p-0"><p class="name"><span
+                                                class="badge btn-info">カテゴリー：{{ item.category }}&nbsp;</span></p></li>
+                                        <li class="list-group-item border-0 p-0"><p class="name"></p></li>
+                                    </ul>
+
+                                    <p class="card-text">対象者：{{ item.target| truncatechars:40 }}</p>
+                                    <ul class="list-group list-group-horizontal-xl">
+                                        <li class="list-group-item border-0 p-0 mb-0"><p
+                                                class="name">{{ item.price }}円/{{ item.session_time }}分</p>
+                                        </li>
+
+                                    </ul>
+                                    <p class="card-text"><small class="text-muted">最終ログイン</small></p>
                                 </div>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">{{ item.title}}</h6>
-                            <p class="">対象者：{{ item.target }}</p>
-                            <p class="card-text">{{ item.catch_message | truncatechars:60 }}<a href="{% url 'main:plan_detail' item.pk %}">続きを読む</a></p>
-                        </div>
-                        <div class="card-footer">
-                            <p>相談のタイミング</p>
-                            <small class="text-muted">{{ item.get_counseling_active_display }}</small>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+
+            </div>
+
         </div>
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import PermissionsMixin, UserManager
+from django.contrib.auth.models import PermissionsMixin, BaseUserManager
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
@@ -12,7 +12,8 @@ from django.dispatch import receiver
 
 
 
-class CustomUserManager(UserManager):
+
+class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('The given email must be set')

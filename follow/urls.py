@@ -4,5 +4,5 @@ from .views import FollowView
 
 app_name = 'follow'
 urlpatterns = [
-    path('follow/', FollowView, name='follow' ),
+    path('<int:pk>/follow/', FollowView, name='follow' ),
     ]

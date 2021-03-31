@@ -19,7 +19,7 @@ import datetime
 #             return user.pk == self.request.user.userprofile.user_id
 
 
-class SendMessage(CreateView):
+class SendMessage(LoginRequiredMixin,CreateView):
     model = Message
     template_name = 'message/message_create.html'
     form_class = MessageForm

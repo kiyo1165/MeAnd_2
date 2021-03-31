@@ -10,12 +10,40 @@ body p {
     color: #333333;
     line-height: 27px;
 }
+.badge{
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+.badge-secondary{
+    background-color: #6c6e7e;
+
+}
+.btn{
+    border-radius: 0px;
+    border: none;
+}
+.btn-info {
+    color: #fff;
+    background-color: #39C4D9;
+}
+.badge-info{
+    background-color: #39C4D9;
+    font-weight: normal;
+
+}
 
 /*プロフィール*/
 .profile-header {
     background-color: #BBC9B7;
-    height: 125px;
-    margin-bottom: 100px;
+    height: 50px;
+    /*margin-bottom: 100px;*/
 }
 
 .content-wrapper {
@@ -111,7 +139,8 @@ a {
 
 .face-image img {
     border-radius: 50px;
-    border: solid 1px lightgray;
+    border: none;
+    width: 90px;
 }
 
 .cons-name {
@@ -257,4 +286,9 @@ a {
 .user-list{
     max-height: 300px;
     height: 100%;
+}
+
+/*プラン詳細*/
+.plan-detail-fix{
+    width: 80%;
 }

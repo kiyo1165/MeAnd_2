@@ -23,7 +23,7 @@ class Plan(models.Model):
     title = models.CharField('タイトル', max_length=30)
     catch_message = models.TextField('アイキャッチメッセージ', max_length=100,help_text='ヒント！ご相談される方が最初に見るメッセージです。')
     detail = models.TextField('本文', max_length=1000)
-    plan_sign = StdImageField( upload_to='media/plan_sign', blank=True, default='icon/images.png', variations={
+    plan_sign = StdImageField( upload_to='media/plan_sign', blank=True, default='static/icon/MeAnd_Logo1.png', variations={
         'xl': (1000, 400),
         'large': (600, 400),
         'medium': (300, 200),

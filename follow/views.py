@@ -1,28 +1,24 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from accounts.models import User
 from .models import Follow
+from plan.models import Plan
 from django.http import JsonResponse
+
 
 # Create your views here.
 
-
-def FollowView(request):
-    if request.method =="POST":
-        follow_user = get_object_or_404(User, pk=request.POST.get('user.pk'))
-        user = request.user
-        followed = False
-        follow = Follow.objects.filter(follow_user=follow_user, user=user)
-        if follow.exists():
-            follow.delete()
-        else:
-            follow.create(follow_user=follow, user=user)
-            followed = True
-
-        context={
-            'user_id': user.id,
-            'followed': followed,
-            'count': user.follower_user.count(),
-        }
-
-    if request.is_ajax():
-        return JsonResponse(context)
+def FollowView(request, pk):
+    print(request,pk)
+    if request.method == "POST":
+        plan_set_user = Plan.objects.get(pk=pk)
+        follower_user = get_object_or_404( User, pk=plan_set_user.user.pk )  # フォローされるユーザー
+        follow_user = request.user  # フォローするユーザー
+        try:
+            follow = Follow.objects.filter( follower_user=follow_user )
+            if follow.exists():
+                follow.delete()
+            else:
+                follow.create( follow_user=follower_user, follower_user=follow_user )
+        except:
+            return redirect( '/accounts/login/')
+    return redirect( 'main:plan_detail', pk=pk )

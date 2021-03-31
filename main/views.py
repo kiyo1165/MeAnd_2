@@ -10,6 +10,7 @@ import json
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
+from follow.models import Follow
 
 # Create your views here.
 class CateSearch(TemplateView):
@@ -71,6 +72,20 @@ class PlanDetail(DetailView, DetailSendMessage):
         form.user = User.objects.get(pk=self_plan.user_id)
         form.save()
         return redirect('main:cate_search')
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        if  self.request.user.is_anonymous:
+            ctx['self_category_list'] = Plan.objects.filter( category=self.object.category_id )
+            return ctx
+        elif Follow.objects.filter(follower_user=self.request.user):
+            follow_check = True
+        else:
+            follow_check = False
+        ctx['follow_check'] = follow_check
+        ctx['self_category_list'] = Plan.objects.filter(category=self.object.category_id)
+        return ctx
 
 
 class UserList(TemplateView):

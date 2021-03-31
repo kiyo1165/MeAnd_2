@@ -3,14 +3,15 @@
 {% block content %}
     <br>
     <br>
-    <!-- Modal -->
+    <!-- MessageModal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">
-                        id:{{ message_receiver.id }}{{ message_receiver.email }}{{ message_receiver.last_name }}{{ message_receiver.first_name }}さんへメッセージを送る
+                        {{ message_receiver.last_name }}{{ message_receiver.first_name }}さんへメッセージを送る
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -20,88 +21,86 @@
                     <form action="" method="post">{% csrf_token %}
                         {{ form }}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                        <button type="submit" class="btn btn-primary">送信</button>
+                        <button type="submit" class="btn btn-info"><a
+                                href="{% url 'message:send_message' object.user.pk %}"
+                                style="color: #ffffff">送信</a></button>
                     </form>
                 </div>
                 <div class="modal-footer">
 
                 </div>
+
+
             </div>
+
         </div>
     </div>
-    <div class="container-fluid">
-    {% include 'profile_header.html' %}
-        <div class="row align-items-center my-5">
-            <div class="col-lg-7">
-                <h3 class="font-weight-light">{{ object.title }}</h3>
-                <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it,
-                    but it makes a great use of the standard Bootstrap core components. Feel free to use this template
-                    for any project you want!</p>
-{#                <a class="btn btn-primary" href="#">Call to Action!</a>#}
 
+    <div class="container-fluid plan-detail-fix">
+        <div class="row row-eq-height  my-5">
+            <div class="col-md-12 col-lg-8">
+                <div class="plan-title">
+                    <h4 class="font-weight-light">{{ object.title }}</h4>
+                </div>
+                <div class="plan-status-1 row">
+                    <div class="col-md-12">
+                        <h6 style="float: left">評価：★★★★★（23）</h6><h6>カテゴリー：<span>{{ object.category }}</span></h6>
+                    </div>
+                </div>
+                <div class="plan-status-2 row justify-content-between">
+                    <div class="col-4 ">
+                        <p class="h-25" style="float: left">面談形式：</p>
+                        {% for style in object.style_choices.all %}
+                            <p class="badge badge-info">{{ style }}</p>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="plan-target row ">
+                    <div class="col-12">
+                        <h5>こんな方が対象です</h5>
+                        <hr>
+                        <p>{{ object.target | linebreaksbr }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="plan-detail row">
+                    <div class="col-m-12">
+                        <h5>プラン内容</h5>
+                        <p>{{ object.detail | linebreaksbr }}</p>
+
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row button-area">
+                    <button class="col-md-3 btn btn-info"><a href="{% url 'reservation:calendar' object.pk %}"
+                                                             style="color: #FFFFFF">申し込む</a></button>
+                </div>
             </div>
             <!-- /.col-lg-8 -->
-            <div class="col-lg-5">
-                <img class="img-fluid rounded mb-4 mb-lg-0" src="{{ object.plan_sign.xl.url }}">
+            <div class="col-md-12 col-lg-4">
+                {% include 'left_sideber.html' %}
 
             </div>
             <!-- /.col-md-4 -->
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h4>同じカテゴリーのプラン</h4>
+        <hr>
         <!-- /.row -->
+    {% include 'recommend_list.html' %}
 
-        <!-- Call to Action Well -->
-        <div class="card text-white bg-secondary my-5 py-4 text-center">
-            <div class="card-body">
-                <p class="text-white m-0">This call to action card is a great place to showcase some important
-                    information or display a clever tagline!</p>
-            </div>
-        </div>
 
-        <!-- Content Row -->
-        <div class="row">
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h2 class="card-title">Card One</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                            numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary btn-sm">More Info</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h2 class="card-title">Card Two</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex
-                            natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore
-                            voluptates quos eligendi labore.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary btn-sm">More Info</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h2 class="card-title">Card Three</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                            numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary btn-sm">More Info</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-md-4 -->
+    </div>
+    </div>
 
-        </div>
-        <!-- /.row -->
+    <!-- Content Row -->
+
 
     </div>
 

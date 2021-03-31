@@ -1,0 +1,71 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://usefontawesomecom/releases/v510/css/allcss" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
+<div id="app">
+    <input type="number" v-modellazy="num" min="0" max="5">
+    <div class="star">
+        <p v-if="num==1" v-html="star1"></p>
+        <p v-else-if="num==2" v-html="star2"></p>
+        <p v-else-if="num==3" v-html="star3"></p>
+        <p v-else-if="num==4" v-html="star4"></p>
+        <p v-else-if="num==5" v-html="star5"></p>
+
+    </div>
+    <div v-for="(item, key) in info" v-bind:key="item">
+        <p>[[ item ]]</p>
+    </div>
+
+
+
+</div>
+
+<script src="https://cdnjsdelivrnet/npm/vue@2612/dist/vuejs"></script>
+<script src="https://cdnjsdelivrnet/npm/axios/dist/axiosminjs"></script>
+<script>
+
+
+    stars = {
+            star1:'<i class="far fa-star">',
+            star2:'<i class="far fa-star"><i class="far fa-star">',
+            star3:'<i class="far fa-star"><i class="far fa-star"><i class="far fa-star">',
+            star4:'<i class="far fa-star"><i class="far fa-star"><i class="far fa-star"><i class="far fa-star">',
+            star5:'<i class="far fa-star"><i class="far fa-star"><i class="far fa-star"><i class="far fa-star"><i class="far fa-star">'
+
+        }
+
+var vm = new Vue({
+    delimiters: ['[[', ']]'],
+    el:"#app",
+    data:{
+        stars:stars,
+        num:0,
+        info:''
+    },
+    computed: {
+        totalStar: function () {
+            return this.stars.reduce(function (sum, star) {
+                return sum + (star.num * star.quantity)
+            }, 0)
+        }
+    },
+    mounted(){
+        axios.get('http://127001:8080/test_index/')
+        .then(response => (this.info = response.data))
+    }
+})
+
+
+</script>
+
+
+<style scoped>
+
+</style>
+
+</body>
+
+
+</html>
+

@@ -22,6 +22,7 @@ from django.conf import settings
 from accounts.models import CounselorRegister
 from django.core.mail import send_mail, EmailMessage
 from message.views import MessageList
+from follow.models import Follow
 
 
 class OnlyStaffMixin( UserPassesTestMixin ):
@@ -145,12 +146,23 @@ class GuestMyPageConsList(TemplateView):
     template_name = 'accounts/guest/guest_my_page_conslist.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
+        ctx = super().get_context_data()
         cons = User.objects.filter(is_staff=True, is_superuser=False)
         ctx['cons_list'] = cons
         return ctx
 
-class MyPageMixin(MyPageCalendar,GuestMyPageConsList):
+class FollowList(TemplateView):
+    model = User
+    template_name = 'accounts/follow_list.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        user = User.objects.get( pk=self.request.user.id )
+        ctx['follow_list'] = user.follower_user.all()
+        return ctx
+
+
+class MyPageMixin(MyPageCalendar,GuestMyPageConsList, FollowList):
     template_name = 'accounts/index.html'
     model = Plan
     def get_context_data(self, **kwargs):

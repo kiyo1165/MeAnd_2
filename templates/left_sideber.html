@@ -1,29 +1,57 @@
 {% load static %}
-
-<div class="sidebar-left col-md-2">
-    <div class="sidebar-face-image">
-        <img src="{{ user.profile.face_image.thumbnail.url }}" alt="顔写真">
-    </div>
-    <div class="email">
-        <label style="font-size:8px;">Email：<span>{{ user.email |  truncatechars:10 }}<a
-                href="{% url 'account_email' %}">変更する</a></span></label>
-    </div>
-    <div class="password">
-        <label style="font-size:  8px;">Password：<span><a
-                href="{% url 'account_change_password' %}">変更する</a></span></label>
-    </div>
-    <ul class="sidebar-menu">
-        <li class="home"><a href=""><img src="{% static 'icon/home.png' %}" alt="">My Page Top</a></li>
-        <li class="message"><a href="{% url 'accounts:my_page_calendar' user.pk %}"><img src="{% static 'icon/reservation.png' %}" alt="">予約確認</a>
-        <li class="message"><a href="{% url 'message:message_list' %}"><img src="{% static 'icon/mail.png' %}" alt="">メッセージ</a>
-        </li>
-        <li class="secret"><a href="{% url 'accounts:cons_confirm_registered' user.pk %}"><img src="{% static 'icon/pira.png' %}" alt="">機密保持契約</a></li>
-        <li class="setting"><a href=""><img src="{% static 'icon/setting.png' %}" alt="">設定</a></li>
-    </ul>
-    <div class="sidebar-sns">
-        <div class="set-sns">
-            <img src="{% static '/icon/twitter.png' %}" class="twitter">
-            <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+    <div class="card-header w-100" >
+        <div class="sidebar-face-image">
+            <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
         </div>
+        <div class="profile">
+            <ul>
+                <li> <p class="text-center mb-0">{{ object.user.last_name }}{{ object.user.first_name }}</p></li>
+                <li> <p class="text-center mb-0">{{ object.user.profile.qualification }}&nbsp;<span>{{ object.user.profile.years_of_experience }}年</span></p></li>
+            </ul>
+
+            <ul class="list-group list-group-horizontal-xl ">
+                <li class="list-group-item border-0  text-center  pb-0"><p>機密保持契約<i class="fas fa-check-circle" style="color: #3AC4D9"></i></p></li>
+                <li class="list-group-item border-0 text-center pb-0"><p>本人確認<i class="fas fa-check-circle" style="color: #3AC4D9"></i></p></li>
+            </ul>
+
+        </div>
+        <div class="card-body m-0 p-1">
+
+            <div class="profile mt-0 p-0">
+                <ul>
+                    <li class="text-center"><small>{{ object.user.profile.career | linebreaksbr }}</small></li>
+                </ul>
+            </div>
+            <ul class="message-button list-group list-group-horizontal-xl text-center">
+                {% if user.is_authenticated %}
+                <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="float:left; font-size: 10px">メッセージで相談する</button></li>
+                {% else %}
+                <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="float:left; font-size: 10px">
+                    <a href="{% url 'account_login' %}" style="color: #FFFFFF">メッセージで相談する</a></button></li>
+                {% endif %}
+                {% if follow_check == True %}
+                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
+                    <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" type="submit" style="font-size: 12px">フォロー解除</button></li>
+                </form>
+                {% else %}
+                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
+                    <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" type="submit" style="font-size: 12px">フォローする</button></li>
+                </form>
+                {% endif %}
+            </ul>
+            <ul class="sidebar-menu">
+
+            </ul>
+            <div class="sidebar-sns">
+                <div class="set-sns">
+                    <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                    <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
-</div>
+
+
