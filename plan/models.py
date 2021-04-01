@@ -27,6 +27,7 @@ class Plan(models.Model):
         'xl': (1000, 400),
         'large': (600, 400),
         'medium': (300, 200),
+        'thumbnail':(200, 170)
     })
     target = models.CharField('対象者', max_length=100)
     plan_type = models.CharField('プランタイプ', max_length=20, choices=PLAN_TYPE_SELECT)

@@ -1,24 +1,127 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <ul>
-        <li>登録資格の説明</li>
-        <li>必要書類</li>
-        <li>
-            <ul>
-                <li>本人確認書類-> 運転免許証 or 健康保険証 <small>※顔写真付き、現住所が確認できるもの。</small></li>
-                <li>保持資格証明書<small>※有効期限の記載あるもの</small></li>
-            </ul>
-        </li>
-        <li>プロフィールの登録</li>
-        <li>機密保持契約の締結</li>
-        <li>銀行口座の登録</li>
-        <li></li>
-    </ul>
-    {% if user.is_authenticated  %}
-        <button type="button" class="btn btn-info"><a href="{% url 'accounts:counselor_register' user.pk %}">カウンセラーの登録</a></button>
+    <div class="container-fluid mb-5 mt-5">
+        <div class="jumbotron main-image text-center">
+            <div class="main-message">
+                <div class="title-message">
+                    <img src="{% static 'img/title.png' %}" alt="">
+                </div>
+                <div class="image-message">
+                    <img src="{% static 'icon/MeAnd_Logo1.png' %}" alt="">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="register-action">
+                <div class="card border-0" style="max-width: 1200px;">
+                    <div class="row no-gutters">
+                        <div class="col-xl-7">
+                            <div class="action-card-body">
+                                <h2 class="card-title text-center">あなたのスキルを待っている人がいます</h2>
+                                <p class="card-text text-center">下記のようなかた、ぜひご登録ください。</p>
+                                <hr>
+                                <br>
+                                <ul class="list-group text-center">
+                                    <li class="list-group-item border-0 mb-2">
+                                        <i class="fas fa-check-circle"></i>
+                                        資格はあるけとブランクがある。
+                                    </li>
+                                    <li class="list-group-item border-0 mb-2">
+                                         <i class="fas fa-check-circle"></i>
+                                        臨床経験をふやしたい。
+                                    </li>
+                                    <li class="list-group-item border-0 mb-2">
+                                         <i class="fas fa-check-circle"></i>
+                                        子育てのあいまの時間に仕事をしたい。
+                                    </li>
+                                     <li class="list-group-item border-0 mb-2">
+                                         <i class="fas fa-check-circle"></i>
+                                        副業で収入を増やしたい。
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 text-center">
+                            <img class="rounded" src="{% static 'img/AdobeStock_141712320_Fotor.jpg' %}" alt=""
+                                 style="width: 600px;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <br>
+    <br>
+    <br>
+    <section class="container register-process">
+        <h2 class="text-center mt-5">ご登録方法</h2>
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-12 register-section">
+                <div class="process-img">
+                    <ul class="list-group list-group-horizontal-xl">
+                        <li class="list-group-item border-0  text-center pb-0">
+                            <img src="{% static 'img/honin_0.png' %}" alt="">
+                            <p>本人確認書類、資格証明書のご登録</p>
+                            <p>NDA(機密保持契約)の締結</p>
+                            <p></p>
+                        </li>
+                        <li class="list-group-item border-0  text-center  pb-0">
+                            <img src="{% static 'img/honin_1.png' %}" alt="">
+                            <p>ご登録情報の確認</p>
+                            <small>※土日祝日を除く3営業日ほど頂いております。</small>
+                        </li>
+                        <li class="list-group-item border-0  text-center  pb-0">
+                            <img src="{% static 'img/honin_2.png' %}" alt="">
+                            <p>ご経歴などのプロフィールの登録</p>
+                        </li>
+                        <li class="list-group-item border-0  text-center  pb-0">
+                            <img src="{% static 'img/honin_3.png' %}" alt="">
+                            <p>ご経歴などのプロフィールの登録</p>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {#    <ul>#}
+    {#        <li>登録資格の説明</li>#}
+    {#        <li>必要書類</li>#}
+    {#        <li>#}
+    {#            <ul>#}
+    {#                <li>本人確認書類-> 運転免許証 or 健康保険証 <small>※顔写真付き、現住所が確認できるもの。</small></li>#}
+    {#                <li>保持資格証明書<small>※有効期限の記載あるもの</small></li>#}
+    {#            </ul>#}
+    {#        </li>#}
+    {#        <li>プロフィールの登録</li>#}
+    {#        <li>機密保持契約の締結</li>#}
+    {#        <li>銀行口座の登録</li>#}
+    {#        <li></li>#}
+    {#    </ul>#}
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-info"><a
+                href="{% url 'accounts:counselor_register' user.pk %}">カウンセラーの登録</a></button>
     {% else %}
         <p>カウンセラーの登録は会員登録、もしくはログインが必要です。</p>
-    <button type="button" class="btn btn-info"><a href="{% url 'account_signup' %}">新規登録</a></button>
+        <button type="button" class="btn btn-info"><a href="{% url 'account_signup' %}">新規登録</a></button>
     {% endif %}
 {% endblock %}

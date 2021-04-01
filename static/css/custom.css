@@ -1,15 +1,18 @@
 body {
-    font-family: 'M PLUS 1p', sans-serif;
+    font-family: "Noto Sans JP",'M PLUS 1p', sans-serif;
 }
-h2{
-    font-size: 25px;
+
+h2 {
+    font-size: 32px;
     color: #212529;
 }
+
 body p {
     font-size: 14px;
     color: #333333;
 }
-.badge{
+
+.badge {
     display: inline-block;
     padding: .25em .4em;
     font-size: 75%;
@@ -20,22 +23,29 @@ body p {
     vertical-align: baseline;
     border-radius: .25rem;
 }
-.badge-secondary{
+
+.badge-secondary {
     background-color: #6c6e7e;
 
 }
-.btn{
+
+.btn {
     border-radius: 0px;
     border: none;
 }
+
 .btn-info {
     color: #fff;
     background-color: #39C4D9;
 }
-.badge-info{
+
+.badge-info {
     background-color: #39C4D9;
     font-weight: normal;
 
+}
+.fa-check-circle{
+    color: #39C4D9;
 }
 
 /*プロフィール*/
@@ -51,7 +61,8 @@ body p {
     padding: 0;
     height: 100px;
 }
-.message-face-img{
+
+.message-face-img {
     width: 50px;
     border-radius: 80px;
     border: solid 2px #BBC9B7;
@@ -80,23 +91,6 @@ body p {
     margin-bottom: 10px;
 }
 
-.messages_ul li {
-    text-align: center;
-}
-
-.messages {
-    max-width: 500px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.alert-success {
-    color: #1e4e0a;
-    font-size: 12px;
-    background-color: #C6D6C5;
-    border-color: #c3e6cb;
-    border-radius: 5px;
-}
 
 .cate-title h4 {
     color: #FFFFFF;
@@ -268,35 +262,129 @@ a {
     max-width: 800px;
 }
 
-.card-header{
+.card-header {
     background-color: #FFFFFF;
 
 }
 
-.detail-image img{
+.detail-image img {
     width: 120px;
     border-radius: 80px;
     border: solid 4px #23c3c3;
 }
-.style-icon{
+
+.style-icon {
     margin-right: 5px;
 }
 
-.user-list{
+.user-list {
     max-height: 300px;
     height: 100%;
 }
 
 /*プラン詳細*/
-.plan-detail-fix{
+.plan-detail-fix {
     width: 80%;
 }
 
 /*プランリスト*/
-.plan-list{
+.plan-list {
     /*max-height: 200px;*/
 }
-.plan-list-body{
+
+.plan-list-body {
     padding: 0;
 }
 
+/*メッセージアラート*/
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    font-size: 12px;
+    padding: 7px;
+}
+
+.messages_ul li {
+    text-align: center;
+}
+
+.messages {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.alert-success {
+    color: #1e4e0a;
+    font-size: 12px;
+    background-color: #C6D6C5;
+    border-color: #c3e6cb;
+    padding: 7px;
+}
+
+.alert-warning {
+    color: #866307;
+    font-size: 12px;
+    background-color: #FFF3CD;
+    border-color: #FFEEBA;
+
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    font-size: 12px;
+    padding: 7px;
+}
+
+/*alert-end*/
+
+/*カウンセラーガイダンス*/
+.main-image {
+    background-image: url('/static/img/AdobeStock_409890226_Fotor.jpg');
+    background-size: cover;
+    height: 650px;
+
+}
+
+.main-message{
+    text-align: center;
+}
+
+.title-message img{
+    margin-top: 40px;
+    width: 500px;
+
+}
+
+.image-message img{
+    margin-top: -150px;
+    width: 200px;
+}
+
+.register-section{
+    height: 300px;
+
+}
+
+.process-img ul li img{
+    width: 200px;
+}
+
+.action-card-body h2{
+    color: #3d3e47;
+    font-family: "Noto Sans JP";
+
+}
+
+.action-card-body li{
+    font-size: 20px;
+    color: #5a5c69;
+}
+
+.register-process h2{
+    color: #3d3e47;
+    font-family: "Noto Sans JP";
+}

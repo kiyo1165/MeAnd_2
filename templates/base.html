@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="{% static 'css/allauth.css' %}">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400;500;700;800&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap"
+          rel="stylesheet">
     <script src="https://kit.fontawesome.com/ca32f5216d.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -55,7 +56,9 @@
                         <p><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p>
                     </li>
                 {% else %}
-                   <li class="nav-item login" style="margin-top: 40px;"><a class="nav-link" href="{% url 'account_login' %}"> <i class="fas fa-sign-in-alt"></i>&nbsp;ログイン</a>
+                    <li class="nav-item login" style="margin-top: 40px;"><a class="nav-link"
+                                                                            href="{% url 'account_login' %}"> <i
+                            class="fas fa-sign-in-alt"></i>&nbsp;ログイン</a>
                     </li>
                     <li class="nav-item signup"><a
                             style="margin-top: 19px; width: 120px; margin-left: 25px; text-align: center;color: #F8F9FA;"

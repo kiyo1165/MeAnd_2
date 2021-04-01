@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView,ListView, FormView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView
 from .models import Profile
 from .forms import UserForm, ProfileForm, ReserveUpdateForm
 from .models import User
@@ -13,16 +13,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-from reservation.views import StaffCalendar
+
 import datetime
 from django.utils import timezone
 from reservation.models import Reservation
 from django.db.models import Q
 from django.conf import settings
 from accounts.models import CounselorRegister
-from django.core.mail import send_mail, EmailMessage
-from message.views import MessageList
-from follow.models import Follow
+from django.core.mail import send_mail
+
 
 
 class OnlyStaffMixin( UserPassesTestMixin ):
@@ -232,7 +231,7 @@ class MyPageScheduleDelete(DeleteView):
     model = Reservation
 
     def form_valid(self, form):
-        messages.success(self.request, f'削除しました。')
+        messages.warning(self.request, f'削除しました。')
         return super(MyPageSchedule, self).form_valid(form)
 
     def get_success_url(self):

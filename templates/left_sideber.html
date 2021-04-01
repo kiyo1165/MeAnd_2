@@ -24,14 +24,14 @@
             </div>
             <ul class="message-button list-group list-group-horizontal-xl text-center">
                 {% if user.is_authenticated %}
-                <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="float:left; font-size: 10px">メッセージで相談する</button></li>
+                <li class="list-group-item border-0 text-center"><button class="btn btn-info pt-2 pb-2" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="font-size: 11px;">メッセージで相談</button></li>
                 {% else %}
-                <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="float:left; font-size: 10px">
-                    <a href="{% url 'account_login' %}" style="color: #FFFFFF">メッセージで相談する</a></button></li>
+                <li class="list-group-item border-0 text-center"><button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" type="button" style=" font-size: 11px">
+                    <a href="{% url 'account_login' %}" style="color: #FFFFFF">メッセージで相談</a></button></li>
                 {% endif %}
                 {% if follow_check == True %}
                 <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
-                    <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" type="submit" style="font-size: 12px">フォロー解除</button></li>
+                    <li class="list-group-item border-0 text-center"><button class="btn btn-info" type="submit" style="font-size: 12px">フォロー解除</button></li>
                 </form>
                 {% else %}
                 <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}

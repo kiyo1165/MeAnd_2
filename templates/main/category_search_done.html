@@ -12,12 +12,12 @@
                 {% for item in plan_list %}
                     <div class="card plan-list mb-3">
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="face-image">
-                                    <img src="{{ item.user.profile.face_image.thumbnail.url }}" alt="face_image">
+                            <div class="col-md-3">
+                                <div class="img-thumbnail">
+                                    <img src="{{ item.plan_sign.medium.url }}" alt="thumbnail">
                                 </div>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                 <div class="card-body plan-list-body">
                                     <ul class="list-group list-group-horizontal-xl">
                                         <li class="list-group-item border-0 pb-0 mb-0 "><p
@@ -37,7 +37,7 @@
                                     </ul>
 
                                     <ul class="list-group list-group-horizontal-xl">
-                                        <li class="list-group-item border-0 pr-0 pb-0 mt-0 "><p class="mb-1">{{ item.price }}円/{{ item.session_time }}分</p></li>
+                                        <li class="list-group-item border-0 pr-0 pb-0 mt-0 "><p class="mb-1">料金：{{ item.price }}円/{{ item.session_time }}分</p></li>
                                     </ul>
                                     <ul class="list-group list-group-horizontal-xl">
                                         <li class="list-group-item border-0 pr-0 pb-0 pt-0"><p class="card-text"><small class="text-muted">最終ログイン</small></p></li>
