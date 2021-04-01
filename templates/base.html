@@ -22,18 +22,19 @@
     <script src="https://kit.fontawesome.com/ca32f5216d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="navbar navbar-light navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'main:top' %}"><img src="{% static 'icon/MeAnd_Logo2.png' %}"
-                                                                 alt="Meand_logo" style="width: 150px"></a>
+<header>
+<nav class="navbar navbar-light navbar-fixed-top navbar-expand-lg">
+    <div class="container-fluid display-1">
+        <a class="navbar-brand" href="{% url 'main:top' %}"><img src="{% static 'icon/MeAnd_Logo_5.png' %}" style="width: 150px; margin-bottom: 7px;"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto mb-0 mb-lg-0">
+            <ul class="nav navbar-nav mr-auto mb-0 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">MeAndとは？</a>
+                    <a class="nav-link" href="#">MeAndとは？</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">サービス・料金</a>
@@ -43,7 +44,7 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         カウンセラーを探す
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="{% url 'main:cate_search' %}">相談内容から探す</a></li>
                         <li><a class="dropdown-item" href="#">エリアから探す</a></li>
                         <li><a class="dropdown-item" href="#">資格から探す</a></li>
@@ -52,19 +53,15 @@
             </ul>
             <ul class="navbar-nav register">
                 {% if user.is_authenticated %}
-                    <li class="nav-item logout"><a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a>
+                    <li class="nav-item logout mt-lg-4 mr-lg-1 m-sm-0 "><a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a>
                         <p><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p>
                     </li>
                 {% else %}
-                    <li class="nav-item login" style="margin-top: 40px;"><a class="nav-link"
-                                                                            href="{% url 'account_login' %}"> <i
-                            class="fas fa-sign-in-alt"></i>&nbsp;ログイン</a>
+                    <li class="nav-item login mt-lg-4 mr-lg-1 m-sm-0"><a class="nav-link" href="{% url 'account_login' %}">
+                        <i class="fas fa-sign-in-alt"></i>&nbsp;ログイン</a>
                     </li>
-                    <li class="nav-item signup"><a
-                            style="margin-top: 19px; width: 120px; margin-left: 25px; text-align: center;color: #F8F9FA;"
-                            class="nav-link btn-lg btn-info" role="button"
-                            href="{% url 'account_signup' %}">新規登録</a>
-                        <p><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p>
+                    <li class="nav-item signup mt-lg-4 m-sm-0"><button class="nav-link btn btn-info rounded"><a href="{% url 'account_signup' %}"  style="color: #FFFFFF">新規登録</a></button>
+                        <p class="pl-0"><a class="c-register" href="{% url 'accounts:counselor_guidance' %}">カウンセラーのご登録はこちら</a></p>
                     </li>
                 {% endif %}
             </ul>
@@ -84,160 +81,18 @@
         {% endif %}
     </div>
 </div>
+</header>
+
 {% block content %}
-    <header>
-        {% include 'header.html' %}
-    </header>
+
+
+
+
 {% endblock %}
 <br>
 <br>
+
+
 {% block ajax %}{% endblock %}
-<footer class="footer-area footer--light">
-    <div class="footer-big">
-        <!-- start .container -->
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-12">
-                    <div class="footer-widget">
-                        <div class="widget-about">
-                            <img src="http://placehold.it/250x80" alt="" class="img-fluid">
-                            <p>Meand</p>
-                            <ul class="contact-details">
-                                <li>
-                                    <span class="icon-earphones"></span> お問い合わせ:
-                                    <a href="tel:344-755-111">344-755-111</a>
-                                </li>
-                                <li>
-                                    <span class="icon-envelope-open"></span>
-                                    <a href="mailto:support@aazztech.com">support@aazztech.com</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-4 -->
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu footer-menu--1">
-                            <h4 class="footer-widget-title">Popular Category</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Wordpress</a>
-                                </li>
-                                <li>
-                                    <a href="#">Plugins</a>
-                                </li>
-                                <li>
-                                    <a href="#">Joomla Template</a>
-                                </li>
-                                <li>
-                                    <a href="#">Admin Template</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML Template</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-md-3 -->
-
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu">
-                            <h4 class="footer-widget-title">Our Company</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">About Us</a>
-                                </li>
-                                <li>
-                                    <a href="#">How It Works</a>
-                                </li>
-                                <li>
-                                    <a href="#">Affiliates</a>
-                                </li>
-                                <li>
-                                    <a href="#">Testimonials</a>
-                                </li>
-                                <li>
-                                    <a href="#">Contact Us</a>
-                                </li>
-                                <li>
-                                    <a href="#">Plan &amp; Pricing</a>
-                                </li>
-                                <li>
-                                    <a href="#">Blog</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- end /.col-lg-3 -->
-
-                <div class="col-md-3 col-sm-4">
-                    <div class="footer-widget">
-                        <div class="footer-menu no-padding">
-                            <h4 class="footer-widget-title">Help Support</h4>
-                            <ul>
-                                <li>
-                                    <a href="#">Support Forum</a>
-                                </li>
-                                <li>
-                                    <a href="#">Terms &amp; Conditions</a>
-                                </li>
-                                <li>
-                                    <a href="#">Support Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#">Refund Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#">FAQs</a>
-                                </li>
-                                <li>
-                                    <a href="#">Buyers Faq</a>
-                                </li>
-                                <li>
-                                    <a href="#">Sellers Faq</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- end /.footer-menu -->
-                    </div>
-                    <!-- Ends: .footer-widget -->
-                </div>
-                <!-- Ends: .col-lg-3 -->
-
-            </div>
-            <!-- end /.row -->
-        </div>
-        <!-- end /.container -->
-    </div>
-    <!-- end /.footer-big -->
-
-    <div class="mini-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="copyright-text">
-                        <p>© 2018
-                            <a href="#">DigiPro</a>. All rights reserved. Created by
-                            <a href="#">AazzTech</a>
-                        </p>
-                    </div>
-
-                    <div class="go_top">
-                        <span class="icon-arrow-up"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 </body>
 </html>

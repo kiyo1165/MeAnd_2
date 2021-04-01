@@ -1,6 +1,6 @@
 .navbar{
-    height: 76px;
     background-color: #FFFFFF;
+    padding: 0;
 
 }
 .navbar-collapse{
@@ -18,35 +18,20 @@
 .dropdown-menu{
     line-height: 20px;
     width: 5px;
-    border: solid  1px #c3e6cb;
+    border: none;
 }
 
 .dropdown-menu a{
     font-size: 12px;
 
 }
-.carousel{
-    border: solid 0px black;
-    z-index: auto;
-}
-.carousel-item{
-    height: 80%;
-}
+
+
 .back-image{
     height: 500px;
     width: 1200px;
 }
 
-.carousel-caption {
-    margin: auto 0;
-    padding: 0;
-}
-.carousel-caption h1{
-    width: 550px;
-    height: 600px;
-    font-size: 50px;
-    writing-mode: vertical-rl;
-}
 .register li{
     margin-top: 20px;
     margin-bottom: 0px;
@@ -55,5 +40,23 @@
 .register .c-register{
     font-size: 5px;
     color: #15A3B8;
-    margin-left: 6px;
+}
+
+
+/*トップイメージ*/
+.top-image{
+    background-image:  url('/static/img/AdobeStock_410052419_Fotor.jpg');
+    background-size:cover;
+    height: 750px;
+}
+
+.top-message h1{
+    writing-mode: vertical-rl;
+    font-size: 45px;
+    margin: 150px auto;
+    color: #FFFFFF;
+    letter-spacing:10px;
+    font-family: "Noto Sans JP";
+    font-weight: 500;
+
 }
