@@ -56,7 +56,7 @@ def MyPagePlanUpdate(request, pk):
         ctx = {
             'plan_form': plan_form,
         }
-        return render( request, 'plan/plan_create.html', ctx )
+        return render( request, 'plan/plan_create.html', ctx)
 
 
 class MyPagePlanDelete(DeleteView):

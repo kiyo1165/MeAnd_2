@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-2"></div>
+            <div class="col-xl-10">
+                {% for item in profile_list %}
+                    <div class="card border-0">
+                    <div class="card-header row border-0">
+                        <div class="col-xl-2 face-image">
+                            <img src="{{ item.face_image.thumbnail.url }}" alt="">
+                        </div>
+                        <div class="col-xl-10　card-profile">
+                            <h6>{{ item.user.last_name }}{{ item.user.first_name }}</h6>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item  p-1 border-0">
+                                    <small>年齢：{{ item.age }}/性別：{{ item.get_gender_display }}</small></li>
+                                <li class="list-group-item p-1 border-0">
+                                    <small>カウンセラー経験：{{ item.years_of_experience }}年</small></li>
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item p-1 mr-1 border-0"><p class="mb-0">評価:☆5.0</p></li>
+                                {% for qua in item.qualification.all %}
+                                    <li class="list-group-item p-1 mr-1 border-0"><p
+                                            class="badge badge-info mb-1">{{ qua }}</p></li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item p-1 mr-1 border-0"><p class="mb-0">カテゴリー</p></li>
+                                {% for cate in item.user.plan_set.all %}
+                                    <li class="list-group-item p-1 mr-1 border-0"><p
+                                            class="badge badge-info mb-1">{{ cate.category }}</p></li>
+
+                                <li class="list-group-item p-1 mr-1 border-0"><p class="mb-0">カウンセリングスタイル</p></li>
+                                {% for item in cate.style_choices.all %}
+                                    <li class="list-group-item p-1 mr-1 border-0"><p
+                                            class="badge badge-info mb-1">{{ item.style_name }}</p></li>
+                                {% endfor %}
+                              {% endfor %}
+
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="card-body border-0 p-1 row">
+                        <div class="col-xl-2"></div>
+                        <div class="col-xl-10">
+                            <div class="pr">
+                                <p>{{ item.self_introduction | truncatechars:200 }}<small><a
+                                        href="{% url 'main:plan_detail' item.pk %}">続きを読む</a></small></p>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,7 +1,5 @@
 .navbar{
     background-color: #FFFFFF;
-    padding: 0;
-
 }
 .navbar-collapse{
     max-width: 1550px;
@@ -27,6 +25,7 @@
 }
 
 
+
 .back-image{
     height: 500px;
     width: 1200px;
@@ -35,6 +34,10 @@
 .register li{
     margin-top: 20px;
     margin-bottom: 0px;
+}
+
+.register li img{
+    width: 35px;
 }
 
 .register .c-register{

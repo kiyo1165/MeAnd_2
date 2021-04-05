@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404,redirect, render
-from django.views.generic import TemplateView, DetailView, CreateView
+from django.views.generic import TemplateView, DetailView, CreateView, ListView
 from category.models import Category
 from plan.models import Plan
+from accounts.models import Qualification, User, Profile
 from message.form import MessageForm
 from accounts.models import User
 from message.models import Message
@@ -12,6 +13,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
 from follow.models import Follow
 
+
 # Create your views here.
 class CateSearch(TemplateView):
     model = Category, Plan
@@ -21,6 +23,7 @@ class CateSearch(TemplateView):
         ctx = super(CateSearch, self).get_context_data()
         ctx['objects'] = Category.objects.all()
         return ctx
+
 
 class CateSearchDone(TemplateView):
     model = Plan
@@ -36,6 +39,40 @@ class CateSearchDone(TemplateView):
             'plan_list': plan_list,
         }
         return ctx
+
+
+class QualificationSearch(TemplateView):
+    model = Qualification
+    template_name = 'main/qualification_index.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        ctx['objects'] = Qualification.objects.all()
+        return ctx
+
+
+class QualificationSearchDone(ListView):
+    model = Profile
+    template_name = 'main/qualification_search_done.html'
+    slug_field = 'qualification_name'
+    slug_url_kwarg = 'qualification_name'
+
+    def get_context_data(self, **kwargs):
+        profile_list = Profile.objects.filter(qualification__qualification_name=self.kwargs['qualification_name'])
+        ctx = {
+            'profile_list': profile_list,
+        }
+        return ctx
+
+
+class ConsList(ListView):
+    model = User
+    template_name = 'main/cons_list.html'
+
+class ConsDetail(DetailView):
+    model = User
+    template_name = 'main/cons_detail.html'
+
 
 class DetailSendMessage(CreateView):
     model = Message

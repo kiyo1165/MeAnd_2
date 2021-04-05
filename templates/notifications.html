@@ -1,0 +1,12 @@
+<div class="message-area">
+    <div class="messages">
+        {% if messages %}
+            <ul class="messages_ul">
+                {% for message in messages %}
+                    <li class="alert{% if message.tags %} alert-{{ message.tags }} alert-dismissible fade show{% endif %}"
+                        role="alert">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>

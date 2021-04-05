@@ -1,5 +1,6 @@
 body {
     font-family: "Noto Sans JP",'M PLUS 1p', sans-serif;
+    margin-top: 40px;
 }
 
 h2 {
@@ -33,6 +34,9 @@ small, .small{
 .badge-secondary {
     background-color: #6c6e7e;
 
+}
+li {
+    list-style: none;
 }
 
 .btn {
@@ -432,4 +436,9 @@ a {
     white-space: nowrap;
     background-color: transparent;
     border: 0;
+}
+
+/*カウンセラー登録ガイダンス*/
+.cons-guidance{
+    margin-top: 120px;
 }

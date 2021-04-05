@@ -4,10 +4,11 @@ from .models import Follow
 from plan.models import Plan
 from django.http import JsonResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-
+@login_required()
 def FollowView(request, pk):
     print(request, pk)
     if request.method == "POST":

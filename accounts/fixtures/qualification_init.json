@@ -1,0 +1,240 @@
+[
+  {
+    "model": "accounts.Qualification",
+    "pk": 1,
+    "fields": {
+      "qualification_name": "臨床心理士"
+    }
+  },
+    {
+    "model": "accounts.Qualification",
+    "pk": 2,
+    "fields": {
+      "qualification_name": "学校心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 3,
+    "fields": {
+      "qualification_name": "臨床発達心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 4,
+    "fields": {
+      "qualification_name": "ガイダンスカウンセラー"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 5,
+    "fields": {
+      "qualification_name": "認定心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 6,
+    "fields": {
+      "qualification_name": "産業カウンセラー"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 7,
+    "fields": {
+      "qualification_name": "EMDR臨床家資格"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 8,
+    "fields": {
+      "qualification_name": "応用心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 9,
+    "fields": {
+      "qualification_name": "音楽療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 10,
+    "fields": {
+      "qualification_name": "認定カウンセラー"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 11,
+    "fields": {
+      "qualification_name": "准認定カウンセラー"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 12,
+    "fields": {
+      "qualification_name": "大学カウンセラー"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 13,
+    "fields": {
+      "qualification_name": "学生支援士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 14,
+    "fields": {
+      "qualification_name": "家族相談士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 15,
+    "fields": {
+      "qualification_name": "家族心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 16,
+    "fields": {
+      "qualification_name": "芸術療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 17,
+    "fields": {
+      "qualification_name": "陶芸療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 18,
+    "fields": {
+      "qualification_name": "健康心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 19,
+    "fields": {
+      "qualification_name": "交通心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 20,
+    "fields": {
+      "qualification_name": "行動療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 21,
+    "fields": {
+      "qualification_name": "専門行動療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 22,
+    "fields": {
+      "qualification_name": "行動療法士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 23,
+    "fields": {
+      "qualification_name": "交流分析士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 24,
+    "fields": {
+      "qualification_name": "催眠技能士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 25,
+    "fields": {
+      "qualification_name": "医療心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 26,
+    "fields": {
+      "qualification_name": "選択理論心理士　"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 27,
+    "fields": {
+      "qualification_name": "福祉心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 28,
+    "fields": {
+      "qualification_name": "ブリーフセラピスト"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 29,
+    "fields": {
+      "qualification_name": "ブリーフコーチ"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 30,
+    "fields": {
+      "qualification_name": "臨床催眠資格"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 31,
+    "fields": {
+      "qualification_name": "臨床動作士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 32,
+    "fields": {
+      "qualification_name": "メンタルケア心理士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 33,
+    "fields": {
+      "qualification_name": "メンタルケア心理専門士"
+    }
+  },
+  {
+    "model": "accounts.Qualification",
+    "pk": 34,
+    "fields": {
+      "qualification_name": "メンタルケアカウンセラー"
+    }
+  }
+]

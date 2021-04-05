@@ -123,6 +123,11 @@ env.read_env(os.path.join(BASE_DIR, '.env'))
 # env.SOCIAL_AUTH_FACEBOOK_KEY # アプリID
 # env.SOCIAL_AUTH_FACEBOOK_SECRET  # app secret
 
+# allauthアダプター
+# ACCOUNT_ADAPTER = 'accounts.adapter.CustomRedirect'
+
+
+
 ACCOUNT_FORMS = {
     'login': 'allauth.account.forms.LoginForm',
     'signup': 'allauth.account.forms.SignupForm',
@@ -216,7 +221,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # 意味：必須
 ACCOUNT_EMAIL_REQUIRED = True
 
 # ログイン/ログアウト後の遷移先を設定
-LOGIN_REDIRECT_URL = 'accounts:mypage'
+LOGIN_REDIRECT_URL = '/home'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/home'
 
 # ログアウトリンクのクリック一発でログアウトする設定

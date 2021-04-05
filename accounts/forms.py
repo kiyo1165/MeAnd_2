@@ -1,9 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
-from .models import User, Profile
+from .models import User, Profile, Qualification
 from reservation.models import Reservation
 from allauth.account.forms import SignupForm
 from django import forms
+# from plan.models import StyleChoices
 
 class SignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -11,15 +12,15 @@ class SignupForm(UserCreationForm):
         fields = ('email',)
 
 
-class ProfileForm( ModelForm ):
+class ProfileForm(ModelForm):
+
     class Meta:
         model = Profile
         exclude = ['user', 'created_at', 'updated_at']
         widgets ={
             'phone': forms.TextInput(attrs={
                 'placeholder': '例：08012341234※ハイフンなしでご入力ください。'
-            },
-            )
+            }),
         }
 
 

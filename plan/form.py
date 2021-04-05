@@ -3,7 +3,14 @@ from .models import Plan, StyleChoices
 from django import forms
 from .choices_file import COUNSELING_STYLE_CHOICES
 
+
 class PlanForm(ModelForm):
+
+    style_choices = forms.ModelMultipleChoiceField(
+        label='面談のスタイル',
+        queryset=StyleChoices.objects.all(),
+        widget=forms.CheckboxSelectMultiple )
+
     title = forms.CharField(
         label='タイトル',
         widget=forms.Textarea(attrs={'rows': 2, 'cols':70,
@@ -45,11 +52,6 @@ class PlanForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': '分単位/例:1時間 => 60'} )
     )
-
-    style_choices = forms.ModelMultipleChoiceField(
-        label='面談のスタイル',
-        queryset=StyleChoices.objects.all(),
-        widget=forms.CheckboxSelectMultiple)
 
 
 

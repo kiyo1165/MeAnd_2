@@ -43,23 +43,26 @@ class OnlyMyPageMixin( UserPassesTestMixin ):
 def ProfileEdit(request):
     user = User.objects.get( pk=request.user.pk )
     profile = get_object_or_404( Profile, user_id=request.user.pk )
-    user_form = UserForm( request.POST or None, instance=user )
+    user_form = UserForm( request.POST or None, instance=user)
     profile_form = ProfileForm(request.POST or None, instance=profile)
     if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
-        user_form = user_form.save( commit=False )
+        user_form = user_form.save(commit=False)
         user_form.save()
-        profile_form = profile_form.save( commit=False )
-        if request.FILES.get( 'face_image' ) is None:
-            profile_form.face_image = profile.face_image
-            profile_form.user = user
-            profile_form.save()
-            messages.success( request, f'正常に登録されました' )
-            return redirect( 'accounts:mypage' )
+        if request.FILES.get('face_image') is None:
+            form = profile_form.save(commit=False)
+            form.face_image = profile.face_image
+            form.user = user
+            form.save()
+            profile_form.save_m2m()
+            messages.success(request, f'正常に登録されました' )
+            return redirect('accounts:mypage')
         else:
-            profile_form.face_image = request.FILES.get( 'face_image' )
-            profile_form.user = user
-            profile_form.save()
-            messages.success( request, f'正常に登録されました' )
+            form = profile_form.save( commit=False )
+            form.face_image = request.FILES.get( 'face_image' )
+            form.user = user
+            form.save()
+            profile_form.save_m2m()
+            messages.success(request, f'正常に登録されました' )
             return redirect( 'accounts:mypage' )
     else:
         ctx = {
@@ -270,14 +273,11 @@ def my_page_day_holiday_delete(request, pk, year, month, day):
         return redirect( 'accounts:mypage' )
 
 
-
-
-
 class CounselorGuidance(TemplateView):
     template_name = 'accounts/counselor_guidance.html'
 
 
-class CounselorRegister(OnlyStaffMixin, CreateView):
+class CounselorRegister(LoginRequiredMixin,CreateView):
     template_name = 'accounts/counselor_register.html'
     model = CounselorRegister
     fields = ('identification', 'credentials', 'signature', 'address', 'agreement')
@@ -285,7 +285,7 @@ class CounselorRegister(OnlyStaffMixin, CreateView):
 
     def form_valid(self, form):
         register = form.save(commit=False)
-        user = User.objects.get( pk=self.kwargs['pk'] )
+        user = User.objects.get(pk=self.request.user.pk )
         register.user = user
         register.save()
         send_mail(
@@ -294,7 +294,7 @@ class CounselorRegister(OnlyStaffMixin, CreateView):
             recipient_list=['admin@example.com', ],
             from_email=user.email
         )
-        messages.warning(self.request, f'{user.last_name}{user.first_name}さんのカウンセラーの仮登録が完了しました。確認メールをご確認ください。')
+        messages.error(self.request, f'{user.last_name}{user.first_name}さんのカウンセラーの仮登録が完了しました。確認メールをご確認ください。')
         return super(CounselorRegister, self).form_valid(form)
 
 class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):

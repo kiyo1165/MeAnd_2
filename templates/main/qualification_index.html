@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h4>資格一覧</h4>
+        <hr>
+        <div class="row">
+             {% for item in objects %}
+            <div class="qualification-list col-2">
+                <p class="badge"><a href="{% url 'main:qualification_search_done' item.qualification_name %}">{{ item }}</a></p>
+            </div>
+    {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}

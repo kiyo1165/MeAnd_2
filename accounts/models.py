@@ -11,8 +11,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
-
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
@@ -88,6 +86,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class Qualification(models.Model):
+    qualification_name = models.CharField('保有資格',max_length=30, blank=True)
+
+    def __str__(self):
+        return self.qualification_name
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nick_name = models.CharField('ニックネーム', max_length=255, help_text='カウンセラーにはニックネームが表示されます。')
@@ -95,12 +100,12 @@ class Profile(models.Model):
     age = models.CharField('年齢', max_length=3, blank=True)
     gender = models.CharField('性別', max_length=5, blank=True, choices=SEX_SELECT)
     pref = models.CharField('お住まいの都道府県', max_length=5, blank=True, help_text='※対面でのカウンセリングは都道府県が必要です。')
-    occupation = models.CharField( 'ご職業', max_length=10, blank=True, choices=OCCUPATION_SELECT )
-    qualification = models.CharField('保持資格', max_length=100, blank=True)
+    occupation = models.CharField('ご職業', max_length=10, blank=True, choices=OCCUPATION_SELECT)
+    qualification = models.ManyToManyField(Qualification, max_length=100, blank=True)
     career = models.TextField('経歴', max_length=1000, blank=True)
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
     self_introduction = models.TextField('自己紹介', max_length=1000, blank=True)
-    face_image = StdImageField( upload_to='media/face_image', blank=True, default='icon/images.png', variations={
+    face_image = StdImageField(upload_to='media/face_image', blank=True, default='images.png', variations={
         'xl':(1000, 400),
         'large': (600, 400),
         'thumbnail': (100, 100, True),
@@ -115,16 +120,16 @@ class Profile(models.Model):
     def __str__(self):
         return self.gender
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
+    return instance.profile.save()
 
 
 class CounselorRegister(models.Model):

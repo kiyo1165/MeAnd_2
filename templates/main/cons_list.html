@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <h4>カウンセラ一覧</h4>
+        <hr>
+        <div class="row">
+            <div class="col-xl-2"></div>
+            <div class="col-xl-10">
+                <div class="row">
+                    {% for item in user_list %}
+                        <div class="col-xl-4 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-xl-2 m-0 p-0 face-image">
+                                            <img src="{{ item.profile.face_image.thumbnail.url }}" alt=""
+                                                 style="width: 50px">
+                                        </div>
+                                        <div class="col-xl-10">
+                                            <ul class="list-group list-group-horizontal-md">
+                                                <li class="list-group-item border-0 p-0">
+                                                    <p>
+                                                        {{ item.last_name }}{{ item.first_name }}&nbsp;<small>年齢：{{ item.profile.age }}歳/性別：{{ item.profile.get_gender_display }}</small>
+                                                    </p></li>
+                                            </ul>
+                                            <ul class="list-group list-group-horizontal-md">
+                                                {% for qua in item.profile.qualification.all %}
+                                                    <li class="list-group-item border-0 p-0"><small
+                                                            class="badge badge-info"
+                                                            style="font-size: 10px">{{ qua }}</small></li>
+                                                {% endfor %}
+                                            </ul>
+                                            <ul class="list-group list-group-horizontal-md">
+                                                <li class="list-group-item border-0 p-0"><small>カウンセラ経験{{ item.profile.years_of_experience }}年</small></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <small>自己紹介</small><hr class="mt-1 mb-1">
+                                    <small>{{ item.profile.self_introduction | truncatechars:100 }}続きを読む</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}

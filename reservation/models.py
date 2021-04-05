@@ -2,9 +2,9 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import User
 import datetime
-from plan.models import Plan
+from plan.models import Plan, StyleChoices
 from .choise import STATUS_LIST
-from plan.models import StyleChoices
+
 
 
 # Create your models here.
@@ -22,8 +22,10 @@ class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        start = timezone.make_aware(self.start).strftime('%Y/%m/%d %H:%M:%S')
-        end = timezone.make_aware(self.end).strftime('%Y/%m/%d %H:%M:%S')
+        # start = timezone.make_aware(self.start).strftime('%Y/%m/%d %H:%M:%S')
+        start = timezone.localtime(self.start).strftime('%Y/%m/%d %H:%M:%S')
+        # end = timezone.make_aware(self.end).strftime('%Y/%m/%d %H:%M:%S')
+        end = timezone.localtime(self.end).strftime('%Y/%m/%d %H:%M:%S')
         return f'{self.message} {start} ~ {end} {self.user2}'
 
 class ReservationMessage(models.Model):

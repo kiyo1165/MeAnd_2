@@ -1,57 +1,77 @@
 {% load static %}
-    <div class="card-header w-100" >
-        <div class="sidebar-face-image">
-            <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
-        </div>
-        <div class="profile">
-            <ul>
-                <li> <p class="text-center mb-0">{{ object.user.last_name }}{{ object.user.first_name }}</p></li>
-                <li> <p class="text-center mb-0">{{ object.user.profile.qualification }}&nbsp;<span>{{ object.user.profile.years_of_experience }}年</span></p></li>
-            </ul>
+<div class="card-header w-100">
+    <div class="sidebar-face-image">
+        <img src="{{ object.user.profile.face_image.thumbnail.url }}" alt="顔写真">
+    </div>
+    <div class="profile">
+        <ul class="text-center pl-0 mb-0">
+            <li><p class="text-center mb-1">{{ object.user.last_name }}{{ object.user.first_name }}</p></li>
+            <li><p class="text-center mb-1"></p></li>
+            <li class=""><p class="text-center mb-2">カンセリング経験{{ object.user.profile.years_of_experience }}年</p></li>
+        </ul>
+        <p class="text-center">保持資格</p>
+        <ul class="list-group list-group-horizontal-xl m-0 text-center">
+            {% for item in object.user.profile.qualification.all %}
+                <li class="list-group-item border-0 mb-1 p-xl-0 ml-xl-0 p-md-1  "><p class="badge badge-secondary mb-0">{{ item }}</p></li>
+            {% endfor %}
+        </ul>
 
-            <ul class="list-group list-group-horizontal-xl ">
-                <li class="list-group-item border-0  text-center  pb-0"><p>機密保持契約<i class="fas fa-check-circle" style="color: #3AC4D9"></i></p></li>
-                <li class="list-group-item border-0 text-center pb-0"><p>本人確認<i class="fas fa-check-circle" style="color: #3AC4D9"></i></p></li>
-            </ul>
-
-        </div>
-        <div class="card-body m-0 p-1">
-
-            <div class="profile mt-0 p-0">
-                <ul>
-                    <li class="text-center"><small>{{ object.user.profile.career | linebreaksbr }}</small></li>
-                </ul>
-            </div>
-            <ul class="message-button list-group list-group-horizontal-xl text-center">
-                {% if user.is_authenticated %}
-                <li class="list-group-item border-0 text-center"><button class="btn btn-info pt-2 pb-2" data-toggle="modal" data-target="#exampleModalCenter" type="button" style="font-size: 11px;">メッセージで相談</button></li>
-                {% else %}
-                <li class="list-group-item border-0 text-center"><button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" type="button" style=" font-size: 11px">
-                    <a href="{% url 'account_login' %}" style="color: #FFFFFF">メッセージで相談</a></button></li>
-                {% endif %}
-                {% if follow_check == True %}
-                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
-                    <li class="list-group-item border-0 text-center"><button class="btn btn-info" type="submit" style="font-size: 12px">フォロー解除</button></li>
-                </form>
-                {% else %}
-                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
-                    <li class="list-group-item border-0 text-center"><button class="btn btn-info w-auto" type="submit" style="font-size: 12px">フォローする</button></li>
-                </form>
-                {% endif %}
-            </ul>
-            <ul class="sidebar-menu">
-
-            </ul>
-            <div class="sidebar-sns">
-                <div class="set-sns">
-                    <img src="{% static '/icon/twitter.png' %}" class="twitter">
-                    <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
-                </div>
-            </div>
-
-        </div>
-
+        <ul class="list-group list-group-horizontal-xl m-0 text-center">
+            <li class="list-group-item border-0 pb-0 pt-0 mb-1 ml-lg-4"><p class="badge badge-secondary mb-0">機密保持契約<i
+                    class="fas fa-check-circle" style="color: #FFFFFF"></i></p></li>
+            <li class="list-group-item border-0 pb-0 pt-0 mb-0"><p class="badge badge-secondary mb-0">本人確認<i
+                    class="fas fa-check-circle" style="color: #FFFFFF"></i></p></li>
+        </ul>
 
     </div>
+    <div class="card-body m-0 p-1">
+        <div class="profile mt-0 p-0">
+            <ul class="pl-0">
+                <li class="text-center"><small>{{ object.user.profile.career | linebreaksbr }}</small></li>
+            </ul>
+        </div>
+        <ul class="message-button list-group list-group-horizontal-xl ">
+            {% if user.is_authenticated %}
+                <li class="list-group-item border-0 text-center">
+                    <button class="btn btn-info pt-2 pb-2" data-toggle="modal" data-target="#exampleModalCenter"
+                            type="button" style="font-size: 11px;">メッセージで相談
+                    </button>
+                </li>
+            {% else %}
+                <li class="list-group-item border-0 text-center">
+                    <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" type="button"
+                            style=" font-size: 11px">
+                        <a href="{% url 'account_login' %}?=next{{ request.path }}" style="color: #FFFFFF">メッセージで相談</a>
+                    </button>
+                </li>
+            {% endif %}
+            {% if follow_check == True %}
+                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
+                    <li class="list-group-item border-0 text-center">
+                        <button class="btn btn-info" type="submit" style="font-size: 12px">フォロー解除</button>
+                    </li>
+                </form>
+            {% else %}
+                <form action="{% url 'follow:follow' object.pk %}" method="post">{% csrf_token %}
+                    <li class="list-group-item border-0 text-center">
+                        <button class="btn btn-info w-auto" type="submit" style="font-size: 12px">フォローする</button>
+                    </li>
+                </form>
+            {% endif %}
+        </ul>
+        <ul class="sidebar-menu">
+
+        </ul>
+        <div class="sidebar-sns">
+            <div class="set-sns">
+                <img src="{% static '/icon/twitter.png' %}" class="twitter">
+                <img src="{% static '/icon/f_logo_RGB-Blue_72.png' %}" class="facebook">
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
 
 

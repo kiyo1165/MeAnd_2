@@ -17,7 +17,7 @@ urlpatterns = [
     path( 'my_page/<int:pk>/config/<int:year>/<int:month>/<int:day>/', MyPageDayDetail.as_view(),
           name='my_page_day_detail' ),
     path('cons_guidance/', CounselorGuidance.as_view(), name='counselor_guidance'),
-    path('cons_register/<int:pk>', CounselorRegister.as_view(), name='counselor_register'),
+    path('cons_register/', CounselorRegister.as_view(), name='counselor_register'),
     path('cons_confirm_registered/<int:pk>', CounselorConfirmRegistered.as_view(), name='cons_confirm_registered'),
     path('profile_edit/', ProfileEdit, name='profile_edit' ),
     path('profile/', MyProfile.as_view(), name='profile'),
