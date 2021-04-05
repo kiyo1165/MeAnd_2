@@ -1,17 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
 
-    <div class="container">
         <div class="row">
-            <div class="col-xl-8">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-xl-12">
+                <div class="card-section">
+                    <div class="card-detail-header text-center">
+                        <div class="your-image">
+                            <img class="rounded" src="{{ user.profile.your_image.xl.url }}" alt="">
+                        </div>
+                        <div class="detail-face-image">
+                            <img class="" src="{{ user.profile.face_image.medium.url }}" alt="">
+                        </div>
+                        <div class="detail-profile">
+                            <ul class="list-group">
+                                <li class="list-group-item border-0 p-1">
+                                    <h4>{{ user.last_name }}{{ user.first_name }}</h4></li>
+                                <li class="list-group-item border-0 p-1 m-0">
+                                    <p class="m-0 p-0">カウンセラ経験{{ object.profile.years_of_experience }}年</p></li>
 
-                    </div>
-                    <div class="card-body">
+                            </ul>
+                            <div class="detail-qua">
+                                 <li class="list-group-item border-0 p-0 m-0">
+                                    <p class="p-1 m-1">保持資格</p></li>
+                                <ul class="list-group list-group-horizontal-lg">
+                                    {% for item in object.profile.qualification.all %}
+                                    <li class="list-group-item border-0 mr-1 mb-sm-1 badge badge-secondary">{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
 
+                            </div>
 
+                        </div>
+                        <div class="card-body">
+
+                        </div>
                     </div>
                 </div>
             </div>

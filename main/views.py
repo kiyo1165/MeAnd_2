@@ -69,6 +69,7 @@ class ConsList(ListView):
     model = User
     template_name = 'main/cons_list.html'
 
+
 class ConsDetail(DetailView):
     model = User
     template_name = 'main/cons_detail.html'

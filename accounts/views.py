@@ -48,22 +48,19 @@ def ProfileEdit(request):
     if request.method == 'POST' and user_form.is_valid() and profile_form.is_valid():
         user_form = user_form.save(commit=False)
         user_form.save()
-        if request.FILES.get('face_image') is None:
-            form = profile_form.save(commit=False)
-            form.face_image = profile.face_image
-            form.user = user
-            form.save()
-            profile_form.save_m2m()
-            messages.success(request, f'正常に登録されました' )
-            return redirect('accounts:mypage')
+        form = profile_form.save( commit=False )
+        form.user = user
+        if request.FILES.get('face_image'):
+            form.face_image = request.FILES.get('face_image')
         else:
-            form = profile_form.save( commit=False )
-            form.face_image = request.FILES.get( 'face_image' )
-            form.user = user
-            form.save()
-            profile_form.save_m2m()
-            messages.success(request, f'正常に登録されました' )
-            return redirect( 'accounts:mypage' )
+            form.face_image = profile.face_image
+        if request.FILES.get('your_image'):
+            form.your_image = request.FILES.get('your_image')
+        else:
+            form.your_image = profile.your_image
+        form.save()
+        messages.success(request, f'正常に登録されました' )
+        return redirect( 'accounts:mypage' )
     else:
         ctx = {
             'user_form': user_form,

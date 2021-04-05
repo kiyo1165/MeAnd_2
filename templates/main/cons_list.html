@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="card-body">
                                     <small>自己紹介</small><hr class="mt-1 mb-1">
-                                    <small>{{ item.profile.self_introduction | truncatechars:100 }}続きを読む</small>
+                                    <small><a href="{% url 'main:cons_detail' item.pk %}">{{ item.profile.self_introduction | truncatechars:100 }}続きを読む</a></small>
                                 </div>
                             </div>
                         </div>

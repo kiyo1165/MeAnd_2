@@ -101,17 +101,24 @@ class Profile(models.Model):
     gender = models.CharField('性別', max_length=5, blank=True, choices=SEX_SELECT)
     pref = models.CharField('お住まいの都道府県', max_length=5, blank=True, help_text='※対面でのカウンセリングは都道府県が必要です。')
     occupation = models.CharField('ご職業', max_length=10, blank=True, choices=OCCUPATION_SELECT)
-    qualification = models.ManyToManyField(Qualification, max_length=100, blank=True)
+    qualification = models.ManyToManyField(Qualification, '保持資格',max_length=100, blank=True)
     career = models.TextField('経歴', max_length=1000, blank=True)
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
     self_introduction = models.TextField('自己紹介', max_length=1000, blank=True)
-    face_image = StdImageField(upload_to='media/face_image', blank=True, default='images.png', variations={
+    face_image = StdImageField('顔写真',upload_to='media/face_image', blank=True, default='/images.png', variations={
         'xl':(1000, 400),
         'large': (600, 400),
         'thumbnail': (100, 100, True),
         'medium': (300, 200),
         'small': (70, 70),
     })
+    your_image = StdImageField('あなたのイメージ写真',upload_to='media/your_image', blank=True, default='images.png', variations={
+        'xl': (1000, 500),
+        'large': (600, 400),
+        'thumbnail': (100, 100),
+        'medium': (300, 200),
+        'small': (70, 70),
+    } )
     face_book = models.URLField('FaceBook_URL', max_length=300, blank=True)
     Twitter = models.URLField('Twitter_URL', max_length=300, blank=True)
     created_at = models.DateTimeField( auto_now_add=True)
