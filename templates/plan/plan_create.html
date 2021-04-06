@@ -9,6 +9,13 @@
             <div class="col-md-1"></div>
 
             <div class="col-md-9 shadow p-3 mb-5 bg-white rounded">
+                {% if plan_form.non_field_errors %}
+                    <ul class="alert alert-danger list-unstyled">
+                        {% for error in plan_form.non_field_errors %}
+                            <li style="list-style-type: none;">{{ error }}</li>
+                            </ul>
+                        {% endfor %}
+                {% endif %}
                 <h3>プランの作成</h3>
                 <hr>
                 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
@@ -16,6 +23,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>プランタイトル</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -28,11 +36,12 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>サムネイル画像</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
                             <div class="form-group mt-3">
-                                <p>{{ plan_form.plan_sign | add_class:'form-control'}}</p>
+                                <p>{{ plan_form.plan_sign | add_class:'form-control' }}</p>
                             </div>
                             <small>※画像サイズ最大1000×400px</small><br>
                             <small>※ご提案するプランの印象にあう画像を選択いただくと効果的です。</small>
@@ -42,6 +51,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>アイキャッチメッセージ</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -54,7 +64,8 @@
                     <div class="row form-inline" style="margin-top: 20px">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <h6>対象者</h6>
+                                <h6 style="width: 100px">対象者</h6><br>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -68,6 +79,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>カテゴリーを選んでください。</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -79,7 +91,8 @@
                     <div class="row form-inline" style="margin-top: 20px">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <h6>プランの詳細</h6>
+                                <h6>カウンセリング詳細</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -93,11 +106,13 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>プランタイプ</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
                             <div class="form-group mt-3">
                                 <p>{{ plan_form.plan_type | add_class:'form-control' }}</p>
+                                <small>{{ plan_form.plan_type.errors }}</small>
                             </div>
                             <small>単発、月極で設定ください。</small>
                         </div>
@@ -106,19 +121,25 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>面談スタイル</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
+                                <label for="id_style_choices">{{ plan_form.style_choices.errors }}</label>
+
+
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
                             <div class="form-group mt-3">
                                 <p>{{ plan_form.style_choices | add_class:'form-check-input' }}</p>
+
                             </div>
                             <small>※面談可能なスタイルを選択してください。</small>
                         </div>
                     </div>
-                     <div class="row form-inline" style="margin-top: 20px">
+                    <div class="row form-inline" style="margin-top: 20px">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>対面可能エリア<br><small>※複数選択可</small></h6>
+                                <label for="id_style_choices">{{ plan_form.plef.errors }}</label>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -128,10 +149,11 @@
                             <small>対面可能とされた方は対面可能エリアを記載してください。</small>
                         </div>
                     </div>
-                     <div class="row form-inline" style="margin-top: 20px">
+                    <div class="row form-inline" style="margin-top: 20px">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <h6>料金</h6>
+                                <h6 style="width: 100px;">料金</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -145,6 +167,8 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <h6>1セッション時間</h6>
+                                <p class="badge badge-danger rounded-0" style="font-weight: normal">※必須</p>
+                                <small>{{ plan_form.session_time.errors }}</small>
                             </div>
                         </div>
                         <div class="col-md-10 rounded-0">
@@ -155,19 +179,21 @@
                         </div>
                     </div>
 
-            <div class="button-area ">
-                <div class="row">
-                     <button type="submit" class="btn btn-info col-m-6 mr-3 rounded-0 ">登録</button>
-                     <div class="ml-4 mt-2">
-                         <p><span>公開&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ plan_form.release | add_class:'form-check-input' }}</p>
-                     </div>
-                </div>
+                    <div class="button-area ">
+                        <div class="row">
+                            <button type="submit" class="btn btn-info col-m-6 mr-3 rounded-0 ">登録</button>
+                            <div class="ml-4 mt-2">
+                                <p>
+                                    <span>公開&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ plan_form.release | add_class:'form-check-input' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
             </div>
 
-            </form>
         </div>
-
-    </div>
 
     </div>
 

@@ -105,14 +105,14 @@ class Profile(models.Model):
     career = models.TextField('経歴', max_length=1000, blank=True)
     years_of_experience = models.CharField('カウンセラー経験年数', max_length=10, blank=True)
     self_introduction = models.TextField('自己紹介', max_length=1000, blank=True)
-    face_image = StdImageField('顔写真',upload_to='media/face_image', blank=True, default='/images.png', variations={
+    face_image = StdImageField('顔写真',upload_to='media/face_image', blank=True, variations={
         'xl':(1000, 400),
         'large': (600, 400),
         'thumbnail': (100, 100, True),
         'medium': (300, 200),
         'small': (70, 70),
     })
-    your_image = StdImageField('あなたのイメージ写真',upload_to='media/your_image', blank=True, default='images.png', variations={
+    your_image = StdImageField('あなたのイメージ写真',upload_to='media/your_image', blank=True, variations={
         'xl': (1000, 500),
         'large': (600, 400),
         'thumbnail': (100, 100),

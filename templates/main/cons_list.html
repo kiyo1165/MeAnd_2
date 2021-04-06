@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <br>
     <br>
@@ -17,8 +17,11 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-xl-2 m-0 p-0 face-image">
-                                            <img src="{{ item.profile.face_image.thumbnail.url }}" alt=""
-                                                 style="width: 50px">
+                                            {% if item.profile.face_image.thumbnail.url %}
+                                            <img src="{{ item.profile.face_image.thumbnail.url }}" alt="" style="width: 50px">
+                                            {% else %}
+                                             <img class="" src="{% static 'icon/MeAnd_Logo1.png' %}" alt="" style="width: 50px">
+                                            {% endif %}
                                         </div>
                                         <div class="col-xl-10">
                                             <ul class="list-group list-group-horizontal-md">

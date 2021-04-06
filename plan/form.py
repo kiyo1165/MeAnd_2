@@ -1,6 +1,9 @@
 from django.forms import ModelForm
 from .models import Plan, StyleChoices
 from django import forms
+from django.core.exceptions import ValidationError
+from .models import StyleChoices
+
 from .choices_file import COUNSELING_STYLE_CHOICES
 
 
@@ -9,7 +12,9 @@ class PlanForm(ModelForm):
     style_choices = forms.ModelMultipleChoiceField(
         label='面談のスタイル',
         queryset=StyleChoices.objects.all(),
-        widget=forms.CheckboxSelectMultiple )
+        widget=forms.CheckboxSelectMultiple)
+
+
 
     title = forms.CharField(
         label='タイトル',
@@ -53,7 +58,15 @@ class PlanForm(ModelForm):
                 'placeholder': '分単位/例:1時間 => 60'} )
     )
 
-
+    def clean(self):
+        cleaned_data = super().clean()
+        style_choices = cleaned_data.get('style_choices')
+        instance = StyleChoices.objects.get(style_name='対面')
+        pref = cleaned_data.get('pref')
+        if instance in style_choices and not pref:
+            raise forms.ValidationError(
+            '対面を選択された場合は対面エリアを選択してください。')
+        return cleaned_data
 
     class Meta:
         model = Plan

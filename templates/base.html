@@ -73,7 +73,11 @@
                                     <p class="mr-2 d-none d-lg-inline text-gray-600">
                                         ゲスト：{{ user.last_name }}{{ user.first_name }}さん</p>
                                 {% endif %}
+                                {% if user.profile.face_image.thumbnail.url %}
                                 <img class="img-profile rounded-circle" src="{{ user.profile.face_image.thumbnail.url }}">
+                                {% else %}
+                                 <img class="" src="{% static 'icon/MeAnd_Logo1.png' %}" alt="">
+                                {% endif %}
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

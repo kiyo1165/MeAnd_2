@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
     <br>
     <br>
@@ -14,10 +14,18 @@
                 <div class="card-section">
                     <div class="card-detail-header text-center">
                         <div class="your-image">
+                            {% if user.profile.your_image.xl.url %}
                             <img class="rounded" src="{{ user.profile.your_image.xl.url }}" alt="">
+                            {% else %}
+                            <img class="rounded" src="{% static 'icon/none-background.png' %}" alt="">
+                            {% endif %}
                         </div>
                         <div class="detail-face-image">
+                            {% if user.profile.face_image.medium.url %}
                             <img class="" src="{{ user.profile.face_image.medium.url }}" alt="">
+                            {% else %}
+                             <img class="" src="{% static 'icon/MeAnd_Logo1.png' %}" alt="">
+                            {% endif %}
                         </div>
                         <div class="detail-profile">
                             <ul class="list-group">
