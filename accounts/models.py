@@ -113,7 +113,7 @@ class Profile(models.Model):
         'small': (70, 70),
     })
     your_image = StdImageField('あなたのイメージ写真',upload_to='media/your_image', blank=True, variations={
-        'xl': (1000, 500),
+        'xl': (1300, 400),
         'large': (600, 400),
         'thumbnail': (100, 100),
         'medium': (300, 200),

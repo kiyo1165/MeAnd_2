@@ -15,5 +15,6 @@ urlpatterns = [
     path('', include('follow.urls')),
     path('api/v1/', include('api.urls')),
     path('', include('evaluation.urls')),
+    path('', include('checkout.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

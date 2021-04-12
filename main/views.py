@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.serializers import serialize
 from follow.models import Follow
+from reservation.views import CheckOut
 
 
 # Create your views here.
@@ -74,6 +75,11 @@ class ConsDetail(DetailView):
     model = User
     template_name = 'main/cons_detail.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        ctx['plan_list'] = Plan.objects.filter(user=self.kwargs['pk'])
+        return ctx
+
 
 class DetailSendMessage(CreateView):
     model = Message
@@ -98,7 +104,8 @@ class DetailSendMessage(CreateView):
         ctx['message_receiver'] = User.objects.get(pk=self_plan.user_id)
         return ctx
 
-class PlanDetail(DetailView, DetailSendMessage):
+
+class PlanDetail(DetailView, CheckOut, DetailSendMessage):
     model = Plan
     template_name = 'main/plan_detail.html'
 

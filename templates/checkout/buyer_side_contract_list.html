@@ -1,0 +1,44 @@
+{% extends 'my_page_base.html' %}
+{% block content %}
+
+    <div class="container-fluid">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">契約者名</th>
+                <th scope="col">契約プラン</th>
+                <th scope="col">料金</th>
+                <th scope="col">契約日</th>
+                <th scope="col">キャンセル</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in object_list %}
+                <tr>
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.vendor_user.last_name }}{{ item.vendor_user.first_name }}</td>
+                    <td><a href="{% url 'plan:mypage_plan_detail' item.plan.pk %}">{{ item.plan.title }}</a></td>
+                    <td>{{ item.amount }}円</td>
+                    <td>{{ item.created_at }}</td>
+                    {% if item.cancel_flag is True %}
+                    <td>キャンセル済み</td>
+                    {% else %}
+                    <td>
+                        <form action="{% url 'checkout:checkout_cancel' item.pk %}" method="post">{% csrf_token %}
+                            <button type="submit" class="btn btn-secondary p-1 rounded-0" style="font-size: 12px">キャンセル</button>
+                        </form>
+                    </td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock %}

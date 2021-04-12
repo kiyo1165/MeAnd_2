@@ -1,17 +1,25 @@
 body {
     font-family: "Noto Sans JP",'M PLUS 1p', sans-serif;
     margin-top: 40px;
+    background-color: #fffffe;
+}
+
+header {
+    background-color: #fffffe;
 }
 
 h2 {
     font-size: 32px;
-    color: #212529;
+}
+
+h1, h2, h5, h6, h4 {
+    color: #3C4356;
 }
 
 body p{
     font-size: 14px;
-    color: #333333;
-    font-weight: 300;
+    color: #3C4356;
+    font-weight: 350;
     line-height: 1.2;
 }
 small, .small{
@@ -22,7 +30,7 @@ small, .small{
 .badge {
     display: inline-block;
     padding: .25em .4em;
-    font-size: 75%;
+    font-size: 65%;
     font-weight: 400;
     line-height: 1;
     text-align: center;
@@ -32,7 +40,8 @@ small, .small{
 }
 
 .badge-secondary {
-    background-color: #6c6e7e94;
+    background-color: #BED2C0;
+    color: #FFFFFe;
 
 }
 li {
@@ -46,11 +55,11 @@ li {
 
 .btn-info {
     color: #fff;
-    background-color: #39C4D9;
+    background-color: #77D9D9;
 }
 
 .badge-info {
-    background-color: #39C4D9;
+    background-color: #77D9D9;
     font-weight: normal;
 
 }
@@ -444,20 +453,26 @@ a {
 }
 
 /*カウンセラー詳細ページ*/
+.cons-detail-wrap {
+    max-width: 1300px;
+    max-height: 400px;
+}
+
 .card-detail-header{
 
 }
 
-.your-image {
-
+.your-image img{
+    width: 1300px;
+    height: 400px;
 }
 
 .detail-face-image img{
-    width: 150px;
-    height: 150px;
+    max-width: 120px;
+    max-height: 120px;
     border-radius: 100px;
-    border: 5px solid #CBDBCC;
-    margin-top: -80px;
+    border: 8px solid #FFFFFe;
+    margin-top: -30px;
 
 }
 
@@ -466,3 +481,27 @@ a {
     margin: 0 auto;
     padding: 0;
 }
+
+.cons-pr{
+    background-color: #fffffe;
+}
+.cons-pr p{
+    line-height: 25px;
+}
+
+.mid-header ul .cate{
+    background-color: #F3F3F3;
+    margin: 0;
+
+}
+.mid-header ul .cate p{
+    padding: 2px;
+    font-weight: bold;
+}
+.mid-header ul p{
+    margin: 0;
+    font-size: 10px;
+    padding: 2px;
+
+}
+

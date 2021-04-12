@@ -77,6 +77,22 @@
                 <div class="row button-area">
                     <button class="col-md-3 btn btn-info"><a href="{% url 'reservation:calendar' object.pk %}"
                                                              style="color: #FFFFFF">申し込む</a></button>
+                    <button id="checkout-button">Checkout</button>
+                    <form action="" method="POST">
+                        <p>{{ message }}</p>
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_test_51IU2lyEl5zmDEOnOeHwSO89J1gW1d6JYlgZcjWsN9zkJHs0ix5qYhpGeczZWNAEoAYUNXMvDDmul0pbAwp6YYGwr00BdWMwIzd"
+                                data-amount="{{ plan.price }}"
+                                data-name="MeAnd"
+                                data-description="{{ plan.title }}"
+                                data-image="{% static '/icon/MeAnd_Logo1.png' %}"
+                                data-locale="ja"
+                                data-currency="jpy"
+                                data-email="{{ user.email }}">
+                        </script>
+                        {% csrf_token %}
+                    </form>
                 </div>
             </div>
             <!-- /.col-lg-8 -->
@@ -93,7 +109,7 @@
         <h4>同じカテゴリーのプラン</h4>
         <hr>
         <!-- /.row -->
-    {% include 'recommend_list.html' %}
+        {% include 'recommend_list.html' %}
 
 
     </div>

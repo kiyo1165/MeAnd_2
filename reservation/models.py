@@ -6,7 +6,6 @@ from plan.models import Plan, StyleChoices
 from .choise import STATUS_LIST
 
 
-
 # Create your models here.
 class Reservation(models.Model):
     """予約スケジュール."""

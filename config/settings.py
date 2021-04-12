@@ -220,7 +220,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # 意味：必須
 ACCOUNT_EMAIL_REQUIRED = True
 
-# ログイン/ログアウト後の遷移先を設定
+# ログイン/ログアウト後の遷移先を設定'
 LOGIN_REDIRECT_URL = '/home'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/home'
 

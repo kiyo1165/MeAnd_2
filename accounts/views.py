@@ -150,6 +150,7 @@ class GuestMyPageConsList(TemplateView):
         ctx['cons_list'] = cons
         return ctx
 
+
 class FollowList(TemplateView):
     model = User
     template_name = 'accounts/follow_list.html'
@@ -164,6 +165,7 @@ class FollowList(TemplateView):
 class MyPageMixin(MyPageCalendar,GuestMyPageConsList, FollowList):
     template_name = 'accounts/index.html'
     model = Plan
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         plan = Plan.objects.filter( user_id=self.request.user.id )
@@ -293,6 +295,7 @@ class CounselorRegister(LoginRequiredMixin,CreateView):
         )
         messages.error(self.request, f'{user.last_name}{user.first_name}さんのカウンセラーの仮登録が完了しました。確認メールをご確認ください。')
         return super(CounselorRegister, self).form_valid(form)
+
 
 class CounselorConfirmRegistered(OnlyStaffMixin,TemplateView):
     template_name = 'accounts/conselor_confirm_registered.html'

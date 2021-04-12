@@ -1,9 +1,9 @@
 import datetime
 from django.conf import settings
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, View
 from .models import  Reservation, ReservationMessage
 from accounts.models import User
 from plan.models import Plan
@@ -12,6 +12,9 @@ from .form import BookingForm
 #パーミッション
 from django.contrib.auth.mixins import LoginRequiredMixin
 from plan.models import StyleChoices
+from checkout.models import CheckOutList
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class UserList(ListView):
@@ -27,6 +30,7 @@ class UserList(ListView):
         user = self.user = get_object_or_404(User, pk=self.kwargs['pk'])
         queryset = super().get_queryset().filter(user=user)
         return queryset
+
 
 class StaffCalendar(TemplateView):
     template_name = 'reservation/calendar.html'
@@ -85,6 +89,43 @@ class StaffCalendar(TemplateView):
         return context
 
 
+class CheckOut(View):
+
+    def post(self, request, *args, **kwargs):
+        plan = self.get_object()
+        token = request.POST['stripeToken']
+
+        try:
+            charge = stripe.Charge.create(
+                amount=plan.price,
+                currency='jpy',
+                source=token,
+                payment_method_types=['card'],
+                mode='payment',
+                description=f'メール:{request.user.email} お名前:{request.user.last_name}{request.user.first_name}',
+                )
+            customer = stripe.Customer.create(
+                email=self.request.user.email,
+                name=self.request.user.last_name + self.request.user.first_name,
+            )
+
+        except stripe.error.CardError as e:
+            context = self.get_context_data()
+            context['message'] = '決済処理が失敗しました。カード情報をご確認ください。'
+            return render(request, 'main/plan_detail.html', context)
+        else:
+            CheckOutList.objects.create(
+                vendor_user=plan.user,
+                buyer_user=self.request.user,
+                plan=plan,
+                plan_type=plan.plan_type,
+                amount=plan.price,
+                strip_id=charge.id,
+                customer_id=customer.id
+            )
+            return redirect('main:top')
+
+
 class Booking(LoginRequiredMixin, CreateView):
     model = Reservation
     template_name = 'reservation/booking.html'
@@ -92,33 +133,59 @@ class Booking(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs )
-        context['staff'] = get_object_or_404( Plan, pk=self.kwargs['pk'] )
+        context['staff'] = get_object_or_404(Plan, pk=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
-        plan = get_object_or_404( Plan, pk=self.kwargs['pk'] )
+        plan = get_object_or_404(Plan, pk=self.kwargs['pk'])
         user = User.objects.get( pk=self.request.user.id )
         user_2 = User.objects.get(pk=plan.user.pk)
-        year = self.kwargs.get( 'year' )
-        month = self.kwargs.get( 'month' )
-        day = self.kwargs.get( 'day' )
-        hour = self.kwargs.get( 'hour' )
+        token = self.request.POST['stripeToken']
+        year = self.kwargs.get('year')
+        month = self.kwargs.get('month')
+        day = self.kwargs.get('day')
+        hour = self.kwargs.get('hour')
         start = datetime.datetime( year=year, month=month, day=day, hour=hour )
         end = datetime.datetime( year=year, month=month, day=day, hour=hour + 1 )
         if Reservation.objects.filter( user2=user_2, start=start ).exists():
-            messages.error( self.request, 'すみません、入れ違いで予約がありました。別の日時はどうですか。' )
+            messages.error(self.request, 'すみません、入れ違いで予約がありました。別の日時はどうですか。' )
         else:
-            schedule = form.save( commit=False )
-            schedule.user = user
-            schedule.user2 = user_2
-            schedule.plan = plan
-            schedule.start = start
-            schedule.end = end
-            schedule.save()
-            form.save_m2m()
-            messages.success( self.request,'予約が完了しました。登録されているメールアドレスをご確認ください。')
+            try:
+                charge = stripe.Charge.create(
+                    amount=plan.price,
+                    currency='jpy',
+                    source=token,
+                    description=f'メール:{self.request.user.email} お名前:{self.request.user.last_name}{self.request.user.first_name}',
+                )
+                customer = stripe.Customer.create(
+                    email=self.request.user.email,
+                    name=self.request.user.last_name + self.request.user.first_name,
+                )
 
-            return redirect( 'reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day )
+            except stripe.error.CardError as e:
+                context = self.get_context_data()
+                context['message'] = '決済処理が失敗しました。カード情報をご確認ください。'
+                return render( self.request, 'main/plan_detail.html', context )
+            else:
+                CheckOutList.objects.create(
+                    vendor_user=plan.user,
+                    buyer_user=self.request.user,
+                    plan=plan,
+                    plan_type=plan.plan_type,
+                    amount=plan.price,
+                    strip_id=charge.id,
+                    customer_id=customer.id
+                )
+                schedule = form.save(commit=False)
+                schedule.user = user
+                schedule.user2 = user_2
+                schedule.plan = plan
+                schedule.start = start
+                schedule.end = end
+                schedule.save()
+                form.save_m2m()
+                messages.success(self.request, '予約が完了しました。登録されているメールアドレスをご確認ください。')
+                return redirect('reservation:next_calendar', pk=plan.pk, year=year, month=month, day=day)
 
 
 class BookingMessage(CreateView):
@@ -126,7 +193,6 @@ class BookingMessage(CreateView):
     template_name = 'reservation/booking_message.html'
     fields = ('message',)
 
-    
     def form_valid(self, form):
         form = form.save(commit=False)
         reservation = Reservation.objects.get(pk=self.kwargs['pk'])
@@ -143,4 +209,10 @@ class BookingMessage(CreateView):
         ctx['reservation_message'] = reservation
         ctx['booking_message'] = booking_message
         return ctx
-        
+
+
+
+
+
+
+
