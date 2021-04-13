@@ -4,7 +4,7 @@ from .views \
     import ProfileEdit, MyProfile,\
     MyPageCalendar,MyPageDayDetail,\
     MyPageSchedule,MyPageScheduleDelete, my_page_holiday_add,my_page_day_holiday_add,my_page_day_holiday_delete,\
-    CounselorGuidance,CounselorRegister,CounselorConfirmRegistered, MyPageMixin, ReservationList
+    CounselorGuidance,CounselorRegister,CounselorConfirmRegistered, MyPageMixin, ReservationList, BankRegister, BankRegisterUpdate,BankRegisterDetail
 
 app_name = 'accounts'
 urlpatterns = [
@@ -27,6 +27,9 @@ urlpatterns = [
     path('my_page/schedule/<int:pk>/delete/', MyPageScheduleDelete.as_view(), name='my_page_schedule_delete'),
     path('mypage/holiday/add/<int:pk>/<int:year>/<int:month>/<int:day>/<int:hour>/',my_page_holiday_add, name='my_page_holiday_add'),
     path('mypage/reservation_list/', ReservationList.as_view(), name='reservation_list'),
+    path('mypage/bank_register/', BankRegister.as_view(), name='bank_register'),
+    path('mypage/bank_detail/', BankRegisterDetail.as_view(), name='bank_register_detail'),
+    path('mypage/<int:pk>/bank_register_update/', BankRegisterUpdate.as_view(), name='bank_register_update'),
 
 
 

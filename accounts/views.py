@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView
 from .models import Profile
-from .forms import UserForm, ProfileForm, ReserveUpdateForm
-from .models import User
+from .forms import UserForm, ProfileForm, ReserveUpdateForm, BankRegisterForm
+from .models import User, Bank
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
 from plan.models import Plan
@@ -21,6 +21,7 @@ from django.db.models import Q
 from django.conf import settings
 from accounts.models import CounselorRegister
 from django.core.mail import send_mail
+from checkout.views import Sales
 
 
 
@@ -312,9 +313,47 @@ class ReservationList(OnlyMyPageMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user.pk
-        reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user),active=True).order_by('-created_at')
+        reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user), active=True).order_by('-created_at')
         return reserve_user
 
+
+class BankRegister(LoginRequiredMixin, CreateView):
+    template_name = 'accounts/bank_register.html'
+    form_class = BankRegisterForm
+    model = Bank
+    success_url = reverse_lazy('accounts:mypage')
+
+    def form_valid(self, form):
+        ins = form.save(commit=False)
+        ins.user = self.request.user
+        ins.save()
+        messages.success(self.request, f'講座の登録が完了しました。')
+        return super().form_valid(form)
+
+
+class BankRegisterDetail(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/bank_register_detail.html'
+    model = Bank
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        ctx['bank'] = Bank.objects.get(user=self.request.user.pk)
+        return ctx
+
+
+class BankRegisterUpdate(LoginRequiredMixin, UpdateView):
+
+    template_name = 'accounts/bank_register_update.html'
+    form_class = BankRegisterForm
+    model = Bank
+    success_url = reverse_lazy('accounts:bank_register_detail')
+
+    def form_valid(self, form):
+        ins = form.save(commit=False)
+        ins.user = self.request.user
+        ins.save()
+        messages.success(self.request, f'講座の登録が完了しました。')
+        return super().form_valid(form)
 
 
 

@@ -70,6 +70,10 @@ class ConsList(ListView):
     model = User
     template_name = 'main/cons_list.html'
 
+    def get_queryset(self):
+        queryset = User.objects.filter(is_staff=True)
+        return queryset
+
 
 class ConsDetail(DetailView):
     model = User
@@ -105,7 +109,7 @@ class DetailSendMessage(CreateView):
         return ctx
 
 
-class PlanDetail(DetailView, CheckOut, DetailSendMessage):
+class PlanDetail(DetailView, DetailSendMessage):
     model = Plan
     template_name = 'main/plan_detail.html'
 

@@ -132,7 +132,7 @@ class Booking(LoginRequiredMixin, CreateView):
     form_class = BookingForm
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data( **kwargs )
+        context = super().get_context_data(**kwargs)
         context['staff'] = get_object_or_404(Plan, pk=self.kwargs['pk'])
         return context
 
@@ -165,7 +165,7 @@ class Booking(LoginRequiredMixin, CreateView):
             except stripe.error.CardError as e:
                 context = self.get_context_data()
                 context['message'] = '決済処理が失敗しました。カード情報をご確認ください。'
-                return render( self.request, 'main/plan_detail.html', context )
+                return render(self.request, 'main/plan_detail.html', context)
             else:
                 CheckOutList.objects.create(
                     vendor_user=plan.user,

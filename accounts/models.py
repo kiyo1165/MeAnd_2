@@ -9,6 +9,7 @@ from stdimage.models import StdImageField
 from .choise import SEX_SELECT, OCCUPATION_SELECT
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class CustomUserManager(BaseUserManager):
@@ -151,6 +152,18 @@ class CounselorRegister(models.Model):
 
     def __str__(self):
         return self.signature
+
+
+class Bank(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bank_code = models.CharField('銀行コード', max_length=3)
+    branch_office_code = models.CharField('支店コード', max_length=5)
+    account_no = models.CharField('口座番号', max_length=20)
+    account_name = models.CharField('口座名義', max_length=255)
+
+    def __str__(self):
+        return self.account_name
+
 
 
 

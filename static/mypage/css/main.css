@@ -51,5 +51,12 @@
 }
 
 
+#id_bank_code, #id_branch_office_code {
+    width: 100px;
+}
+
+#id_account_no, #id_account_name{
+    width: 200px;
+}
 
 

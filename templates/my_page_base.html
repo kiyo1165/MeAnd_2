@@ -57,7 +57,7 @@ Page Wrapper
             <div class="sidebar-brand-icon">
                 <img src="{% static 'icon/MeAnd_logo2.png' %}" style="width: 150px">
             </div>
-           
+
         </a>
 
         <!-- Divider -->
@@ -89,8 +89,8 @@ Page Wrapper
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">カウンセリング履歴</h6>
                     {% if user.is_staff %}
-                    <a class="collapse-item" href="{% url 'plan:plan_list' %}">プラン</a>
-                    <a class="collapse-item" href="{% url 'checkout:contract_list' %}">契約情報</a>
+                        <a class="collapse-item" href="{% url 'plan:plan_list' %}">プラン</a>
+                        <a class="collapse-item" href="{% url 'checkout:contract_list' %}">契約情報</a>
                     {% endif %}
                     <a class="collapse-item" href="{% url 'accounts:reservation_list' %}">予約の確認</a>
                     <a class="collapse-item" href="{% url 'message:message_list' %}">メッセージ</a>
@@ -113,6 +113,11 @@ Page Wrapper
                     <a class="collapse-item" href="{% url 'account_email' %}">メールアドレス変更</a>
                     <a class="collapse-item" href="{% url 'account_change_password' %}">パスワード変更</a>
                     <a class="collapse-item" href="{% url 'checkout:buyer_contract_list' %}">お支払い情報</a>
+                    {% if user.bank %}
+                        <a class="collapse-item" href="{% url 'accounts:bank_register_detail' %}">銀行口座</a>
+                    {% else %}
+                        <a class="collapse-item" href="{% url 'accounts:bank_register' %}">銀行口座</a>
+                    {% endif %}
                     <a class="collapse-item" href="utilities-animation.html">機密保持契約（NDA）</a>
                 </div>
             </div>
@@ -410,7 +415,15 @@ Page Wrapper
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            売上
+                                            売上残高
+                                        </div>
+                                        {% for item in amount %}
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ item }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            出金可能残高
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">¥215,000</div>
                                     </div>

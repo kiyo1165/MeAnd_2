@@ -1,0 +1,38 @@
+{% extends 'my_page_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <br>
+    <br>
+    <div class="container-sm w-75">
+        <div class="bank-info">
+            <p>MeAndより、カウンセラへのお支払い用に使う口座です。</p>
+            <p>1,000円以上になった場合、出金申請後、約2週間程度で振り込まれます。</p>
+            <p>※ 銀行コード・支店コードについては<a href="https://zengin.ajtw.net/">こちら</a>を参照してください。</p>
+
+        </div>
+        <div class="bank-register">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">銀行コード</th>
+                    <th scope="col">支店コード</th>
+                    <th scope="col">口座番号</th>
+                    <th scope="col">口座名義</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ bank.bank_code }}</td>
+                    <td>{{ bank.branch_office_code }}</td>
+                    <td>{{ bank.account_no }}</td>
+                    <td>{{ bank.account_name }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button class="btn btn-info rounded-0"><a href="{% url 'accounts:bank_register_update' bank.pk %}" style="color: #FFFFFF">編集</a></button>
+
+        </div>
+    </div>
+
+{% endblock %}

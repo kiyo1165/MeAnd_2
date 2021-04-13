@@ -3,38 +3,7 @@
 {% block content %}
     <br>
     <br>
-    <!-- MessageModal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">
-                        {{ message_receiver.last_name }}{{ message_receiver.first_name }}さんへメッセージを送る
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="post">{% csrf_token %}
-                        {{ form }}
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                        <button type="submit" class="btn btn-info"><a
-                                href="{% url 'message:send_message' object.user.pk %}"
-                                style="color: #ffffff">送信</a></button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-
-                </div>
-
-
-            </div>
-
-        </div>
-    </div>
+   {% include 'message_modal.html' %}
 
     <div class="container-fluid plan-detail-fix">
         <div class="row row-eq-height  my-5">
@@ -77,22 +46,7 @@
                 <div class="row button-area">
                     <button class="col-md-3 btn btn-info"><a href="{% url 'reservation:calendar' object.pk %}"
                                                              style="color: #FFFFFF">申し込む</a></button>
-                    <button id="checkout-button">Checkout</button>
-                    <form action="" method="POST">
-                        <p>{{ message }}</p>
-                        <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_test_51IU2lyEl5zmDEOnOeHwSO89J1gW1d6JYlgZcjWsN9zkJHs0ix5qYhpGeczZWNAEoAYUNXMvDDmul0pbAwp6YYGwr00BdWMwIzd"
-                                data-amount="{{ plan.price }}"
-                                data-name="MeAnd"
-                                data-description="{{ plan.title }}"
-                                data-image="{% static '/icon/MeAnd_Logo1.png' %}"
-                                data-locale="ja"
-                                data-currency="jpy"
-                                data-email="{{ user.email }}">
-                        </script>
-                        {% csrf_token %}
-                    </form>
+
                 </div>
             </div>
             <!-- /.col-lg-8 -->

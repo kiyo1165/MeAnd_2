@@ -6,8 +6,8 @@
     <br>
     <br>
     <br>
-    <br>
     <div class="container-fluid cons-detail-wrap">
+        {% include 'message_modal.html' %}
         <div class="card-section">
             <div class="card-detail-header text-center">
                 <div class="your-image">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <div class="col-xl-2 mt-5">
-                            <h1>test</h1>
+                            {% include 'left_mini_sideber.html' %}
                         </div>
                     </div>
 
@@ -117,7 +117,7 @@
                                 <h6 class="mt-0" style="font-size: 12px;">{{ item.title }}</h6>
                                 <hr class="mt-1 mb-1">
                                 <p><a
-                                        href="{% url 'main:cons_detail' item.pk %}">{{ item.catch_message | truncatechars:100 }}続きを読む</a>
+                                        href="{% url 'main:plan_detail' item.pk %}">{{ item.catch_message | truncatechars:100 }}続きを読む</a>
                                 </p>
                             </div>
                         </div>
@@ -134,8 +134,6 @@
     <br>
     <br>
     <br>
-    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
     <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
     <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
     <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
