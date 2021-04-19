@@ -2,6 +2,7 @@
 
 {% block content %}
     <div class="container-fluid">
+    {% include 'notifications.html' %}
         <div class="table-responsive">
             <table class="table">
                 <thead class="thead-light">
@@ -13,6 +14,7 @@
                     <th scope="col" style="width: 20px">予約プラン</th>
                     <th scope="col">面談スタイル</th>
                     <th scope="col">開始終了時間</th>
+                    <th scope="col">詳細</th>
 
 
                 </tr>
@@ -33,6 +35,9 @@
 
                             </td>
                         <td>{{ list.start }}〜{{ list.end }}</td>
+                        <td><a href="{% url 'accounts:reservation_detail'  list.pk%}">詳細</a></td>
+
+
 
 
                     </tr>

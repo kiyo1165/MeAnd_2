@@ -1,7 +1,9 @@
 {% extends 'my_page_base.html' %}
 
 {% block content %}
-    <p><a class="btn btn-info" type="button" href="{% url 'plan:plan_create' %}">プラン新規作成</a></p>
+    <a class="" href="{% url 'plan:plan_create' %}">プラン新規作成</a>
+    <br>
+    <br>
     <h4>プラン一覧</h4>
     <table class="table table-striped">
         <thead>
@@ -26,10 +28,10 @@
                         {{ s }}/
                     {% endfor %}
                 </td>
-                <td><button type="button" class="btn btn-info"><a href="{% url 'plan:mypage_plan_update' item.pk %}">編集</a></button></td>
-                <td><button type="button" class="btn btn-secondary"><a href="{% url 'plan:mypage_plan_delete' item.pk %}">削除</a></button></td>
+                <td><a href="{% url 'plan:mypage_plan_update' item.pk %}">編集</a></td>
+                <td><a href="{% url 'plan:mypage_plan_delete' item.pk %}">削除</a></td>
                 {% if item.release %}
-                <td><button type="button" class="btn btn-info">公開中</button></td>
+                <td>公開中</td>
                 {% else %}
                 <td><p>非公開</p></td>
                 {% endif %}

@@ -1,0 +1,47 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th class="p-3">予約番号</th>
+                <td class="p-3">{{ object.id }}</td>
+            </tr>
+             <tr>
+                <th class="p-3">予約のプラン</th>
+                <td class="p-3">{{ object.plan }}</td>
+            </tr >
+            <tr>
+                <th class="p-3">予約者名</th>
+                <td class="p-3">{{ object.user.last_name }}{{ object.user.first_name }}</td>
+            </tr>
+            <tr>
+                <th class="p-3">予約日時</th>
+                <td class="p-3">{{ object.start }}〜{{ object.end }}</td>
+            </tr>
+            <tr>
+                <th class="p-3">カウンセリング前メッセージ</th>
+                <td class="p-3">{{ object.message }}</td>
+            </tr>
+            <tr>
+                <th class="p-3">カウンセリングスタイル</th>
+                {% for item in object.style_choice.all %}
+                <td class="p-3">{{ item }}</td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+        <a href="{% url 'accounts:reservation_delete' object.pk %}">キャンセル申請</a>
+
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}

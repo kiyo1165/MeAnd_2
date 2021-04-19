@@ -17,7 +17,7 @@
                         {{ form }}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
                         <button type="submit" class="btn btn-info"><a
-                                href="{% url 'message:send_message' user.pk %}"
+                                href="{% url 'message:send_message' object.user.pk %}"
                                 style="color: #ffffff">送信</a></button>
                     </form>
                 </div>

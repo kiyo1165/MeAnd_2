@@ -1,0 +1,15 @@
+{% extends 'my_page_base.html' %}
+
+{% block content %}
+    <div class="container">
+    <div class="text-center">
+         <h4>本当にキャンセルしますか？</h4>
+        <p>予約時間：{{ object.start }}〜{{ object.end }}</p>
+         <p style="color: red">キャンセルは取消が出来ません。</p>
+        <form action="" method="post">{% csrf_token %}
+            <button type="submit" class="btn-secondary" value="削除">キャンセルする</button>
+        </form>
+    </div>
+
+    </div>
+{% endblock %}

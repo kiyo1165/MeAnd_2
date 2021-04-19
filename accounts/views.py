@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView, DetailView
 from .models import Profile
 from .forms import UserForm, ProfileForm, ReserveUpdateForm, BankRegisterForm
 from .models import User, Bank
@@ -11,7 +11,9 @@ from plan.models import Plan
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+#messages
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
 
 import datetime
@@ -141,6 +143,7 @@ class MyPageCalendar(TemplateView):
         context['public_holidays'] = settings.PUBLIC_HOLIDAYS
         return context
 
+
 class GuestMyPageConsList(TemplateView):
     model = User
     template_name = 'accounts/guest/guest_my_page_conslist.html'
@@ -176,7 +179,7 @@ class MyPageMixin(MyPageCalendar,GuestMyPageConsList, FollowList):
         return ctx
 
 
-class MyProfile( TemplateView ):
+class MyProfile(TemplateView):
     model = Profile
     template_name = 'accounts/profile.html'
 
@@ -315,6 +318,38 @@ class ReservationList(OnlyMyPageMixin, ListView):
         user = self.request.user.pk
         reserve_user = Reservation.objects.filter(Q(user2=user)|Q(user=user), active=True).order_by('-created_at')
         return reserve_user
+
+
+class ReservationDetail(OnlyMyPageMixin, DetailView):
+    model = Reservation
+    template_name = 'accounts/reservation_detail.html'
+
+
+import stripe
+from checkout.models import CheckOutList
+from checkout.forms import CheckOutForm
+class ReservationDelete(SuccessMessageMixin, DeleteView):
+    template_name = 'accounts/reservation_delete_confirm.html'
+    model = Reservation
+    success_url = reverse_lazy('accounts:reservation_list')
+    success_message = '削除しました。'
+
+    def delete(self, request, *args, **kwargs):
+        r = Reservation.objects.get(pk=kwargs['pk'])
+        check = get_object_or_404(CheckOutList, stripe_id=r.stripe_id)
+        form = CheckOutForm( request.POST or None, instance=check)
+
+        if request.method == 'POST' and form.is_valid():
+            form = form.save( commit=False )
+            form.cancel_flag = True
+            form.save()
+            messages.info( request, f'{check.plan.title}のキャンセルが完了しました。メールをご確認ください。' )
+            stripe.Refund.create(
+                charge=check.stripe_id,
+                amount=check.amount,
+            )
+        messages.warning(self.request, self.success_message)
+        return super(ReservationDelete, self).delete(request, *args, **kwargs)
 
 
 class BankRegister(LoginRequiredMixin, CreateView):

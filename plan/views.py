@@ -28,6 +28,7 @@ def PlanCreate(request):
         }
         return render(request, 'plan/plan_create.html', ctx)
 
+
 class PlanList(ListView):
     model = Plan
     template_name = 'plan/plan_list.html'
@@ -37,9 +38,12 @@ class PlanList(ListView):
         queryset = Plan.objects.filter(user=user)
         return queryset
 
+
+
 class MyPagePlanDetail(DetailView):
     model = Plan
     template_name = 'plan/mypage_plan_detail.html'
+
 
 def MyPagePlanUpdate(request, pk):
     user = get_object_or_404( User, pk=request.user.id )

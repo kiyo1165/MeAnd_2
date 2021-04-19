@@ -3,6 +3,7 @@ from .models import Reservation
 from django import forms
 from reservation.models import StyleChoices
 
+
 class BookingForm(ModelForm):
     message = forms.CharField(
         label='事前に相談したいメッセージ',

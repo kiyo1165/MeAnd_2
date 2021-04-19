@@ -8,12 +8,15 @@ from .models import  Reservation, ReservationMessage
 from accounts.models import User
 from plan.models import Plan
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from .form import BookingForm
 #パーミッション
 from django.contrib.auth.mixins import LoginRequiredMixin
 from plan.models import StyleChoices
 from checkout.models import CheckOutList
 import stripe
+import json
+from django.http.response import JsonResponse
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -64,7 +67,6 @@ class StaffCalendar(TemplateView):
             for day in days:
                 row[day] = True
             calendar[hour] = row
-
 
 
         start_time = datetime.datetime.combine(start_day, datetime.time(hour=9, minute=0, second=0))
@@ -126,21 +128,30 @@ class CheckOut(View):
             return redirect('main:top')
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+
 class Booking(LoginRequiredMixin, CreateView):
     model = Reservation
     template_name = 'reservation/booking.html'
     form_class = BookingForm
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data( **kwargs )
         context['staff'] = get_object_or_404(Plan, pk=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
         plan = get_object_or_404(Plan, pk=self.kwargs['pk'])
         user = User.objects.get( pk=self.request.user.id )
-        user_2 = User.objects.get(pk=plan.user.pk)
         token = self.request.POST['stripeToken']
+        user_2 = User.objects.get(pk=plan.user.pk)
         year = self.kwargs.get('year')
         month = self.kwargs.get('month')
         day = self.kwargs.get('day')
@@ -151,17 +162,16 @@ class Booking(LoginRequiredMixin, CreateView):
             messages.error(self.request, 'すみません、入れ違いで予約がありました。別の日時はどうですか。' )
         else:
             try:
+                customer = stripe.Customer.create(
+                    email=self.request.user.email,
+                    name=self.request.user.last_name + self.request.user.first_name,
+                )
                 charge = stripe.Charge.create(
                     amount=plan.price,
                     currency='jpy',
                     source=token,
                     description=f'メール:{self.request.user.email} お名前:{self.request.user.last_name}{self.request.user.first_name}',
                 )
-                customer = stripe.Customer.create(
-                    email=self.request.user.email,
-                    name=self.request.user.last_name + self.request.user.first_name,
-                )
-
             except stripe.error.CardError as e:
                 context = self.get_context_data()
                 context['message'] = '決済処理が失敗しました。カード情報をご確認ください。'
@@ -173,7 +183,7 @@ class Booking(LoginRequiredMixin, CreateView):
                     plan=plan,
                     plan_type=plan.plan_type,
                     amount=plan.price,
-                    strip_id=charge.id,
+                    stripe_id=charge.id,
                     customer_id=customer.id
                 )
                 schedule = form.save(commit=False)
@@ -182,6 +192,7 @@ class Booking(LoginRequiredMixin, CreateView):
                 schedule.plan = plan
                 schedule.start = start
                 schedule.end = end
+                schedule.stripe_id = charge.id
                 schedule.save()
                 form.save_m2m()
                 messages.success(self.request, '予約が完了しました。登録されているメールアドレスをご確認ください。')

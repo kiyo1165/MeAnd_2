@@ -52,7 +52,7 @@ def contract_cancel(request, pk):
         form.save()
         messages.info(request, f'{check.plan.title}のキャンセルが完了しました。メールをご確認ください。')
         stripe.Refund.create(
-            charge=check.strip_id,
+            charge=check.stripe_id,
             amount=check.amount,
         )
         return redirect('checkout:buyer_contract_list')
