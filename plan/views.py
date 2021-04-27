@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from .models import Plan
+from .models import Plan, City
 from accounts.models import User
 from django.views.generic import DetailView, ListView, UpdateView, DeleteView
 from .form import PlanForm
 from django.contrib import messages
+import csv
+from io import TextIOWrapper
 # Create your views here.
 
 def PlanCreate(request):
@@ -66,3 +68,16 @@ def MyPagePlanUpdate(request, pk):
 class MyPagePlanDelete(DeleteView):
     model = Plan
     success_url = reverse_lazy('plan:plan_list')
+
+
+def upload(request):
+    if 'csv' in request.FILES:
+        form_data = TextIOWrapper(request.FILES['csv'].file, encoding='utf-8')
+        csv_file = csv.reader(form_data)
+
+        for line in csv_file:
+            city, created = City.objects.get_or_create(city_name=line[0], pref_id=line[1])
+            city.save()
+        return render(request, 'plan/upload.html')
+    else:
+        return render(request, 'plan/upload.html')

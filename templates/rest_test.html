@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang=ja>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+
+    <select v-model="selectedPref" v-on:change="fetchTags">
+        <option>選択してください</option>
+       <option v-for="item in pref" :key="item.id" :value="item.id">[[ item.pref_name ]]</option>
+    </select>
+      <select v-model="selectedCity">
+       <option v-for="item in city.city" :key="item.id">[[ item.city_name]]</option>
+    </select>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const vm = new Vue({
+        delimiters: ['[[', ']]'],
+        el: "#app",
+        data() {
+            return {
+                pref:'',
+                city:'',
+                selectedPref:'',
+                selectedCity:''
+            }
+        },
+        methods:{
+            fetchTags:function (){
+                let obj = this.pref
+                let i = this.selectedPref
+                let j = i - 1
+                return console.log(this.city = obj[j])
+                }
+            },
+        mounted() {
+            axios
+                .get('http://127.0.0.1:8080/api/v1/pref_list/')
+                .then(response => {
+                    (this.pref = response.data),
+                        console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error),
+                        this.errord = true
+                })
+                .finally(() => this.loading = false)
+        }
+
+
+
+    })
+
+
+</script>
+</body>
+</html>

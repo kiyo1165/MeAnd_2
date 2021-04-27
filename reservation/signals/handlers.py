@@ -9,14 +9,6 @@ def message(sender, instance, created, **kwargs):
     if created :
         if  '休暇' in instance.message:
             pass
-            # send_mail(
-            #         subject='【予約完了】' + str(instance.start) + '〜' + str(instance.end),
-            #         message='開始時間：' + str(instance.start) + '〜' + str(instance.end) + 'カウンセラー：' +
-            #                 instance.user2.first_name,
-            #         recipient_list=[ instance.user2.email,],
-            #         from_email='admin@example.com'
-            #     )
-            # print(instance)
         else:
             to_host = ('【予約が入りました】'+ str(instance.start) + '〜' + str(instance.end), '開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user2.first_name,'admin@example.com',[instance.user2.email])
             to_guest = ('【予約完了】' + str( instance.start ) + '〜' + str( instance.end ),'開始時間：' + str( instance.start ) + '〜' + str( instance.end ) + 'カウンセラー：' + instance.user.first_name,'admin@example.com',[instance.user.email])

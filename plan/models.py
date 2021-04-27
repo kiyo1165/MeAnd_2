@@ -14,6 +14,15 @@ class Pref(models.Model):
         return self.pref_name
 
 
+class City(models.Model):
+
+    pref = models.ForeignKey(Pref, on_delete=models.CASCADE, blank=True)
+    city_name = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+        return self.city_name
+
+
 class StyleChoices(models.Model):
     style_name = models.CharField( max_length=10, blank=True )
 
@@ -37,7 +46,8 @@ class Plan(models.Model):
     price = models.CharField('価格', max_length=10)
     session_time = models.CharField('カウンセリング時間/一回', max_length=3, help_text='ヒント！分でご記入ください')
     counseling_active = models.CharField('カウンセリングのタイミング', max_length=20, blank=True, choices=COUNSELING_ACTIVE)
-    pref = models.ManyToManyField(Pref, related_name='pref', blank=True)
+    pref = models.ForeignKey(Pref, on_delete=models.PROTECT, blank=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True)
     style_choices = models.ManyToManyField(StyleChoices, related_name='style')
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     release = models.BooleanField('公開', default=False)
