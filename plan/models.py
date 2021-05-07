@@ -47,7 +47,7 @@ class Plan(models.Model):
     session_time = models.CharField('カウンセリング時間/一回', max_length=3, help_text='ヒント！分でご記入ください')
     counseling_active = models.CharField('カウンセリングのタイミング', max_length=20, blank=True, choices=COUNSELING_ACTIVE)
     pref = models.ForeignKey(Pref, on_delete=models.PROTECT, blank=True)
-    city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True)
+    city = models.ForeignKey(City, on_delete=models.PROTECT, blank=True, null=True)
     style_choices = models.ManyToManyField(StyleChoices, related_name='style')
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     release = models.BooleanField('公開', default=False)

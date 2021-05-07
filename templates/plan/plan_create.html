@@ -178,7 +178,6 @@
                             <small></small>
                         </div>
                     </div>
-
                     <div class="button-area ">
                         <div class="row">
                             <button type="submit" class="btn btn-info col-m-6 mr-3 rounded-0 ">登録</button>
@@ -196,5 +195,48 @@
         </div>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const vm = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#app",
+            data() {
+                return {
+                    pref: '',
+                    city: '',
+                    selectedPref: '',
+                    selectedCity: ''
+                }
+            },
+            methods: {
+                fetchTags: function () {
+                    let obj = this.pref
+                    let i = this.selectedPref
+                    let j = i - 1
+                    return console.log(this.city = obj[j])
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://127.0.0.1:8080/api/v1/pref_list/')
+                    .then(response => {
+                        (this.pref = response.data),
+                            console.log(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error),
+                            this.errord = true
+                    })
+                    .finally(() => this.loading = false)
+                axios
+                    .post('')
+
+
+            }
+        })
+
+
+    </script>
 
 {% endblock %}

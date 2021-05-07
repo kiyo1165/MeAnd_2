@@ -12,9 +12,14 @@ from django.contrib.auth.decorators import login_required
 def FollowView(request, pk):
     print(request, pk)
     if request.method == "POST":
-        plan_set_user = Plan.objects.get(pk=pk)
-        follower_user = get_object_or_404( User, pk=plan_set_user.user.pk )  # フォローされるユーザー
-        follow_user = request.user  # フォローするユーザー
+        try:
+            User.objects.get(pk=pk)
+            plan_set_user = get_object_or_404(User, pk=pk )
+            follower_user = get_object_or_404(User ,pk=plan_set_user.pk)
+        except:
+            plan_set_user = Plan.objects.get( pk=pk )
+            follower_user = get_object_or_404( User, pk=plan_set_user.user.pk)  # フォローされるユーザー
+            follow_user = request.user  # フォローするユーザー
         try:
             follow = Follow.objects.filter(follower_user=follow_user)
             if follow.exists():
