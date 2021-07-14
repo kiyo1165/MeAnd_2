@@ -1,0 +1,6 @@
+__pycache__
+db.sqlite3
+db.
+.DS_Store
+django.db.backends.postgresql_psycopg2
+local_settings.py

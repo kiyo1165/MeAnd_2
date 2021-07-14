@@ -56,7 +56,9 @@ class StaffCalendar(TemplateView):
             base_date = today
 
         days = [base_date + datetime.timedelta(days=day) for day in range(7)]
+        print(days)
         start_day = days[0]
+        print(start_day)
         end_day = days[-1]
 
         # 9時から17時まで1時間刻み、1週間分の、値がTrueなカレンダーを作る
@@ -71,8 +73,8 @@ class StaffCalendar(TemplateView):
 
         start_time = datetime.datetime.combine(start_day, datetime.time(hour=9, minute=0, second=0))
         end_time =datetime.datetime.combine(end_day, datetime.time(hour=23, minute=0, second=0))
-        for schedule in Reservation.objects.filter( user2=user ).exclude(
-                Q( start__gt=end_time ) | Q( end__lt=start_time ) ):
+        for schedule in Reservation.objects.filter(user2=user).exclude(
+                Q( start__gt=end_time ) | Q(end__lt=start_time) ):
             local_dt = timezone.localtime( schedule.start )
             booking_date = local_dt.date()
             booking_hour = local_dt.hour
